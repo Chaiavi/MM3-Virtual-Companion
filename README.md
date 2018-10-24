@@ -21,3 +21,6 @@ I tried to remove as many complications as I could (Advanced players will be mad
 Another simplification I have done here was adding the damage bonus to the hit bonus of the material, so if for example you have a gold weapon which has a hit bonus of 4, and damage bonus of 8, I have added 12 (4 + 8) to the damage score.
 
 So a gold katana will get a damage score of 20 (8 damage average + 12 gold damage = 20).
+
+
+This page can be found on my site here: http://dosgameshub.org/mm3calc/
