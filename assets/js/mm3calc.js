@@ -31,3 +31,14 @@ var changeInArmorValue = function() {
 	document.getElementById("protection").value = parseInt(armor_protection) + parseInt(material_protection);			
 	document.getElementById("armor_usable").value = usableby;
 }
+
+var clickOnHands = function() {
+	var weapons = document.getElementById("weaponId");
+	var selected_weapon = weapons.options[weapons.selectedIndex];
+	var num_of_hands = selected_weapon.getAttribute("data-hands");
+	swal({
+	  title: 'Hands',
+	  text: `Number of hands used for this weapon: ${num_of_hands}`,
+	  showConfirmButton: false
+	})
+}
