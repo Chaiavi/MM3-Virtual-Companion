@@ -1,3 +1,4 @@
+// WEAPON
 var changeInWeaponValue = function() {
 	var weapons = document.getElementById("weaponId");
 	var materials = document.getElementById("weaponMaterialId");
@@ -14,22 +15,6 @@ var changeInWeaponValue = function() {
 	document.getElementById("damage").value = parseInt(weapon_damage) + parseInt(material_damage);			
 	document.getElementById("hands").value = num_of_hands;
 	document.getElementById("weapon_usable").value = usableby;
-}
-
-var changeInArmorValue = function() {
-	var armor = document.getElementById("armorId");
-	var materials = document.getElementById("armorMaterialId");
-
-	var selected_armor = armor.options[armor.selectedIndex];
-	var selected_material = materials.options[materials.selectedIndex];
-
-	var armor_protection = selected_armor.value;
-	var material_protection = materials.options[materials.selectedIndex].value;
-
-	var usableby = selected_armor.getAttribute("data-usable-by");
-
-	document.getElementById("protection").value = parseInt(armor_protection) + parseInt(material_protection);			
-	document.getElementById("armor_usable").value = usableby;
 }
 
 var clickOnHands = function() {
@@ -62,6 +47,23 @@ var clickOnWeaponUsableBy = function() {
 	})
 }
 
+// ARMOR
+var changeInArmorValue = function() {
+	var armor = document.getElementById("armorId");
+	var materials = document.getElementById("armorMaterialId");
+
+	var selected_armor = armor.options[armor.selectedIndex];
+	var selected_material = materials.options[materials.selectedIndex];
+
+	var armor_protection = selected_armor.value;
+	var material_protection = materials.options[materials.selectedIndex].value;
+
+	var usableby = selected_armor.getAttribute("data-usable-by");
+
+	document.getElementById("protection").value = parseInt(armor_protection) + parseInt(material_protection);			
+	document.getElementById("armor_usable").value = usableby;
+}
+
 var clickOnArmorUsableBy = function() {
 	var usableBy = document.getElementById("armor_usable").value;
 	usableBy = usableBy.replace("Kn", "Knight").replace("Pa", "Paladin").replace("Ar", "Archer").replace("Cl", "Cleric").replace("Ro", "Robber").replace("Ni", "Ninja").replace("Ba", "Barbarian").replace("Dr", "Druid").replace("Ra", "Ranger");
@@ -77,6 +79,29 @@ var clickOnProtectionResult = function() {
 	swal({
 	  title: 'Protection',
 	  text: `Protection Issued by This Armor: ${protection}`,
+	  showConfirmButton: false
+	})
+}
+
+// ITEMS
+var changeInItemValue = function() {
+	var item = document.getElementById("itemId");
+	var materials = document.getElementById("itemMaterialId");
+
+	var selected_item = item.options[item.selectedIndex];
+	var selected_material = materials.options[materials.selectedIndex];
+
+	var item_protection = selected_item.value;
+	var material_protection = selected_material.value;
+
+	document.getElementById("itemProtection").value = parseInt(item_protection) + parseInt(material_protection);			
+}
+
+var clickOnItemResult = function() {
+	var protection = document.getElementById("itemProtection").value;
+	swal({
+	  title: 'Protection',
+	  text: `Protection Issued by This Item: ${protection}`,
 	  showConfirmButton: false
 	})
 }

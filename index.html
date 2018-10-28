@@ -116,11 +116,15 @@
 										</div>
 
 										<br/>
+
 										<!-- ARMOR -->
 										<div class="row gtr-uniform">
 											<div class="col-2">
 												<select id="armorId" onchange="changeInArmorValue()">
 													<option value="0" data-usable-by="">Armor</option>
+													<option value="1" data-usable-by="All">Cape</option>
+													<option value="1" data-usable-by="All">Cloak</option>
+													<option value="1" data-usable-by="All">Robes</option>
 													<option value="2" data-usable-by="All">Padded Armor</option>
 													<option value="3" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Leather Armor</option>
 													<option value="4" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Ra">Scale Armor</option>
@@ -165,7 +169,65 @@
 											</div>
 
 											<div class="col-2">
-												<input type="text" id="protection" placeholder="protection" onclick="clickOnProtectionResult()" readonly></textarea>
+												<input type="text" id="protection" placeholder="Protection" onclick="clickOnProtectionResult()" readonly></textarea>
+											</div>
+										</div>
+
+										<br/>
+
+										<!-- ITEMS -->
+										<div class="row gtr-uniform">
+											<div class="col-2">
+												<select id="itemId" onchange="changeInItemValue()">
+													<option value="0">Item</option>
+													<option value="0">Amulet</option>
+													<option value="0">Belt</option>
+													<option value="1">Boots</option>
+													<option value="0">Broach</option>
+													<option value="0">Cameo</option>
+													<option value="0">Charm</option>
+													<option value="1">Gauntlets</option>
+													<option value="2">Helm</option>
+													<option value="0">Medal</option>
+													<option value="0">Necklace</option>
+													<option value="0">Pendant</option>
+													<option value="1">Ring</option>
+													<option value="2">Scarab</option>
+													<option value="4">Shield</option>
+													<option value="0">Tiara</option>
+												</select>
+											</div>
+
+											<div class="col-2" >
+												<select id="itemMaterialId" onchange="changeInItemValue()">
+													<option value="0">Material</option>
+													<option value="0">Leather</option>
+													<option value="-3">Wooden</option>
+													<option value="0">Glass</option>
+													<option value="1">Coral</option>
+													<option value="1">Crystal</option>
+													<option value="1">Iron</option>
+													<option value="-1">Bronze</option>
+													<option value="2">Lapis</option>
+													<option value="2">Pearl</option>
+													<option value="2">Silver</option>
+													<option value="-2">Brass</option>
+													<option value="3">Amber</option>
+													<option value="4">Steel</option>
+													<option value="4">Ebony</option>
+													<option value="6">Gold</option>
+													<option value="5">Qaurtz</option>
+													<option value="8">Platinum</option>
+													<option value="10">Ruby</option>
+													<option value="12">Emerald</option>
+													<option value="14">Sapphire</option>
+													<option value="16">Diamond</option>
+													<option value="20">Obsidian</option>
+												</select>
+											</div>
+
+											<div class="col-2">
+												<input type="text" id="itemProtection" placeholder="Item Protection" onclick="clickOnItemResult()" readonly></textarea>
 											</div>
 
 											<div class="col-12">
