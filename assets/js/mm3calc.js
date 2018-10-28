@@ -42,3 +42,41 @@ var clickOnHands = function() {
 	  showConfirmButton: false
 	})
 }
+
+var clickOnDamageResult = function() {
+	var damage = document.getElementById("damage").value;
+	swal({
+	  title: 'Damage',
+	  text: `Damage Issued by This Weapon: ${damage}`,
+	  showConfirmButton: false
+	})
+}
+
+var clickOnWeaponUsableBy = function() {
+	var usableBy = document.getElementById("weapon_usable").value;
+	usableBy = usableBy.replace("Kn", "Knight").replace("Pa", "Paladin").replace("Ar", "Archer").replace("Cl", "Cleric").replace("Ro", "Robber").replace("Ni", "Ninja").replace("Ba", "Barbarian").replace("Dr", "Druid").replace("Ra", "Ranger");
+	swal({
+	  title: 'Usable By',
+	  text: `This Weapon can be Used only by the Following:\n ${usableBy}`,
+	  showConfirmButton: false
+	})
+}
+
+var clickOnArmorUsableBy = function() {
+	var usableBy = document.getElementById("armor_usable").value;
+	usableBy = usableBy.replace("Kn", "Knight").replace("Pa", "Paladin").replace("Ar", "Archer").replace("Cl", "Cleric").replace("Ro", "Robber").replace("Ni", "Ninja").replace("Ba", "Barbarian").replace("Dr", "Druid").replace("Ra", "Ranger");
+	swal({
+	  title: 'Usable By',
+	  text: `This Armor can be Used only by the Following:\n ${usableBy}`,
+	  showConfirmButton: false
+	})
+}
+
+var clickOnProtectionResult = function() {
+	var protection = document.getElementById("protection").value;
+	swal({
+	  title: 'Protection',
+	  text: `Protection Issued by This Armor: ${protection}`,
+	  showConfirmButton: false
+	})
+}

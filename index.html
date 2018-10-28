@@ -48,7 +48,7 @@
 										<!-- WEAPONS -->
 										<div class="row gtr-uniform">
 											<div class="col-2">
-												<select name="Weapon" id="weaponId" onchange="changeInWeaponValue()">
+												<select id="weaponId" onchange="changeInWeaponValue()">
 													<option value="0" data-hands="0" data-usable-by="">Weapon</option>
 													<option value="10" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Bardiche</option>
 													<option value="9" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ba, Ra">Battle Axe</option>
@@ -87,7 +87,7 @@
 											</div>
 
 											<div class="col-2" >
-												<select name="Material" id="weaponMaterialId" onchange="changeInWeaponValue()">
+												<select id="weaponMaterialId" onchange="changeInWeaponValue()">
 													<option value="0">Material</option>
 													<option value="-4">Leather</option>
 													<option value="-3">Wooden</option>
@@ -115,15 +115,15 @@
 											</div>
 
 											<div class="col-2">
-												<input type="text" name="Hands" id="hands" value="" placeholder="Hands" onclick="clickOnHands()" readonly />	
+												<input type="text" id="hands" placeholder="Hands" onclick="clickOnHands()" readonly />	
 											</div>
 
 											<div class="col-4">
-												<input type="text" name="UsableBy" id="weapon_usable" value="" placeholder="Usable By" readonly />
+												<input type="text" id="weapon_usable" placeholder="Usable By" onclick="clickOnWeaponUsableBy()" readonly />
 											</div>
 
 											<div class="col-2">
-												<input type="text" name="Damage" id="damage" placeholder="Damage" readonly></textarea>
+												<input type="text" id="damage" placeholder="Damage" onclick="clickOnDamageResult()" readonly></textarea>
 											</div>
 										</div>
 
@@ -131,7 +131,7 @@
 										<!-- ARMOR -->
 										<div class="row gtr-uniform">
 											<div class="col-2">
-												<select name="Armor" id="armorId" onchange="changeInArmorValue()">
+												<select id="armorId" onchange="changeInArmorValue()">
 													<option value="0" data-usable-by="">Armor</option>
 													<option value="2" data-usable-by="All">Padded Armor</option>
 													<option value="3" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Leather Armor</option>
@@ -145,7 +145,7 @@
 											</div>
 
 											<div class="col-2" >
-												<select name="Material" id="armorMaterialId" onchange="changeInArmorValue()">
+												<select id="armorMaterialId" onchange="changeInArmorValue()">
 													<option value="0">Material</option>
 													<option value="0">Leather</option>
 													<option value="-3">Wooden</option>
@@ -173,11 +173,11 @@
 											</div>
 
 											<div class="col-4">
-												<input type="text" name="UsableBy" id="armor_usable" value="" placeholder="Usable By" readonly />
+												<input type="text" id="armor_usable" placeholder="Usable By" onclick="clickOnArmorUsableBy()" readonly />
 											</div>
 
 											<div class="col-2">
-												<input type="text" name="Protection" id="protection" placeholder="protection" readonly></textarea>
+												<input type="text" id="protection" placeholder="protection" onclick="clickOnProtectionResult()" readonly></textarea>
 											</div>
 
 											<div class="col-12">
