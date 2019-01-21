@@ -14,7 +14,7 @@ So, although I do appreciate this aspect of the game (I really do), I still thin
 Just choose the equipment type and the material from which it was created and you will get the information you need.
 
 ## How were the calculations made?
-I used [Aaron Shanon's article](https://gamefaqs.gamespot.com/snes/588491-might-and-magic-iii-isles-of-terra/faqs/55704) where he writes down all of the equipment stats
+I used [Aaron Shanon's article](https://gamefaqs.gamespot.com/snes/588491-might-and-magic-iii-isles-of-terra/faqs/55704) as well as [Stephen's article](https://gamefaqs.gamespot.com/pc/564551-might-and-magic-iii-isles-of-terra/faqs/36599) where they write down all of the various stats
 
 **I tried to remove as many complications as I could** (Advanced players will be mad at me here), so, for example if a Katana does 4-12 damage, I just took the average of 8 ((4 + 12) / 2).
 Another simplification I have done here was adding the damage bonus to the hit bonus of the material, so if for example you have a gold weapon which has a hit bonus of 4, and damage bonus of 8, I have added 12 (4 + 8) to the damage score.
