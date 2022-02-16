@@ -13,6 +13,8 @@ So, although I do appreciate this aspect of the game (I really do), I still thin
 # How to use?
 Just choose the equipment type and the material from which it was created and you will get the information you need.
 
+![image](https://user-images.githubusercontent.com/1760091/154284399-391f6a0f-40c0-44e2-bac5-a6de80c90592.png)
+
 ## How were the calculations made?
 I used [Aaron Shanon's article](https://gamefaqs.gamespot.com/snes/588491-might-and-magic-iii-isles-of-terra/faqs/55704) as well as [Stephen's article](https://gamefaqs.gamespot.com/pc/564551-might-and-magic-iii-isles-of-terra/faqs/36599) where they write down all of the various stats
 
