@@ -1,7 +1,9 @@
-# mm3-calc
-Might and Magic III - Isles Of Terra Equipment Calculator
-
-This is intended to be a basic web page which will help people playing *Might and Magic 3 Isles of Terra* evaluate the equipment they carry.
+# Might & Magic III - Virtual Companion
+This is intended to be a web site which will help people playing *Might and Magic 3 Isles of Terra*:
+- Evaluate the equipment they carry
+- Write quick notes
+- Have all of the maps
+- Keyboard Shortcuts
 
 The scenario which caused me to create this page was one which happens a lot, I play the game, get into a dungeon or just kill many baddies and get lots of loot, I then go to the nearest town to equip each character with the best equipment (weapon and\or armor) and sell all of the rest.
 
@@ -10,7 +12,7 @@ The above scenario is a **nightmare** where I need to make many calculations and
 So, although I do appreciate this aspect of the game (I really do), I still think that an equipment calculator like this one might come in handy for many players (I hope you still play this amazing game).
 
 
-# How to use?
+## How to use?
 Just choose the equipment type and the material from which it was created and you will get the information you need.
 
 ![image](https://user-images.githubusercontent.com/1760091/154284399-391f6a0f-40c0-44e2-bac5-a6de80c90592.png)
