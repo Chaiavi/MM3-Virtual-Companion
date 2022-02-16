@@ -23,3 +23,5 @@ So a gold katana will get a damage score of 20 (8 damage average + 12 gold damag
 
 
 This page can be found live on my [site, Dos Games Hub](http://dosgameshub.org/mm3calc/)
+
+![image](https://user-images.githubusercontent.com/1760091/154284192-58daffe0-25fd-4ae9-8e4d-090cd7f1bf8c.png)
