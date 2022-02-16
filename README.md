@@ -13,11 +13,13 @@ So, although I do appreciate this aspect of the game (I really do), I still thin
 
 
 ## How to use?
-Just choose the equipment type and the material from which it was created and you will get the information you need.
+- Equipment Calculator: Just choose the equipment type and the material from which it was created and you will get the information you need.
+- Quick Notes: Write quick notes and click save, they will still be there the next time you play
+- Maps: Maps of every city, dungeon and outer areas is present, use them as you progress through the game
+- Keyboard Shortcuts: List of keyboard shortcuts straight from the manual
 
-![image](https://user-images.githubusercontent.com/1760091/154284399-391f6a0f-40c0-44e2-bac5-a6de80c90592.png)
 
-## How were the calculations made?
+## How were the equipment calculations made?
 I used [Aaron Shanon's article](https://gamefaqs.gamespot.com/snes/588491-might-and-magic-iii-isles-of-terra/faqs/55704) as well as [Stephen's article](https://gamefaqs.gamespot.com/pc/564551-might-and-magic-iii-isles-of-terra/faqs/36599) where they write down all of the various stats
 
 **I tried to remove as many complications as I could** (Advanced players will be mad at me here), so, for example if a Katana does 4-12 damage, I just took the average of 8 ((4 + 12) / 2).
@@ -28,4 +30,15 @@ So a gold katana will get a damage score of 20 (8 damage average + 12 gold damag
 
 This page can be found live on my [site, Dos Games Hub](http://dosgameshub.org/mm3calc/)
 
-![image](https://user-images.githubusercontent.com/1760091/154284192-58daffe0-25fd-4ae9-8e4d-090cd7f1bf8c.png)
+Images of the different tabs
+## Equipment Calculator
+![itemsCalculator](https://user-images.githubusercontent.com/1760091/154338699-4ff42b85-a7c3-462a-b2c8-40b083e23030.jpg)
+
+## Quick Notes
+![NotesTab](https://user-images.githubusercontent.com/1760091/154338740-aeb75f01-b3d5-4558-a88e-0bb67d9bc05e.jpg)
+
+## Maps
+![MapsTab](https://user-images.githubusercontent.com/1760091/154338791-6187381d-2152-4305-80f4-0519f85e92f4.jpg)
+
+## Keyboard Shortcuts
+![KeyboardShortcutsTab](https://user-images.githubusercontent.com/1760091/154338826-732a293c-6400-4b9e-a2cd-8f167a1980cb.jpg)
