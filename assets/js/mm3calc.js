@@ -1,18 +1,18 @@
 // WEAPON
 var changeInWeaponValue = function() {
 	var weapons = document.getElementById("weaponId");
+  	var special = document.getElementById("weaponSpecialId");
 	var materials = document.getElementById("weaponMaterialId");
 
-	var selected_weapon = weapons.options[weapons.selectedIndex];
-	var selected_material = materials.options[materials.selectedIndex];
+	var weapon_damage = weapons.options[weapons.selectedIndex].value;
+	var special_damage = special.options[special.selectedIndex].value;
+  	var material_damage = materials.options[materials.selectedIndex].value;
 
-	var weapon_damage = selected_weapon.value;
-	var material_damage = materials.options[materials.selectedIndex].value;
-
+  	var selected_weapon = weapons.options[weapons.selectedIndex];
 	var num_of_hands = selected_weapon.getAttribute("data-hands");
 	var usableby = selected_weapon.getAttribute("data-usable-by");
 
-	document.getElementById("damage").value = parseInt(weapon_damage) + parseInt(material_damage);			
+	document.getElementById("damage").value = parseInt(weapon_damage) + parseInt(material_damage) + parseInt(special_damage);			
 	document.getElementById("hands").value = num_of_hands;
 	document.getElementById("weapon_usable").value = usableby;
 }
