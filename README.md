@@ -28,7 +28,7 @@ Another simplification I have done here was adding the damage bonus to the hit b
 So a gold katana will get a damage score of 20 (8 damage average + 12 gold damage = 20).
 
 
-This page can be found live on my [site, Dos Games Hub](http://dosgameshub.org/mm3calc/)
+This page can be found live on my [site, Dos Games Hub](http://dosgameshub.org/mm3/)
 
 Images of the different tabs
 ## Equipment Calculator
