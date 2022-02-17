@@ -31,7 +31,7 @@ include "link.php";
       <!--	map-->
       <div class="container ">
         <div class="map-responsive">
-        	<iframe src="https://dosgameshub.org/mm3/notes/" title="Maps" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+        	<iframe src="notes/" title="Maps" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
         </div>
       </div>
 	</div>
