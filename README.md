@@ -34,11 +34,11 @@ Images of the different tabs
 ## Equipment Calculator
 ![itemsCalculator](https://user-images.githubusercontent.com/1760091/154338699-4ff42b85-a7c3-462a-b2c8-40b083e23030.jpg)
 
+## Maps
+![MapsTab](https://user-images.githubusercontent.com/1760091/154498096-b7d82cb6-84db-4f43-87b6-75bf129aa710.png)
+
 ## Quick Notes
 ![NotesTab](https://user-images.githubusercontent.com/1760091/154338740-aeb75f01-b3d5-4558-a88e-0bb67d9bc05e.jpg)
-
-## Maps
-![MapsTab](https://user-images.githubusercontent.com/1760091/154338791-6187381d-2152-4305-80f4-0519f85e92f4.jpg)
 
 ## Keyboard Shortcuts
 ![KeyboardShortcutsTab](https://user-images.githubusercontent.com/1760091/154338826-732a293c-6400-4b9e-a2cd-8f167a1980cb.jpg)
