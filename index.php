@@ -10,13 +10,14 @@ include "link.php";
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/custom-util.js"></script>
 		<script src="assets/js/mm3calc.js"></script>
 		<style> .navbar-dark{
 		color: white;
 		} </style>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
-      <script>	
+		
+    <script>	
   $(document).ready(function() {
       $('#items-content').load("itemsCalculator.php");
       $('#map-content').load("maps.php");
@@ -87,13 +88,12 @@ include "link.php";
       <!-- Footer -->
       <footer id="footer">
         <ul class="copyright">
-          <li>&copy; <a href="http://dosgameshub.org">Dos Games Hub</a></li>
+          <li>&copy; <a href="https://chaiware.org/">Chaiware.org</a></li>
         </ul>
       </footer>
 	</div>
 
     <!-- Scripts -->
-    <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
