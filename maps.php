@@ -161,9 +161,6 @@
 			<div class="maps-description">
 				Explore all the maps and locations for Might and Magic III - Isles Of Terra
 			</div>
-			<div class="version-info">
-				Version: Simple v8 | Updated: <?php echo date('Y-m-d H:i:s'); ?> | Direct load
-			</div>
 		</div>
 		
 		<div class="iframe-wrapper">
@@ -184,7 +181,7 @@
 	</div>
 
 	<script>
-		console.log('Simple Maps loaded - Version 8');
+		console.log('Simple Maps loaded');
 		
 		function openFullscreen() {
 			document.getElementById('fullscreenModal').classList.add('active');
