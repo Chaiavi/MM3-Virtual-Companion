@@ -12,13 +12,15 @@ include "link.php";
 	<title>Items Calculator</title>
 	
 	<style>
-		/* Mobile-first responsive styles */
+		/* Mobile-first responsive styles - Enhanced for full width */
 		@media (max-width: 768px) {
 			.form-row {
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
 				margin-bottom: 20px;
+				width: 100%;
+				padding: 0;
 			}
 			
 			.form-group {
@@ -28,11 +30,16 @@ include "link.php";
 			.form-row select,
 			.form-row input {
 				width: 100%;
-				padding: 12px;
+				padding: 15px 12px;
 				font-size: 16px; /* Prevents zoom on iOS */
-				border-radius: 4px;
+				border-radius: 6px;
 				border: 1px solid #ccc;
 				box-sizing: border-box;
+				margin: 0;
+				height: auto;
+				min-height: 50px;
+				line-height: 1.4;
+				vertical-align: top;
 			}
 			
 			.section-title {
@@ -45,14 +52,15 @@ include "link.php";
 			
 			.reset-btn {
 				width: 100%;
-				padding: 12px;
-				margin-top: 20px;
-				font-size: 16px;
+				padding: 15px;
+				margin-top: 25px;
+				font-size: 18px;
 				background-color: #dc3545;
 				color: white;
 				border: none;
-				border-radius: 4px;
+				border-radius: 6px;
 				cursor: pointer;
+				box-sizing: border-box;
 			}
 			
 			.reset-btn:hover {
@@ -118,6 +126,38 @@ include "link.php";
 			}
 		}
 		
+		/* Header styles */
+		.calculator-container {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.calculator-header {
+			background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+			color: white;
+			padding: 20px 15px;
+			text-align: center;
+			width: 100%;
+			box-sizing: border-box;
+		}
+		
+		.calculator-title {
+			margin: 0 0 15px 0;
+			font-size: 28px;
+			font-weight: 800;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+			letter-spacing: 0.5px;
+		}
+		
+		.calculator-description {
+			margin: 0;
+			opacity: 0.95;
+			font-size: 16px;
+			line-height: 1.5;
+			font-weight: 300;
+		}
+		
 		/* Common styles */
 		.container {
 			max-width: 1200px;
@@ -147,12 +187,44 @@ include "link.php";
 			background-position: right 10px center;
 			background-size: 12px;
 			padding-right: 30px;
+			height: auto;
+			min-height: 50px;
+			line-height: 1.4;
+		}
+		
+		/* Mobile specific fixes */
+		@media (max-width: 768px) {
+			select, input[type="text"] {
+				height: 50px !important;
+				min-height: 50px !important;
+				padding: 12px !important;
+				box-sizing: border-box !important;
+				vertical-align: middle !important;
+				line-height: 1.5 !important;
+				display: block !important;
+				width: 100% !important;
+			}
+			
+			.readonly-input {
+				height: 50px !important;
+				padding: 12px !important;
+				line-height: 1.5 !important;
+			}
 		}
 	</style>
 </head>
 
 <body>
 	<div id="page-wrapper">
+		<div class="calculator-container">
+			<div class="calculator-header">
+				<h1 class="calculator-title">⚔️ Items Calculator</h1>
+				<p class="calculator-description">
+					Calculate weapon damage, armor protection, and item stats for Might and Magic III - Isles of Terra
+				</p>
+			</div>
+		</div>
+		
 		<div class="container">   	  
 			<section class="wrapper style5">
 				<form method="post" action="#">
