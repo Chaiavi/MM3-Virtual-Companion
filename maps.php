@@ -1,3 +1,8 @@
+<?php
+// Redirect to original PHP gallery
+header('Location: maps/index.php');
+exit;
+?>
 <!doctype html>
 <html>
 <head>

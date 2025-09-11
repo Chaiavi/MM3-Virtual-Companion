@@ -2,205 +2,239 @@
 
 	/*
 
-		Single File PHP Gallery 4.8.1 (SFPG)
+		Single File PHP Gallery 4.14.0 (SFPG)
 
 		See EULA in readme.txt for commercial use
 		See readme.txt for configuration
 
-		Released: 14-dec-2021
-		http://sye.dk/sfpg/
+		Released: 2024-Dec-17
+		https://sye.dk/sfpg/
 		by Kenny Svalgaard
 
 	*/
 
-	error_reporting(0);
-	
+	error_reporting(defined('ERROR_REPORT') ? ERROR_REPORT : 0);
+
 	//	----------- CONFIGURATION START ------------
 
-	define('GALLERY_ROOT', './');
-	define('DATA_ROOT', './_sfpg_data/');
-	define('SECURITY_PHRASE', '');
-	define('PASSWORD', '');
-	define('ADMIN', FALSE);  // WARNING - See description in readme.txt before setting to TRUE
+	option('GALLERY_ROOT', './');
+	option('DATA_ROOT', './_sfpg_data/');
+	option('PASSWORD', '');
+	option('ADMIN', FALSE);  // WARNING - See description in readme.txt before setting to TRUE.
 
-	define('DIR_NAME_FILE', '_name.txt');
-	define('DIR_THUMB_FILE', '_image.jpg');
-	define('DIR_THUMB_FROM_ICONS_DIR', FALSE);
-	define('DIR_DESC_FILE', '_desc.txt');
-	define('DIR_BANNER_FILE', '_banner.txt');
-	define('DIR_ROOT_BANNER_IN_SUBDIRS', TRUE);
-	define('DIR_DESC_IN_GALLERY', TRUE);
-	define('DIR_DESC_IN_INFO', TRUE);
-	define('DIR_SORT_REVERSE', FALSE);
-	define('DIR_SORT_BY_TIME', FALSE);
-	$dir_exclude = ['_sfpg_data', '_sfpg_icons'];
-	define('DIR_EXCLUDE_REGEX', '');
+	option('DIR_NAME_FILE', '_name.txt');
+	option('DIR_THUMB_FILE', '_image.jpg');
+	option('DIR_THUMB_FROM_ICONS_DIR', FALSE);
+	option('DIR_DESC_FILE', '_desc.txt');
+	option('DIR_BANNER_FILE', '_banner.txt');
+	option('DIR_ROOT_BANNER_IN_SUBDIRS', TRUE);
+	option('DIR_NAME_AS_BANNER', FALSE);
+	option('DIR_DESC_IN_GALLERY', TRUE);
+	option('DIR_DESC_IN_INFO', TRUE);
+	option('DIR_SORT_REVERSE', FALSE);
+	option('DIR_SORT_BY_TIME', FALSE);
+	option('DIR_EXCLUDE', ['_sfpg_data', '_sfpg_zip', '_sfpg_icons']);  // Use only lower case.
+	option('DIR_EXCLUDE_REGEX', '');
 
-	define('SHOW_IMAGE_EXT', FALSE);
-	define('IMAGE_SORT_REVERSE', FALSE);
-	define('IMAGE_SORT_BY_TIME', FALSE);
-	define('IMAGE_EXIF_TIME', FALSE);
-	define('ROTATE_IMAGES', TRUE);
-	define('IMAGE_JPEG_QUALITY', 90);
-	define('IMAGE_EXCLUDE_REGEX', '');
+	option('SHOW_IMAGE_EXT', FALSE);
+	option('SHOW_IMAGE_NAME_BELOW_FULL', FALSE);
+	option('IMAGE_SORT_REVERSE', FALSE);
+	option('IMAGE_SORT_BY_TIME', FALSE);
+	option('IMAGE_EXIF_TIME', FALSE);
+	option('ROTATE_IMAGES', TRUE);
+	option('IMAGE_JPEG_QUALITY', 90);
+	option('IMAGE_EXCLUDE_REGEX', '');
 
-	define('SHOW_FILES', TRUE);
-	define('SHOW_FILE_EXT', TRUE);
-	define('FILE_IN_NEW_WINDOW', TRUE);
-	define('FILE_THUMB_EXT', '.jpg');
-	define('FILE_THUMB_DEFAULT', '');
-	define('FILE_SORT_REVERSE', FALSE);
-	define('FILE_SORT_BY_TIME', FALSE);
-	$file_exclude = [];
-	$file_ext_exclude = ['.php', '.txt', '.sell'];
-	define('FILE_EXCLUDE_REGEX', '');
+	option('SHOW_FILES', TRUE);
+	option('SHOW_FILE_EXT', TRUE);
+	option('FILE_IN_NEW_WINDOW', TRUE);
+	option('FILE_THUMB_EXT', '.jpg');
+	option('FILE_THUMB_DEFAULT', '');
+	option('FILE_SORT_REVERSE', FALSE);
+	option('FILE_SORT_BY_TIME', FALSE);
+	option('FILE_EXCLUDE', ['_sfpg_zip']);  // Use only lower case.
+	option('FILE_EXT_EXCLUDE', ['.php', '.txt', '.sell']);  // Use only lower case.
+	option('FILE_EXCLUDE_REGEX', '');
 
-	define('ICONS_DIR', '_sfpg_icons/');
-	define('LINK_BACK', '');
-	define('CHARSET', 'utf-8');
-	define('DATE_FORMAT', 'Day Date Month Year Hour:Min:Sec');
-	define('DESC_EXT', '.txt');
-	define('HTML_DESCRIPTIONS', FALSE);  // WARNING - See description in readme.txt before setting to TRUE
-	define('DESC_NL_TO_BR', FALSE);
-	define('SORT_DIVIDER', '--');
-	define('SORT_ALL_NATURAL', TRUE);
-	define('FONT_SIZE', 12);
-	define('UNDERSCORE_AS_SPACE', TRUE);
-	define('SHOW_EXIF_INFO', TRUE);
-	define('SHOW_IPTC_INFO', TRUE);
-	define('SHOW_INFO_BY_DEFAULT', FALSE);
-	define('ROUND_CORNERS', 3);
+	option('ICONS_DIR', '_sfpg_icons/');
+	option('LINK_BACK', '');
+	option('CHARSET', 'utf-8');
+	option('DATE_FORMAT', 'Day Date Month Year Hour:Min:Sec');
+	option('DESC_EXT', '.txt');
+	option('HTML_DESCRIPTIONS', FALSE);  // WARNING - See description in readme.txt before configuring this option.
+	option('DESC_NL_TO_BR', FALSE);
+	option('SORT_DIVIDER', '--');
+	option('SORT_ALL_NATURAL', TRUE);
+	option('FONT_SIZE', 12);
+	option('UNDERSCORE_AS_SPACE', TRUE);
+	option('SHOW_EXIF_INFO', TRUE);
+	option('SHOW_IPTC_INFO', TRUE);
+	option('PNG_TEXT_CHUNKS', TRUE);  // Use only lower case when set to an array.
+	option('SPIDER_PASSWORD', '');  // WARNING - See description in readme.txt before setting this option.
 
-	define('THUMB_MAX_WIDTH', 200);
-	define('THUMB_MAX_HEIGHT', 150);
-	define('THUMB_SQUARE', FALSE);
-	define('THUMB_ENLARGE', FALSE);
-	define('THUMB_JPEG_QUALITY', 75);
-	define('THUMB_PNG_ALPHA', TRUE);
+	option('WEBP_EXIF', [
+		'COMPUTED'=>['ApertureFNumber', 'UserComment'],
+		'IFD0'=>['Make', 'Model'],
+		'EXIF'=>['ExposureTime', 'FNumber', 'ISOSpeedRatings', 'DateTimeOriginal', 'FocalLength']
+	]);
 
-	define('LOW_IMAGE_RESAMPLE_QUALITY', FALSE);
-	define('KEYBOARD_NAVIGATION', TRUE);
-	define('WATERMARK', '');
-	define('WATERMARK_FRACTION', 0.1);
+	option('SHOW_INFO_BY_DEFAULT', FALSE);
+	option('ROUND_CORNERS', 3);
 
-	define('MPO_STEREO_IMAGE', TRUE);
-	define('MPO_STEREO_DOTS', TRUE);
-	define('MPO_STEREO_MAX_WIDTH', 300);
-	define('MPO_STEREO_MAX_HEIGHT', 300);
-	define('MPO_FULL_IMAGE', TRUE);
-	define('MPO_FULL_ANAGLYPH', TRUE);
-	define('MPO_FULL_MAX_WIDTH', 1200);
-	define('MPO_FULL_MAX_HEIGHT', 800);
-	define('MPO_SPACING', 20);
+	option('ZIP_ENABLE', FALSE);
+	option('ZIP_FILES', FALSE);
+	option('ZIP_FILE_THUMBS', FALSE);
+	option('ZIP_SUB_GALLERIES', FALSE);
+	option('ZIP_DESCRIPTIONS', FALSE);
+	option('ZIP_COMPRESSION', FALSE);
+	option('ZIP_CACHE_DAYS', 180);
+	option('TEXT_ZIP_ROOT_NAME', 'Single File PHP Gallery');
+	option('TEXT_ZIP_NOTHING', 'Nothing to zip.');
+	option('TEXT_ZIP_DL', 'Download all images in this directory as a zip file:');
+	option('TEXT_ZIP_BUTTON', 'Generate zip-file and download');
+	option('TEXT_ZIP_WAIT', 'Zip is being generated. Please wait...');
 
-	define('INFO_BOX_WIDTH', 250);
-	define('MENU_BOX_HEIGHT', 70);
-	define('NAV_BAR_HEIGHT', 25);
-	define('THUMB_BORDER_WIDTH', 1);
-	define('THUMB_MARGIN', 10);
-	define('THUMB_BOX_MARGIN', 7);
-	define('THUMB_BOX_EXTRA_HEIGHT', 14);
-	define('THUMB_CHARS_MAX', 20);
-	define('FULLIMG_BORDER_WIDTH', 5);
+	option('THUMB_MAX_WIDTH', 200);
+	option('THUMB_MAX_HEIGHT', 150);
+	option('THUMB_SQUARE', FALSE);
+	option('THUMB_ENLARGE', FALSE);
+	option('THUMB_JPEG_QUALITY', 75);
+	option('THUMB_TRANSPARENCY', TRUE);
+	option('LOW_IMAGE_RESAMPLE_QUALITY', FALSE);
 
-	define('NAVI_CHARS_MAX', 100);
-	define('OVERLAY_OPACITY', 0.9);
-	define('FADE_DURATION_MS', 300);
-	define('SLIDESHOW_DELAY_SEC', 5);
+	option('KEYBOARD_NAVIGATION', TRUE);
+	option('WATERMARK', '');
+	option('WATERMARK_FRACTION', 0.1);
 
-	define('SHOW_MAX_IMAGES', FALSE);
-	define('SHOW_IMAGE_DAYS', FALSE);
-	define('DELETE_IMAGE_DAYS', FALSE);
-	define('DELETE_EMPTY_DIRS', FALSE);
+	option('MPO_STEREO_IMAGE', TRUE);
+	option('MPO_STEREO_DOTS', TRUE);
+	option('MPO_STEREO_MAX_WIDTH', 300);
+	option('MPO_STEREO_MAX_HEIGHT', 300);
+	option('MPO_FULL_IMAGE', TRUE);
+	option('MPO_FULL_ANAGLYPH', TRUE);
+	option('MPO_FULL_MAX_WIDTH', 1200);
+	option('MPO_FULL_MAX_HEIGHT', 800);
+	option('MPO_SPACING', 20);
 
-	define('PAYPAL_ENABLED', FALSE);
-	define('PAYPAL_ACCOUNT', '');
-	define('PAYPAL_CURRENCY', 'USD');
-	define('PAYPAL_EXTENSION', '.sell');
-	define('RETURN_PROTOCOL', 'https');
+	option('INFO_BOX_WIDTH', 250);
+	option('MENU_BOX_HEIGHT', 70);
+	option('NAV_BAR_HEIGHT', 25);
+	option('THUMB_BORDER_WIDTH', 1);
+	option('THUMB_MARGIN', 10);
+	option('THUMB_BOX_MARGIN', 7);
+	option('THUMB_BOX_EXTRA_HEIGHT', 14);
+	option('THUMB_CHARS_MAX', 20);
+	option('FULLIMG_BORDER_WIDTH', 5);
 
-	define('TEXT_PAYPAL_FOR_SALE', 'Sales information');
-	define('TEXT_PAYPAL_PRICE', 'Price');
-	define('TEXT_PAYPAL_STATUS', 'Status');
-	define('TEXT_PAYPAL_AVAILABLE', 'Available');
-	define('TEXT_PAYPAL_SOLD', 'Sold');
-	define('TEXT_PAYPAL_ITEM_ID', 'Item ID');
-	define('TEXT_PAYPAL_BUY', 'Buy this item');
-	define('TEXT_PAYPAL_OUT_BACK', 'Item is no longer available. Click back and refresh the page to update status.');
-	define('TEXT_PAYPAL_THANKS', 'Thank you for your purchase. The item will remain listed as available until seller have verified the purchase. Click here to return to the gallery: ');
-	define('TEXT_PAYPAL_REDIRECT', 'Redirecting to PayPal. Please wait...');
+	option('NAVI_CHARS_MAX', 100);
+	option('OVERLAY_OPACITY', 0.9);
+	option('SLIDESHOW_DELAY_SEC', 5);
 
-	define('HTML_LANGUAGE', 'en-US');
+	option('SHOW_MAX_IMAGES', FALSE);
+	option('SHOW_IMAGE_DAYS', FALSE);
+	option('DELETE_IMAGE_DAYS', FALSE);
+	option('DELETE_EMPTY_DIRS', FALSE);
+	option('RELOAD_IMAGE_MIN', 5000);
+	option('RELOAD_IMAGE_MAX', 10000);
 
-	define('TEXT_GALLERY_NAME', 'Single File PHP Gallery');
-	define('TEXT_BANNER', '');
-	define('TEXT_HOME', 'Home');
-	define('TEXT_CLOSE_IMG_VIEW', 'Close Image');
-	define('TEXT_ACTUAL_SIZE', 'Actual Size');
-	define('TEXT_PREVIOUS', '&#x25C4;&#xFE0E; Previous');
-	define('TEXT_NEXT', 'Next &#x25BA;&#xFE0E;');
-	define('TEXT_INFO', 'Information');
-	define('TEXT_DOWNLOAD', 'Download image');
-	define('TEXT_SLIDESHOW', 'Slideshow');
-	define('TEXT_NO_IMAGES', 'No Images in gallery');
-	define('TEXT_DATE', 'Date');
-	define('TEXT_FILESIZE', 'File size');
-	define('TEXT_IMAGESIZE', 'Image size');
-	define('TEXT_DIR_NAME', 'Gallery Name');
-	define('TEXT_IMAGE_NAME', 'Image Name');
-	define('TEXT_FILE_NAME', 'File Name');
-	define('TEXT_DIRS', 'Directories');
-	define('TEXT_DIR_MARK_START', '&#128193; ');
-	define('TEXT_DIR_MARK_END', '');
-	define('TEXT_IMAGES', 'Images');
-	define('TEXT_IMAGE_NUMBER', 'Image number');
-	define('TEXT_FILES', 'Files');
-	define('TEXT_DESCRIPTION', 'Description');
-	define('TEXT_DIRECT_LINK_GALLERY', 'Direct link to Gallery');
-	define('TEXT_DIRECT_LINK_IMAGE', 'Direct link to Image');
-	define('TEXT_NO_THUMB_FOR_FILE', 'No thumbnail for file');
-	define('TEXT_IMAGE_LOADING', 'Image Loading ');
-	define('TEXT_LINKS', 'Links');
-	define('TEXT_NOT_SCALED', 'Not Scaled');
-	define('TEXT_LINK_BACK', 'Back to my site');
-	define('TEXT_SCALED_TO', 'Scaled to');
-	define('TEXT_YES', 'Yes');
-	define('TEXT_NO', 'No');
-	define('TEXT_FIRST_VIEW', 'This is first view of this image. Refresh page to get information.');
+	option('PAYPAL_ENABLED', FALSE);
+	option('PAYPAL_ACCOUNT', '');
+	option('PAYPAL_CURRENCY', 'USD');
+	option('PAYPAL_EXTENSION', '.sell');
+	option('RETURN_PROTOCOL', 'https');
 
-	define('TEXT_LOGIN', 'Login');
-	define('TEXT_LOGOUT', 'Logout');
-	define('TEXT_ADMIN', 'Admin');
-	define('TEXT_OK', 'OK');
-	define('TEXT_CANCEL', 'Cancel');
-	define('TEXT_DELETE', 'Delete');
-	define('TEXT_RENAME', 'Rename');
-	define('TEXT_MOVE', 'Move');
-	define('TEXT_MOVE_TO', 'Move to');
-	define('TEXT_MKDIR', 'Create Directory');
-	define('TEXT_UPLOAD', 'Upload');
-	define('TEXT_INVERT_SELECTION', 'Invert Select');
-	define('TEXT_NOTHING', 'Nothing Selected');
-	define('TEXT_ONLY_ONE', 'Select only one element to use this function');
-	define('TEXT_ONE_IMAGE', 'Select only one image to use this function');
+	option('TEXT_PAYPAL_FOR_SALE', 'Sales information');
+	option('TEXT_PAYPAL_PRICE', 'Price');
+	option('TEXT_PAYPAL_STATUS', 'Status');
+	option('TEXT_PAYPAL_AVAILABLE', 'Available');
+	option('TEXT_PAYPAL_SOLD', 'Sold');
+	option('TEXT_PAYPAL_ITEM_ID', 'Item ID');
+	option('TEXT_PAYPAL_BUY', 'Buy this item');
+	option('TEXT_PAYPAL_OUT_BACK', 'Item is no longer available. Click back and refresh the page to update status.');
+	option('TEXT_PAYPAL_THANKS', 'Thank you for your purchase. The item will remain listed as available until seller have verified the purchase. Click here to return to the gallery: ');
+	option('TEXT_PAYPAL_REDIRECT', 'Redirecting to PayPal. Please wait...');
 
-	define('TEXT_EXIF', 'EXIF');
-	define('TEXT_EXIF_DATE', 'Date');
-	define('TEXT_EXIF_CAMERA', 'Camera');
-	define('TEXT_EXIF_ISO', 'ISO');
-	define('TEXT_EXIF_SHUTTER', 'Shutter Speed');
-	define('TEXT_EXIF_APERTURE', 'Aperture');
-	define('TEXT_EXIF_FOCAL', 'Focal Length');
-	define('TEXT_EXIF_FLASH', 'Flash fired');
-	define('TEXT_EXIF_LATITUDE', 'Latitude');
-	define('TEXT_EXIF_LONGITUDE', 'Longitude');
-	define('TEXT_EXIF_MAP', 'See on Google map');
-	define('EXIF_MAP_LINK', 'https://maps.google.com/maps?q=[lat],[long]');
-	define('TEXT_EXIF_MAP_EMBED', 'Image map');
-	define('EXIF_MAP_EMBED_LINK', 'https://maps.google.com/maps?q=[lat],[long]&output=embed');
+	option('HTML_LANGUAGE', 'en-US');
+	option('TEXT_DAYS', "['Sun','Mon','Tue','Wed','Thu','Fri','Sat']");
+	option('TEXT_MONTHS', "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']");
 
-	define('TEXT_IPTC', 'IPTC');
-	$iptc = [
+	option('TEXT_GALLERY_NAME', 'Single File PHP Gallery');
+	option('TEXT_BANNER', '');
+	option('TEXT_HOME', 'Home');
+	option('TEXT_CLOSE_IMG_VIEW', 'Close Image');
+	option('TEXT_ACTUAL_SIZE', 'Actual Size');
+	option('TEXT_PREVIOUS', '&#x25C4;&#xFE0E; Previous');
+	option('TEXT_NEXT', 'Next &#x25BA;&#xFE0E;');
+	option('TEXT_INFO', '<u>I</u>nfo');
+	option('TEXT_INFO_LABEL', 'Information');
+	option('TEXT_DOWNLOAD', 'Download image');
+	option('TEXT_SLIDESHOW', 'Slideshow');
+	option('TEXT_NO_IMAGES', 'No Images in gallery');
+	option('TEXT_DATE', 'Date');
+	option('TEXT_FILESIZE', 'File size');
+	option('TEXT_IMAGESIZE', 'Image size');
+	option('TEXT_DIR_NAME', 'Gallery Name');
+	option('TEXT_IMAGE_NAME', 'Image Name');
+	option('TEXT_FILE_NAME', 'File Name');
+	option('TEXT_DIRS', 'Directories');
+	option('TEXT_DIR_MARK_START', '&#128193;&#xFE0E; ');
+	option('TEXT_DIR_MARK_END', '');
+	option('TEXT_IMAGES', 'Images');
+	option('TEXT_IMAGE_NUMBER', 'Image number');
+	option('TEXT_FILES', 'Files');
+	option('TEXT_DESCRIPTION', 'Description');
+	option('TEXT_DIRECT_LINK_GALLERY', 'Direct link to Gallery');
+	option('TEXT_DIRECT_LINK_IMAGE', 'Direct link to Image');
+	option('TEXT_NO_THUMB_FOR_FILE', 'No thumbnail for file');
+	option('TEXT_IMAGE_LOADING', 'Image Loading ');
+	option('TEXT_LINKS', 'Links');
+	option('TEXT_NOT_SCALED', 'Not Scaled');
+	option('TEXT_LINK_BACK', 'Back to my site');
+	option('TEXT_SCALED_TO', 'Scaled to');
+	option('TEXT_YES', 'Yes');
+	option('TEXT_NO', 'No');
+	option('TEXT_FIRST_VIEW', 'This is first view of this image. Refresh page to get information.');
+
+	option('TEXT_LOGIN', 'Login');
+	option('TEXT_LOGOUT', 'Logout');
+	option('TEXT_ADMIN', 'Admin');
+	option('TEXT_OK', 'OK');
+	option('TEXT_CANCEL', 'Cancel');
+	option('TEXT_DELETE', 'Delete');
+	option('TEXT_RENAME', 'Rename');
+	option('TEXT_MOVE', 'Move');
+	option('TEXT_MOVE_TO', 'Move to');
+	option('TEXT_MKDIR', 'Create Directory');
+	option('TEXT_SET_DIR_THUMB', 'Dir Thumb');
+	option('TEXT_REMOVE_THUMB', 'No images selected. Will remove current directory thumbnail and select new thumbnail.');
+	option('TEXT_SETTING_THUMB', 'Setting directory thumbnail to: ');
+	option('TEXT_WRONG_FILETYPE', 'Wrong filetype selected. Filetype must be same as set in DIR_THUMB_FILE: ');
+	option('TEXT_UPLOAD', 'Upload');
+	option('TEXT_INVERT_SELECTION', 'Invert Select');
+	option('TEXT_NOTHING', 'Nothing Selected');
+	option('TEXT_ONLY_ONE', 'Select only one element to use this function');
+	option('TEXT_ONE_IMAGE', 'Select only one image to use this function');
+
+	option('TEXT_EXIF', 'EXIF');
+	option('TEXT_EXIF_DATE', 'Date');
+	option('TEXT_EXIF_CAMERA', 'Camera');
+	option('TEXT_EXIF_ISO', 'ISO');
+	option('TEXT_EXIF_SHUTTER', 'Shutter Speed');
+	option('TEXT_EXIF_APERTURE', 'Aperture');
+	option('TEXT_EXIF_FOCAL', 'Focal Length');
+	option('TEXT_EXIF_FLASH', 'Flash fired');
+	option('TEXT_EXIF_LATITUDE', 'Latitude');
+	option('TEXT_EXIF_LONGITUDE', 'Longitude');
+	option('TEXT_EXIF_MAP', 'See on Google map');
+	option('EXIF_MAP_LINK', 'https://maps.google.com/maps?q=[lat],[long]');
+	option('TEXT_EXIF_MAP_EMBED', 'Image map');
+	option('EXIF_MAP_EMBED_LINK', 'https://maps.google.com/maps?q=[lat],[long]&output=embed');
+
+	option('TEXT_PNG_CHUNKS', 'PNG text chunks');
+	option('TEXT_WEBP_EXIF', 'WebP EXIF');
+	option('TEXT_IPTC', 'IPTC');
+
+	option('IPTC', [
 		'2#005' => 'Document Title',
 		'2#010' => 'Urgency',
 		'2#015' => 'Category',
@@ -219,72 +253,82 @@
 		'2#116' => 'Copyright',
 		'2#120' => 'Caption',
 		'2#122' => 'Caption Writer',
-	];
+	]);
 
-	$color_body_back = '#000000';
-	$color_body_text = '#aaaaaa';
-	$color_body_link = '#ffffff';
-	$color_body_hover = '#aaaaaa';
+	option('COLOR_BODY_BACK', '#000000');
+	option('COLOR_BODY_TEXT', '#aaaaaa');
+	option('COLOR_BODY_LINK', '#ffffff');
+	option('COLOR_BODY_HOVER', '#aaaaaa');
 
-	$color_thumb_border = '#606060';
-	$color_fullimg_border = '#ffffff';
+	option('COLOR_THUMB_BORDER', '#606060');
+	option('COLOR_FULLIMG_BORDER', '#ffffff');
 
-	$color_marked_back = '#ff0000';
-	$color_marked_text = '#000000';
+	option('COLOR_MARKED_BACK', '#ff0000');
+	option('COLOR_MARKED_TEXT', '#000000');
 	
-	$color_dir_box_border = '#505050';
-	$color_dir_box_back = '#000000';
-	$color_dir_box_text = '#aaaaaa';
-	$color_dir_hover = '#ffffff';
-	$color_dir_hover_text = '#000000';
+	option('COLOR_DIR_BOX_BORDER', '#505050');
+	option('COLOR_DIR_BOX_BACK', '#000000');
+	option('COLOR_DIR_BOX_TEXT', '#aaaaaa');
+	option('COLOR_DIR_HOVER', '#ffffff');
+	option('COLOR_DIR_HOVER_TEXT', '#000000');
 
-	$color_img_box_border = '#505050';
-	$color_img_box_back = '#202020';
-	$color_img_box_text = '#aaaaaa';
-	$color_img_hover = '#ffffff';
-	$color_img_hover_text = '#000000';
+	option('COLOR_IMG_BOX_BORDER', '#505050');
+	option('COLOR_IMG_BOX_BACK', '#202020');
+	option('COLOR_IMG_BOX_TEXT', '#aaaaaa');
+	option('COLOR_IMG_HOVER', '#ffffff');
+	option('COLOR_IMG_HOVER_TEXT', '#000000');
 
-	$color_file_box_border = '#404040';
-	$color_file_box_back = '#101010';
-	$color_file_box_text = '#aaaaaa';
-	$color_file_hover = '#ffffff';
-	$color_file_hover_text = '#000000';
+	option('COLOR_FILE_BOX_BORDER', '#404040');
+	option('COLOR_FILE_BOX_BACK', '#101010');
+	option('COLOR_FILE_BOX_TEXT', '#aaaaaa');
+	option('COLOR_FILE_HOVER', '#ffffff');
+	option('COLOR_FILE_HOVER_TEXT', '#000000');
 
-	$color_desc_box_border = '#404040';
-	$color_desc_box_back = '#202020';
-	$color_desc_box_text = '#aaaaaa';
+	option('COLOR_DESC_BOX_BORDER', '#404040');
+	option('COLOR_DESC_BOX_BACK', '#202020');
+	option('COLOR_DESC_BOX_TEXT', '#aaaaaa');
 
-	$color_menu_back = '#000000';
-	$color_menu_top = '#303030';
+	option('COLOR_MENU_BACK', '#000000');
+	option('COLOR_MENU_TOP', '#303030');
 
-	$color_navbar_back = '#202020';
-	$color_navbar_top = '#303030';
+	option('COLOR_NAVBAR_BACK', '#202020');
+	option('COLOR_NAVBAR_TOP', '#303030');
 
-	$color_button_nav_border = '#404040';
-	$color_button_nav_back = '#101010';
-	$color_button_nav_text ='#808080';
+	option('COLOR_BUTTON_NAV_BORDER', '#404040');
+	option('COLOR_BUTTON_NAV_BACK', '#101010');
+	option('COLOR_BUTTON_NAV_TEXT', '#808080');
 
-	$color_info_back = '#000000';
-	$color_info_border = '#606060';
-	$color_info_text = '#aaaaaa';
+	option('COLOR_INFO_BACK', '#000000');
+	option('COLOR_INFO_BORDER', '#606060');
+	option('COLOR_INFO_TEXT', '#aaaaaa');
 
-	$color_infobox_border = '#404040';
-	$color_infobox_back ='#101010';
+	option('COLOR_INFOBOX_BORDER', '#404040');
+	option('COLOR_INFOBOX_BACK', '#101010');
 
-	$color_button_border = '#808080';
-	$color_button_back = '#000000';
-	$color_button_text = '#aaaaaa';
-	$color_button_border_off = '#505050';
-	$color_button_back_off = '#000000';
-	$color_button_text_off = '#505050';
-	$color_button_hover = '#ffffff';
-	$color_button_hover_text = '#000000';
-	$color_button_on = '#aaaaaa';
-	$color_button_text_on = '#000000';
+	option('COLOR_BUTTON_BORDER', '#808080');
+	option('COLOR_BUTTON_BACK', '#000000');
+	option('COLOR_BUTTON_TEXT', '#aaaaaa');
+	option('COLOR_BUTTON_BORDER_OFF', '#505050');
+	option('COLOR_BUTTON_BACK_OFF', '#000000');
+	option('COLOR_BUTTON_TEXT_OFF', '#505050');
+	option('COLOR_BUTTON_HOVER', '#ffffff');
+	option('COLOR_BUTTON_HOVER_TEXT', '#000000');
+	option('COLOR_BUTTON_ON', '#aaaaaa');
+	option('COLOR_BUTTON_TEXT_ON', '#000000');
 
-	$color_overlay = '#000000';
+	option('COLOR_OVERLAY', '#000000');
 
 	//	----------- CONFIGURATION END ------------
+
+
+	function option($name, $value)
+	{
+		if (!defined($name))
+		{
+			define($name, $value);
+		}
+	}
+
 
 	function sfpg_array_sort(&$arr, &$arr_time, $sort_by_time, $sort_reverse)
 	{
@@ -342,9 +386,13 @@
 
 	function sfpg_base64url_decode($base64url)
 	{
-		$base64 = strtr($base64url, '-_', '+/');
-		$plain = base64_decode($base64);
-		return ($plain);
+		if($base64url)
+		{
+			$base64 = strtr($base64url, '-_', '+/');
+			$plain = base64_decode($base64);
+			return ($plain);
+		}
+		return '';
 	}
 
 
@@ -357,37 +405,43 @@
 
 	function sfpg_url_decode($string)
 	{
-		$get = explode('*', sfpg_base64url_decode($string));
-		if ((hash('sha256', $get[0].'*'.$get[1].'*'.SECURITY_PHRASE) === $get[2]) and (strpos(GALLERY_ROOT.$get[0].$get[1], '/../') === FALSE) and (strpos($get[0].$get[1], '\\') === FALSE))
+		if(is_string($string) and (strlen($string)>65))  // sha256 is 64 plus the two *
 		{
-			return [$get[0], $get[1]];
+			$get = explode('*', sfpg_base64url_decode($string));
+			if (is_array($get) and (count($get)==3) and (hash('sha256', $get[0].'*'.$get[1].'*'.SECURITY_PHRASE) === $get[2]) and (strpos(GALLERY_ROOT.$get[0].$get[1], '/../') === FALSE) and (strpos($get[0].$get[1], '\\') === FALSE))
+			{
+				return [$get[0], $get[1]];
+			}
 		}
-		else
-		{
-			return FALSE;
-		}
+		return FALSE;
 	}
 
 
 	function block_html($str)
 	{
-		$str = str_replace('&', '&amp;', $str);
-		$str = str_replace('"', '&quot;', $str);
-		$str = str_replace("'", '&#39;', $str);
-		$str = str_replace('<', '&lt;', $str);
-		$str = str_replace('>', '&gt;', $str);
-		return $str;
+		return str_replace(['&', '"', "'", '<', '>'], ['&amp;', '&quot;', '&#39;', '&lt;', '&gt;'], $str);
+	}
+
+
+	function clean_html($str)
+	{
+		if (HTML_DESCRIPTIONS === TRUE)
+		{
+			return $str;
+		}
+		elseif (is_string(HTML_DESCRIPTIONS) or is_array(HTML_DESCRIPTIONS))
+		{
+			// allowed tags
+			$str = strip_tags($str, HTML_DESCRIPTIONS);
+			return $str;
+		}
+		return block_html($str);
 	}
 
 
 	function sts($str, $nl_to_br=true)
 	{
-		$str = str_replace("\r", "", $str);
-		$str = str_replace("\n", ($nl_to_br?"<br>":""), $str);
-		$str = str_replace("\\", "\\\\", $str);
-		$str = str_replace("\"", "\\\"", $str);
-		$str = str_replace("'", "\'", $str);
-		return $str;
+		return str_replace(["\r", "\n", "\\", "\"", "'"], ["", ($nl_to_br?"<br>":" "), "\\\\", "\\\"", "\'"], $str);
 	}
 
 
@@ -441,6 +495,10 @@
 		elseif ($type == '.gif')
 		{
 			return 'gif';
+		}
+		elseif ($type == '.webp')
+		{
+			return 'webp';
 		}
 		return FALSE;
 	}
@@ -524,7 +582,7 @@
 						for($x=0; $x<$mpo_full_width; $x++)
 						{
 							$left_color = imagecolorat($tmp_left, $x, $y);
-							$r = (int)(($left_color >> 16) & 255) * 0.299 + (($left_color >> 8) & 255) * 0.587 + (($left_color) & 255) * 0.114;
+							$r = (int)((($left_color >> 16) & 255) * 0.299 + (($left_color >> 8) & 255) * 0.587 + (($left_color) & 255) * 0.114);
 							if ($r > 255)
 							{
 								$r = 255;
@@ -590,7 +648,7 @@
 				$new_img_width = $image_width / $aspect_y;
 			}
 		}
-		return [$new_img_width, $new_img_height];
+		return [(int)round($new_img_width), (int)round($new_img_height)];
 	}
 
 
@@ -605,9 +663,8 @@
 	}
 
 
-	function sfpg_get_dir($dir, $for_dir_info=FALSE)
+	function sfpg_get_dir($dir, $for_dir_info=FALSE, $for_zip=FALSE, $for_spider=FALSE)
 	{
-		global $dir_exclude, $file_exclude, $file_ext_exclude;
 		$dirs = [];
 		$dirs_time = [];
 		$images = [];
@@ -615,14 +672,14 @@
 		$files = [];
 		$files_time = [];
 		$misc = [];
-		$directory_handle = opendir(GALLERY_ROOT.$dir);
+		$directory_handle = @opendir(GALLERY_ROOT.$dir);
 		if ($directory_handle != FALSE)
 		{
 			while(($var=readdir($directory_handle))!==false)
 			{
 				if (is_dir(GALLERY_ROOT.$dir.$var))
 				{
-					if (($var != '.') and ($var != '..') and !in_array(strtolower($var), $dir_exclude) and !@preg_match(DIR_EXCLUDE_REGEX, $var))
+					if (($var != '.') and ($var != '..') and !in_array(strtolower($var), DIR_EXCLUDE) and !@preg_match(DIR_EXCLUDE_REGEX, $var))
 					{
 						$dirs[] = $var;
 						if (DIR_SORT_BY_TIME)
@@ -673,7 +730,7 @@
 				}
 				elseif (SHOW_FILES)
 				{
-					if (!in_array(strtolower($var), $file_exclude) and !in_array(sfpg_ext($var), $file_ext_exclude) and !@preg_match(FILE_EXCLUDE_REGEX, $var))
+					if (!in_array(strtolower($var), FILE_EXCLUDE) and !in_array(sfpg_ext($var), FILE_EXT_EXCLUDE) and !@preg_match(FILE_EXCLUDE_REGEX, $var))
 					{
 						$files[] = $var;
 						if (FILE_SORT_BY_TIME)
@@ -687,30 +744,33 @@
 					$misc[] = $var;
 				}
 			}
+			closedir($directory_handle);
 			if ($for_dir_info)
 			{
 				$misc = 0;
 			}
-			if (SHOW_FILES)
+			if (!$for_spider) // never remove images when for spider
 			{
-				foreach ($files as $val)
+				if (SHOW_FILES and !($for_zip and ZIP_FILES and ZIP_FILE_THUMBS)) // removes thumbnail images from being listed as images. Unless needed for zip.
 				{
-					$fti = array_search($val.FILE_THUMB_EXT, $images);
-					if ($fti !== FALSE)
+					foreach ($files as $val)
 					{
-						if ($for_dir_info)
+						$fti = array_search($val.FILE_THUMB_EXT, $images);
+						if ($fti !== FALSE)
 						{
-							$misc++;
-						}
-						else
-						{
-							array_splice($images, $fti, 1);
-							array_splice($images_time, $fti, 1);
+							if ($for_dir_info)
+							{
+								$misc++;
+							}
+							else
+							{
+								array_splice($images, $fti, 1);
+								array_splice($images_time, $fti, 1);
+							}
 						}
 					}
 				}
 			}
-			closedir($directory_handle);
 			sfpg_array_sort($dirs, $dirs_time, DIR_SORT_BY_TIME, DIR_SORT_REVERSE);
 			sfpg_array_sort($images, $images_time, IMAGE_SORT_BY_TIME, IMAGE_SORT_REVERSE);
 			sfpg_array_sort($files, $files_time, FILE_SORT_BY_TIME, FILE_SORT_REVERSE);
@@ -718,8 +778,66 @@
 		}
 		else
 		{
-			header('Location: '.$_SERVER['PHP_SELF']);
+			if ($dir=='')
+			{
+				exit('GALLERY_ROOT is not accessible.');
+			}
+			else
+			{
+				header('Location: '.$_SERVER['PHP_SELF']);
+			}
 			exit;
+		}
+	}
+
+
+	function get_files_for_zip($dir_to_zip)
+	{
+		list($dirs, $images, $files, $misc) = sfpg_get_dir($dir_to_zip,FALSE,TRUE);
+		$zip_list = $images;
+		if (ZIP_FILES)
+		{
+			$zip_list = array_merge($zip_list, $files);
+		}
+		if (ZIP_DESCRIPTIONS)
+		{
+			$zip_list = array_merge($zip_list, $misc);
+		}
+		for($i=0; $i<count($zip_list); $i++)
+		{
+			$zip_list[$i] = $dir_to_zip.$zip_list[$i];
+		}
+		if (ZIP_SUB_GALLERIES)
+		{
+			foreach($dirs as $dir)
+			{
+				$zip_list = array_merge($zip_list, get_files_for_zip($dir_to_zip.$dir.'/'));
+			}
+		}
+		return $zip_list;
+	}
+
+
+	function cleanup_zip_days($time, $dir)
+	{
+		$items = array_diff(scandir($dir),['.','..']);
+		if (count($items)==0)
+		{
+			rmdir($dir);
+		}
+		else
+		{
+			foreach($items as $item)
+			{
+				if (is_dir($dir.'/'.$item))
+				{
+					cleanup_zip_days($time, $dir.'/'.$item);
+				}
+				elseif (filemtime($dir.'/'.$item) < $time)
+				{
+					unlink($dir.'/'.$item);
+				}
+			}
 		}
 	}
 
@@ -777,9 +895,33 @@
 	}
 
 
-	function sfpg_image($image_dir, $image_file, $func, $download=FALSE)
+	function data_as_str($data)
 	{
-		global $iptc;
+		if(is_array($data))
+		{
+			$res='';
+			foreach($data as $d)
+			{
+				$res.=($res!=''?', ':'').data_as_str($d);
+			}
+			return $res;
+		}
+		else
+		{
+			if(isset($data))
+			{
+				return trim((string)$data);
+			}
+			else
+			{
+				return '';
+			}
+		}
+	}
+
+
+	function sfpg_image($image_dir, $image_file, $func, $download=FALSE, $spider=FALSE)
+	{
 		$image_path_file = DATA_ROOT.$func.'/'.$image_dir.$image_file;
 		$image_type = sfpg_image_type($image_file);
 		if ($func == 'image')
@@ -799,16 +941,19 @@
 				header('Content-Disposition: filename="'.$image_file.'"');
 			}
 			readfile($image_path_file);
-			exit;
+			return;
 		}
 		if ($func == 'thumb')
 		{
 			if (file_exists($image_path_file))
 			{
-				header('Content-Type: image/'.$image_type);
-				header('Content-Disposition: filename="'.$func.'_'.$image_file.'"');
-				readfile($image_path_file);
-				exit;
+				if (!$spider)
+				{
+					header('Content-Type: image/'.$image_type);
+					header('Content-Disposition: filename="'.$func.'_'.$image_file.'"');
+					readfile($image_path_file);
+				}
+				return;
 			}
 			else
 			{
@@ -818,33 +963,43 @@
 				$jpeg_quality = THUMB_JPEG_QUALITY;
 				$source_img = GALLERY_ROOT.$image_dir.$image_file;
 				$image_changed = FALSE;
+				if ($image_type=='webp') // the imagecreatefromstring function can't handle animated WebP images. So check for this and return/skip if found. When it gets fixed by PHP, this 'if' can be removed.
+				{
+					if (stripos(file_get_contents($source_img, false, null, 0, 40),'ANIM')!==FALSE)
+					{
+						return;
+					}
+				}
 				if ((MPO_FULL_IMAGE or MPO_STEREO_IMAGE) and (sfpg_ext($image_file)=='.mpo'))
 				{
 					if (!$image = sfpg_mpo_image($source_img))
 					{
-						exit;
+						return;
 					}
 					$image_changed = TRUE;
 				}
 				elseif (!$image = imagecreatefromstring(file_get_contents($source_img)))
 				{
-					exit;
+					return;
 				}
 				if (($func == 'thumb') and ($image_dir != ICONS_DIR))
 				{
 					sfpg_mkdir(DATA_ROOT.'info/'.$image_dir);
 					$image_info = [];
-					if (function_exists('exif_read_data'))
+					if ((SHOW_EXIF_INFO or ROTATE_IMAGES) and function_exists('exif_read_data') and ($image_type!='webp')) // exif_read_data do not yet support the WebP format.
 					{
+						$exif_data = @exif_read_data(GALLERY_ROOT.$image_dir.$image_file, 'IFD0');
 						if (SHOW_EXIF_INFO)
 						{
-							$exif_data = exif_read_data(GALLERY_ROOT.$image_dir.$image_file, 'IFD0');
 							if ($exif_data !== FALSE)
 							{
 								if(isset($exif_data['DateTimeOriginal']))
 								{
 									$exif_time = explode(':', str_replace(' ', ':', $exif_data['DateTimeOriginal']));
-									$image_info['exifDate'] = block_html(mktime($exif_time[3], $exif_time[4], $exif_time[5], $exif_time[1], $exif_time[2], $exif_time[0]));
+									if(count($exif_time)==6)
+									{
+										$image_info['exifDate'] = block_html(mktime((int)$exif_time[3], (int)$exif_time[4], (int)$exif_time[5], (int)$exif_time[1], (int)$exif_time[2], (int)$exif_time[0]));
+									}
 								}
 								if (isset($exif_data['Model']))
 								{
@@ -863,7 +1018,22 @@
 									}
 									else
 									{
-										$image_info['exifExposureTime'] = block_html($exif_data['ExposureTime'].'s');
+										$tmp = explode('/', $exif_data['ExposureTime']);
+										if (count($tmp)==2)  // if input contains one /, like: "1/250"
+										{
+											$as=(string)($tmp[0]);
+											$bs=(string)($tmp[1]);
+											while ((substr($as,-1)=='0') and (substr($bs,-1)=='0') and (strlen($as)>1) and (strlen($bs)>1)) // removed tailing 0 if both sides have them, like 10/10000
+											{
+												$as=substr($as,0,-1);
+												$bs=substr($bs,0,-1);
+											}
+											$image_info['exifExposureTime'] = block_html($as.'/'.$bs.'s');
+										}
+										else
+										{
+											$image_info['exifExposureTime'] = block_html($exif_data['ExposureTime'].'s');
+										}
 									}
 								}
 								if(isset($exif_data['FNumber']))
@@ -882,10 +1052,10 @@
 								{
 									$lat = $exif_data['GPSLatitude'];
 									$lng = $exif_data['GPSLongitude'];
-									$image_info['exifGPSLatitude'] = block_html(sfpg_div_num($lat[0])).'&deg;'.block_html(sfpg_div_num($lat[1]).'\''.sfpg_div_num($lat[2]).'"'.$exif_data['GPSLatitudeRef']);
-									$image_info['exifGPSLongitude'] = block_html(sfpg_div_num($lng[0])).'&deg;'.block_html(sfpg_div_num($lng[1]).'\''.sfpg_div_num($lng[2]).'"'.$exif_data['GPSLongitudeRef']);
-									$image_info['exifGPSLatitudeDec'] = block_html(round(((sfpg_div_num($lat[0]) + sfpg_div_num($lat[1])/60 + sfpg_div_num($lat[2])/3600)*($exif_data['GPSLatitudeRef']=='N'?1:-1)),12)); // limited to 12 decimals
-									$image_info['exifGPSLongitudeDec'] = block_html(round(((sfpg_div_num($lng[0]) + sfpg_div_num($lng[1])/60 + sfpg_div_num($lng[2])/3600)*($exif_data['GPSLongitudeRef']=='W'?-1:1)),12));  // limited to 12 decimals
+									$image_info['exifGPSLatitude'] = block_html(sfpg_div_num($lat[0])).'&deg;'.block_html(sfpg_div_num($lat[1]).'\''.sfpg_div_num($lat[2]).'"'.@$exif_data['GPSLatitudeRef']);
+									$image_info['exifGPSLongitude'] = block_html(sfpg_div_num($lng[0])).'&deg;'.block_html(sfpg_div_num($lng[1]).'\''.sfpg_div_num($lng[2]).'"'.@$exif_data['GPSLongitudeRef']);
+									$image_info['exifGPSLatitudeDec'] = block_html(round(((sfpg_div_num($lat[0]) + sfpg_div_num($lat[1])/60 + sfpg_div_num($lat[2])/3600)*(@$exif_data['GPSLatitudeRef']=='N'?1:-1)),12)); // limited to 12 decimals
+									$image_info['exifGPSLongitudeDec'] = block_html(round(((sfpg_div_num($lng[0]) + sfpg_div_num($lng[1])/60 + sfpg_div_num($lng[2])/3600)*(@$exif_data['GPSLongitudeRef']=='W'?-1:1)),12));  // limited to 12 decimals
 								}
 							}
 						}
@@ -894,97 +1064,23 @@
 							$orientation = (int)$exif_data['Orientation'];
 							if (($orientation>1) and ($orientation<9))
 							{
-								$image_width = imagesx($image);
-								$image_height = imagesy($image);
-								switch ($orientation)
+								if (($orientation==3) or ($orientation==4))
 								{
-									case 2:
-									{
-										$rotate = @imagecreatetruecolor($image_width, $image_height);
-										if (LOW_IMAGE_RESAMPLE_QUALITY)
-										{
-											imagecopyresized($rotate, $image, 0, 0, $image_width-1, 0, $image_width, $image_height, -$image_width, $image_height);
-										}
-										else
-										{
-											imagecopyresampled($rotate, $image, 0, 0, $image_width-1, 0, $image_width, $image_height, -$image_width, $image_height);
-										}
-										imagedestroy($image);
-										$image_changed = TRUE;
-										break;
-									}
-									case 3:
-									{
-										$rotate = imagerotate($image, 180, 0);
-										imagedestroy($image);
-										$image_changed = TRUE;
-										break;
-									}
-									case 4:
-									{
-										$rotate = @imagecreatetruecolor($image_width, $image_height);
-										if (LOW_IMAGE_RESAMPLE_QUALITY)
-										{
-											imagecopyresized($rotate, $image, 0, 0, 0, $image_height-1, $image_width, $image_height, $image_width, -$image_height);
-										}
-										else
-										{
-											imagecopyresampled($rotate, $image, 0, 0, 0, $image_height-1, $image_width, $image_height, $image_width, -$image_height);
-										}
-										imagedestroy($image);
-										$image_changed = TRUE;
-										break;
-									}
-									case 5:
-									{
-										$rotate = imagerotate($image, 270, 0);
-										imagedestroy($image);
-										$image = $rotate;
-										$rotate = @imagecreatetruecolor($image_height, $image_width);
-										if (LOW_IMAGE_RESAMPLE_QUALITY)
-										{
-											imagecopyresized($rotate, $image, 0, 0, 0, $image_width-1, $image_height, $image_width, $image_height, -$image_width);
-										}
-										else
-										{
-											imagecopyresampled($rotate, $image, 0, 0, 0, $image_width-1, $image_height, $image_width, $image_height, -$image_width);
-										}
-										$image_changed = TRUE;
-										break;
-									}
-									case 6:
-									{
-										$rotate = imagerotate($image, 270, 0);
-										imagedestroy($image);
-										$image_changed = TRUE;
-										break;
-									}
-									case 7:
-									{
-										$rotate = imagerotate($image, 90, 0);
-										imagedestroy($image);
-										$image = $rotate;
-										$rotate = @imagecreatetruecolor($image_height, $image_width);
-										if (LOW_IMAGE_RESAMPLE_QUALITY)
-										{
-											imagecopyresized($rotate, $image, 0, 0, 0, $image_width-1, $image_height, $image_width, $image_height, -$image_width);
-										}
-										else
-										{
-											imagecopyresampled($rotate, $image, 0, 0, 0, $image_width-1, $image_height, $image_width, $image_height, -$image_width);
-										}
-										$image_changed = TRUE;
-										break;
-									}
-									case 8:
-									{
-										$rotate = imagerotate($image, 90, 0);
-										imagedestroy($image);
-										$image_changed = TRUE;
-										break;
-									}
+									$image = imagerotate($image, 180, 0);
 								}
-								$image = $rotate;
+								elseif (($orientation==5) or ($orientation==6))
+								{
+									$image = imagerotate($image, -90, 0);
+								}
+								elseif (($orientation==7) or ($orientation==8))
+								{
+									$image = imagerotate($image, 90, 0);
+								}
+								if (($orientation==2) or ($orientation==4) or ($orientation==5) or ($orientation==7))
+								{
+									imageflip($image, IMG_FLIP_HORIZONTAL);
+								}
+								$image_changed = TRUE;
 							}
 						}
 					}
@@ -994,11 +1090,109 @@
 						if (isset($info['APP13']))
 						{
 							$iptcParsed = iptcparse($info['APP13']);
-							foreach($iptc as $iptcID => $iptcText)
+							foreach(IPTC as $iptcID => $iptcText)
 							{
 								if (isset($iptcParsed[$iptcID]))
 								{
 									$image_info[$iptcID] = block_html($iptcParsed[$iptcID][0]);
+								}
+							}
+						}
+					}
+					if (PNG_TEXT_CHUNKS and ($image_type=='png'))
+					{
+						if ($png_fp = @fopen(GALLERY_ROOT.$image_dir.$image_file, 'rb'))
+						{
+							if("\x89PNG\x0d\x0a\x1a\x0a" === fread($png_fp, 8)) // first 8 bytes in a PNG must be like this
+							{
+								$png_text_chunks=[];
+								while(!feof($png_fp))
+								{
+									$chunk_info = @unpack('Nlength/a4type', fread($png_fp, 8));
+									if(!$chunk_info or ($chunk_info['type'] == 'IEND'))
+									{
+										break;
+									}
+									if($chunk_info['type'] == 'tEXt')
+									{
+										$chunk_data = fread($png_fp, $chunk_info['length']);
+										$chunk_crc = @unpack('Ncrc', fread($png_fp, 4));
+										if($chunk_crc and ($chunk_crc['crc'] === crc32($chunk_info['type'].$chunk_data)))
+										{
+											list($keyword, $value) = explode("\0", $chunk_data);
+											if((PNG_TEXT_CHUNKS === TRUE) or ((is_array(PNG_TEXT_CHUNKS)) and (in_array(strtolower($keyword), PNG_TEXT_CHUNKS))))
+											{
+												$png_text_chunks[]=block_html($keyword);
+												$png_text_chunks[]=block_html($value);
+											}
+										}
+									}
+									else
+									{
+										fseek($png_fp, $chunk_info['length']+4, SEEK_CUR); // skip the chunk + crc
+									}
+								}
+								fclose($png_fp);
+								if(count($png_text_chunks)>0)
+								{
+									$image_info['pngChunks'] = $png_text_chunks;
+								}
+							}
+						}
+					}
+					if (WEBP_EXIF and ($image_type=='webp'))
+					{
+						if ($webp_fp = @fopen(GALLERY_ROOT.$image_dir.$image_file, 'rb'))
+						{
+							$webp_exif=[];
+							$webp_header = @unpack('a4riff/I1size/a4webp', fread($webp_fp, 12));
+							if (($webp_header['riff']=='RIFF') and ($webp_header['webp']=='WEBP')) // required WebP header
+							{
+								while(!feof($webp_fp))
+								{
+									$chunk_info = @unpack('a4type/I1size', fread($webp_fp, 8));
+									if(!$chunk_info)
+									{
+										break;
+									}
+									if($chunk_info['type'] == 'EXIF')
+									{
+										$chunk_data = fread($webp_fp, $chunk_info['size']); // read EXIF chunk from image
+										$php_mem  = fopen('php://memory', 'w+'); // create php memory stream
+										fputs($php_mem, $chunk_data);
+										rewind($php_mem);
+										$exif=@exif_read_data($php_mem, null, true);
+										fclose($php_mem);
+										foreach(WEBP_EXIF as $key=>$data)
+										{
+											foreach($data as $id)
+											{
+												if(isset($exif[$key][$id]))
+												{
+													$exif_data_str=data_as_str($exif[$key][$id]);
+													if($exif_data_str!='')
+													{
+														$webp_exif[]=block_html($id);
+														$webp_exif[]=block_html($exif_data_str);
+													}
+												}
+											}
+										}
+										break; // stop searching as only one EXIF section is allowed
+									}
+									else
+									{
+										fseek($webp_fp, $chunk_info['size'], SEEK_CUR); // skip the chunk
+									}
+									if ($chunk_info['size'] & 1) // if chunk size is odd, skip the padding byte
+									{
+										fseek($webp_fp, 1, SEEK_CUR);
+									}
+								}
+								fclose($webp_fp);
+								if(count($webp_exif)>0)
+								{
+									$image_info['webpExif'] = $webp_exif;
 								}
 							}
 						}
@@ -1053,6 +1247,10 @@
 						{
 							imagegif($image, $new_full_img);
 						}
+						elseif ($image_type == 'webp')
+						{
+							imagewebp($image, $new_full_img);
+						}
 					}
 					$image_info['fileMTime'] = filemtime(GALLERY_ROOT.$image_dir.$image_file); // also used for deleting data if time have changed
 					$image_info['fileSize'] = sfpg_file_size(filesize(GALLERY_ROOT.$image_dir.$image_file));
@@ -1067,7 +1265,7 @@
 					$new_img_height = $max_width;
 				}
 				$new_image = imagecreatetruecolor($new_img_width, $new_img_height);
-				if(THUMB_PNG_ALPHA and ($image_type == 'png'))
+				if(THUMB_TRANSPARENCY and (($image_type == 'png') or ($image_type == 'webp')))
 				{
 					imagealphablending($new_image, false);
 					imagesavealpha($new_image,true);
@@ -1098,22 +1296,42 @@
 				}
 				imagedestroy($image);
 				sfpg_mkdir(DATA_ROOT.$func.'/'.$image_dir);
-				header('Content-type: image/'.$image_type);
-				header('Content-Disposition: filename="'.$func.'_'.$image_file.'"');
+				if (!$spider)
+				{
+					header('Content-type: image/'.$image_type);
+					header('Content-Disposition: filename="'.$func.'_'.$image_file.'"');
+				}
 				if ($image_type == 'jpeg')
 				{
-					imagejpeg($new_image, NULL, $jpeg_quality);
+					if (!$spider)
+					{
+						imagejpeg($new_image, null, $jpeg_quality);
+					}
 					imagejpeg($new_image, $image_path_file, $jpeg_quality);
 				}
 				elseif ($image_type == 'png')
 				{
-					imagepng($new_image);
+					if (!$spider)
+					{
+						imagepng($new_image);
+					}
 					imagepng($new_image, $image_path_file);
 				}
 				elseif ($image_type == 'gif')
 				{
-					imagegif($new_image);
+					if (!$spider)
+					{
+						imagegif($new_image);
+					}
 					imagegif($new_image, $image_path_file);
+				}
+				elseif ($image_type == 'webp')
+				{
+					if (!$spider)
+					{
+						imagewebp($new_image);
+					}
+					imagewebp($new_image, $image_path_file);
 				}
 				imagedestroy($new_image);
 			}
@@ -1201,6 +1419,7 @@
 		sfpg_delete(DATA_ROOT.'info/'.$element);
 		sfpg_delete(DATA_ROOT.'thumb/'.$element);
 		sfpg_delete(DATA_ROOT.'image/'.$element);
+		sfpg_delete(DATA_ROOT.'zip/'.$element);
 	}
 
 
@@ -1235,7 +1454,21 @@
 			echo $name.'['.$id.'] = {';
 			foreach($array as $key=>$val)
 			{
-				echo $sep.'"'.$key.'":"'.sts($val, $nl_to_br).'"';
+				if(is_array($val))
+				{
+					$arrSep='';
+					echo $sep.'"'.$key.'":[';
+					foreach($val as $v)
+					{
+						echo $arrSep.'"'.sts($v, $nl_to_br).'"';
+						$arrSep=', ';
+					}
+					echo ']';
+				}
+				else
+				{
+					echo $sep.'"'.$key.'":"'.sts($val, $nl_to_br).'"';
+				}
 				$sep=', ';
 			}
 			echo "};\n";
@@ -1257,7 +1490,7 @@
 
 	function sfpg_javascript()
 	{
-		global $dirs, $images, $files, $misc, $iptc;
+		global $dirs, $images, $files, $misc;
 		echo "<script>
 		<!--
 
@@ -1361,18 +1594,30 @@
 		}
 
 
+		function reloadImage(imageID)
+		{
+			setTimeout(function(t) {t.src = t.src;}, Math.floor(Math.random() * (".(RELOAD_IMAGE_MAX - RELOAD_IMAGE_MIN + 1).") + ".RELOAD_IMAGE_MIN."), imageID);
+		};
+
+
 		function updateSize()
 		{
 			if (index)
 			{
 				if ((imgFullWidth==gebi('full').width) && (imgFullHeight==gebi('full').height))
 				{
-					gebi('img_resize').innerHTML = '".sts(TEXT_NOT_SCALED)."';
+					if (gebi('img_resize'))
+					{
+						gebi('img_resize').innerHTML = '".sts(TEXT_NOT_SCALED)."';
+					}
 					imageIsScaled = false;
 				}
 				else
 				{
-					gebi('img_resize').innerHTML = gebi('full').width + ' x ' + gebi('full').height;
+					if (gebi('img_resize'))
+					{
+						gebi('img_resize').innerHTML = gebi('full').width + ' x ' + gebi('full').height;
+					}
 					imageIsScaled = true;
 				}
 			}
@@ -1451,25 +1696,26 @@
 					menu += '<span onclick=\"toggleInfo(showInfo);\" class=\"sfpg_button\">".sts(TEXT_INFO)."</span>';
 				}";
 			}
-			echo "
-			if (index)
+			if(TEXT_ACTUAL_SIZE)
 			{
-				if (actualSize)
+				echo "
+				if (index)
 				{
-					menu += '<span class=\"sfpg_button_on\" onclick=\"fullSize()\">".sts(TEXT_ACTUAL_SIZE)."</span>';
+					if (actualSize)
+					{
+						menu += '<span class=\"sfpg_button_on\" onclick=\"fullSize()\">".sts(TEXT_ACTUAL_SIZE)."</span>';
+					}
+					else
+					{
+						menu += '<span class=\"sfpg_button\" onclick=\"fullSize()\">".sts(TEXT_ACTUAL_SIZE)."</span>';
+					}
 				}
 				else
 				{
-					menu += '<span class=\"sfpg_button\" onclick=\"fullSize()\">".sts(TEXT_ACTUAL_SIZE)."</span>';
+					menu += '<span class=\"sfpg_button_disabled\">".sts(TEXT_ACTUAL_SIZE)."</span>';
 				}
+				";
 			}
-			else
-			{
-				menu += '<span class=\"sfpg_button_disabled\">".sts(TEXT_ACTUAL_SIZE)."</span>';
-			}
-
-
-			";
 			if (LINK_BACK)
 			{
 				echo "menu += '<span class=\"sfpg_button\" onclick=\"window.location=\'".LINK_BACK."\'\">".sts(TEXT_LINK_BACK)."</span>';
@@ -1488,6 +1734,7 @@
 						menu += '<span class=\"sfpg_button\" onclick=\"admRename()\">".sts(TEXT_RENAME)."</span>';
 						menu += '<span class=\"sfpg_button\" onclick=\"admMove()\">".sts(TEXT_MOVE)."</span>';
 						menu += '<span class=\"sfpg_button\" onclick=\"admMakeDir()\">".sts(TEXT_MKDIR)."</span>';
+						menu += '<span class=\"sfpg_button\" onclick=\"admSetThumb()\">".sts(TEXT_SET_DIR_THUMB)."</span>';
 						menu += '<span class=\"sfpg_button\" onclick=\"admUpload(true)\">".sts(TEXT_UPLOAD)."</span>';
 						menu += '<span class=\"sfpg_button\" onclick=\"admDesc()\">".sts(TEXT_DESCRIPTION)."</span>';
 						menu += '<span class=\"sfpg_button\" onclick=\"admSell()\">".sts(TEXT_PAYPAL_FOR_SALE)."</span>';
@@ -1547,8 +1794,8 @@
 		function dateFormat(timestamp)
 		{
 			var dt = new Date(timestamp*1000);
-			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+			var days = ".TEXT_DAYS.";
+			var months = ".TEXT_MONTHS.";
 			var year = dt.getFullYear();
 			var nrmon = dt.getMonth()+1;
 			var month = months[dt.getMonth()];
@@ -1560,6 +1807,11 @@
 			return '".$date_format."';
 		}
 
+		function generateZip()
+		{
+			gebi('zipform').submit();
+			gebi('zipspan').innerHTML = '".TEXT_ZIP_WAIT."';
+		}
 
 		function fillInfo(type, id)
 		{
@@ -1570,7 +1822,7 @@
 				{
 					if (isDef(dirInfo[id]['dirThumb']))
 					{
-						info += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+dirInfo[id]['dirThumb']+'\">';
+						info += '<img class=\"thumb\" onerror=\"reloadImage(this)\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+dirInfo[id]['dirThumb']+'\">';
 					}
 					else
 					{
@@ -1586,26 +1838,42 @@
 							info += '<strong>".sts(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+dirInfo[id]['dirDesc']+'<br></div><br>';
 						}";
 					}
-					echo "
-					info += '<strong>".sts(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
-					info += '".sts(TEXT_DATE).": '+dateFormat(dirInfo[id]['dirTime'])+'<br>';
-					info += '".sts(TEXT_DIRS).": '+dirInfo[id]['dirDirs']+'<br>';
-					info += '".sts(TEXT_IMAGES).": '+dirInfo[id]['dirImages']+'<br>';";
-					if (SHOW_FILES)
+					if (TEXT_INFO_LABEL)
 					{
 						echo "
-						info += '".sts(TEXT_FILES).": '+dirInfo[id]['dirFiles']+'<br>';";
+						info += '<strong>".sts(TEXT_INFO_LABEL)."</strong><br><div class=\"sfpg_info_text\">';
+						info += '".sts(TEXT_DATE).": '+dateFormat(dirInfo[id]['dirTime'])+'<br>';
+						info += '".sts(TEXT_DIRS).": '+dirInfo[id]['dirDirs']+'<br>';
+						info += '".sts(TEXT_IMAGES).": '+dirInfo[id]['dirImages']+'<br>';";
+						if (SHOW_FILES)
+						{
+							echo "
+							info += '".sts(TEXT_FILES).": '+dirInfo[id]['dirFiles']+'<br>';";
+						}
+						echo "
+						info += '</div><br>';
+						";
 					}
 					echo "
-					info += '</div><br>';
-					info += '<strong>".sts(TEXT_LINKS)."</strong><br><a href=\"'+phpSelf+'?sfpg='+dirInfo[id]['dirLink']+'\">".sts(TEXT_DIRECT_LINK_GALLERY)."</a><br><br>';
+					info += '<strong>".sts(TEXT_LINKS)."</strong><br><a href=\"'+phpSelf+'?sfpg='+dirInfo[id]['dirLink']+'\">".sts(TEXT_DIRECT_LINK_GALLERY)."</a><br>';";
+					if (ZIP_ENABLE)
+					{
+						echo "
+							info += '<br>".sts(TEXT_ZIP_DL)."<br><br>';
+							info += '<span id=\"zipspan\"><form method=\"post\" id=\"zipform\"><input type=\"password\" id=\"password\" name=\"password\"><input type=\"hidden\" name=\"zipdl\" value=\"x\"></form><span class=\"sfpg_button\" onclick=\"generateZip()\">".sts(TEXT_ZIP_BUTTON)."</span></span><br><br>';"; // the password input is to make sure that web crawlers do not post the form
+					}
+					echo "
 				}
 				else if (type == 'img')
 				{
-					info += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgInfo[id]['imageLink']+'\">';
+					info += '<img class=\"thumb\" onerror=\"reloadImage(this)\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgInfo[id]['imageLink']+'\">';
 					info += '</div>';
 					info += '<strong>".sts(TEXT_IMAGE_NAME)."</strong><br><div class=\"sfpg_info_text\">'+imgInfo[id]['imageName'] + '</div><br>';
 					";
+					if(SHOW_IMAGE_NAME_BELOW_FULL)
+					{
+						echo "gebi('box_image_full_name').innerHTML = imgInfo[id]['imageName'];";
+					}
 					if(PAYPAL_ENABLED)
 					{
 						echo"
@@ -1627,8 +1895,7 @@
 								info += '<br><span class=\"sfpg_button_disabled\">".sts(TEXT_PAYPAL_BUY)."</span><br><br>';
 							}
 							info += '</div><br>';
-						}
-						";
+						}";
 					}
 					echo"
 					if (!isDef(imgInfo[id]['firstView']))
@@ -1636,14 +1903,18 @@
 						if (isDef(imgInfo[id]['fileDescription']))
 						{
 							info += '<strong>".sts(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+imgInfo[id]['fileDescription']+'<br></div><br>';
+						}";
+						if (TEXT_INFO_LABEL)
+						{
+							echo "
+							info += '<strong>".sts(TEXT_INFO_LABEL)."</strong><br><div class=\"sfpg_info_text\">';
+							info += '".sts(TEXT_DATE).": '+dateFormat(imgInfo[id]['fileMTime'])+'<br>';
+							info += '".sts(TEXT_IMAGESIZE).": '+imgInfo[id]['imageSizeX']+' x '+imgInfo[id]['imageSizeY']+'<br>';
+							info += '".sts(TEXT_SCALED_TO).": <span id=\"img_resize\"></span><br>';
+							info += '".sts(TEXT_FILESIZE).": '+imgInfo[id]['fileSize']+'<br>';
+							info += '".sts(TEXT_IMAGE_NUMBER).": '+id+' / '+(imgInfo.length-1)+'<br>';
+							info += '</div><br>';";
 						}
-						info += '<strong>".sts(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
-						info += '".sts(TEXT_DATE).": '+dateFormat(imgInfo[id]['fileMTime'])+'<br>';
-						info += '".sts(TEXT_IMAGESIZE).": '+imgInfo[id]['imageSizeX']+' x '+imgInfo[id]['imageSizeY']+'<br>';
-						info += '".sts(TEXT_SCALED_TO).": <span id=\"img_resize\"></span><br>';
-						info += '".sts(TEXT_FILESIZE).": '+imgInfo[id]['fileSize']+'<br>';
-						info += '".sts(TEXT_IMAGE_NUMBER).": '+id+' / '+(imgInfo.length-1)+'<br>';
-						info += '</div><br>';";
 						if (SHOW_EXIF_INFO)
 						{
 							echo"
@@ -1656,19 +1927,26 @@
 							exifInfo += (isDef(imgInfo[id]['exifFlash'])?'".sts(TEXT_EXIF_FLASH).": '+imgInfo[id]['exifFlash']+'<br>':'');
 							exifInfo += (isDef(imgInfo[id]['exifGPSLatitude'])?'".sts(TEXT_EXIF_LATITUDE).": '+imgInfo[id]['exifGPSLatitude']+'<br>':'');
 							exifInfo += (isDef(imgInfo[id]['exifGPSLongitude'])?'".sts(TEXT_EXIF_LONGITUDE).": '+imgInfo[id]['exifGPSLongitude']+'<br>':'');
-							if (isDef(imgInfo[id]['exifGPSLatitudeDec']) && isDef(imgInfo[id]['exifGPSLongitudeDec']))
+							";
+							if (TEXT_EXIF_MAP and EXIF_MAP_LINK)
 							{
-								tmpStr = '<a target=\"_blank\" href=\"".sts(EXIF_MAP_LINK)."\">".sts(TEXT_EXIF_MAP)."</a>';
-								tmpStr = tmpStr.replace('[lat]', imgInfo[id]['exifGPSLatitudeDec']);
-								tmpStr = tmpStr.replace('[long]', imgInfo[id]['exifGPSLongitudeDec']);
-								exifInfo += tmpStr;
+								echo "
+								if (isDef(imgInfo[id]['exifGPSLatitudeDec']) && isDef(imgInfo[id]['exifGPSLongitudeDec']))
+								{
+									tmpStr = '<a target=\"_blank\" href=\"".sts(EXIF_MAP_LINK)."\">".sts(TEXT_EXIF_MAP)."</a>';
+									tmpStr = tmpStr.replace('[lat]', imgInfo[id]['exifGPSLatitudeDec']);
+									tmpStr = tmpStr.replace('[long]', imgInfo[id]['exifGPSLongitudeDec']);
+									exifInfo += tmpStr;
+								}
+								";
 							}
+							echo "
 							if (exifInfo != '')
 							{
 								info += '<strong>".sts(TEXT_EXIF)."</strong><br><div class=\"sfpg_info_text\">'+exifInfo+'</div><br>';
 							}";
 						}
-						if (TEXT_EXIF_MAP_EMBED)
+						if (TEXT_EXIF_MAP_EMBED and EXIF_MAP_EMBED_LINK)
 						{
 							echo"
 							if (isDef(imgInfo[id]['exifGPSLatitudeDec']) && isDef(imgInfo[id]['exifGPSLongitudeDec']))
@@ -1684,7 +1962,7 @@
 						{
 							echo "var iptcInfo = '';
 							";
-							foreach($iptc as $iptcID => $iptcText)
+							foreach(IPTC as $iptcID => $iptcText)
 							{
 								echo"iptcInfo += (isDef(imgInfo[id]['".$iptcID."'])?'".sts($iptcText).": '+imgInfo[id]['".$iptcID."']+'<br>':'');
 								";
@@ -1695,11 +1973,43 @@
 								info += '<strong>".sts(TEXT_IPTC)."</strong><br><div class=\"sfpg_info_text\">'+iptcInfo+'</div><br>';
 							}";
 						}
+						if (PNG_TEXT_CHUNKS)
+						{
+							echo"
+							if (isDef(imgInfo[id]['pngChunks']))
+							{
+								info += '<strong>".sts(TEXT_PNG_CHUNKS)."</strong><br><div class=\"sfpg_info_text\">';
+								var brsep='';
+								for (i=0; i<imgInfo[id]['pngChunks'].length; i=i+2)
+								{
+									info += brsep+'<b>'+imgInfo[id]['pngChunks'][i]+'</b><br>'+imgInfo[id]['pngChunks'][i+1];
+									brsep='<br><br>';
+								}
+								info += '</div><br>';
+							}
+							";
+						}
+						if (WEBP_EXIF)
+						{
+							echo"
+							if (isDef(imgInfo[id]['webpExif']))
+							{
+								info += '<strong>".sts(TEXT_WEBP_EXIF)."</strong><br><div class=\"sfpg_info_text\">';
+								var brsep='';
+								for (i=0; i<imgInfo[id]['webpExif'].length; i=i+2)
+								{
+									info += brsep+'<b>'+imgInfo[id]['webpExif'][i]+'</b><br>'+imgInfo[id]['webpExif'][i+1];
+									brsep='<br><br>';
+								}
+								info += '</div><br>';
+							}
+							";
+						}
 						echo"
 					}
 					else
 					{
-						info += '<br><strong>".sts(TEXT_FIRST_VIEW)."</strong><br><br><span id=\"img_size\"></span><span id=\"img_resize\"></span><br><br>';
+						info += '<br><strong>".sts(TEXT_FIRST_VIEW)."</strong><br><br><span id=\"img_size\"></span><br><br>';
 					}
 					info += '<strong>".sts(TEXT_LINKS)."</strong><br>';
 					info += '<a href=\"'+phpSelf+'?sfpg='+imgInfo[id]['imageLink']+'\">".sts(TEXT_DIRECT_LINK_IMAGE)."</a><br>';
@@ -1709,7 +2019,7 @@
 				{
 					if (isDef(fileInfo[id]['fileThumb']))
 					{
-						info += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+fileInfo[id]['fileThumb']+'\">';
+						info += '<img class=\"thumb\" onerror=\"reloadImage(this)\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+fileInfo[id]['fileThumb']+'\">';
 					}
 					else
 					{
@@ -1720,13 +2030,18 @@
 					if (isDef(fileInfo[id]['description']))
 					{
 						info += '<strong>".sts(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+fileInfo[id]['description']+'<br></div><br>';
+					}";
+					if (TEXT_INFO_LABEL)
+					{
+						echo "
+						info += '<strong>".sts(TEXT_INFO_LABEL)."</strong><br><div class=\"sfpg_info_text\">';
+						info += '".sts(TEXT_DATE).": '+dateFormat(fileInfo[id]['fileTime'])+'<br>';
+						info += '".sts(TEXT_FILESIZE).": '+fileInfo[id]['fileSize']+'<br>';
+						info += '</div><br>';";
 					}
-					info += '<strong>".sts(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
-					info += '".sts(TEXT_DATE).": '+dateFormat(fileInfo[id]['fileTime'])+'<br>';
-					info += '".sts(TEXT_FILESIZE).": '+fileInfo[id]['fileSize']+'<br>';
-					info += '</div><br>';
+					echo "
 				}
-				info += '<br><small><a href=\"http://sye.dk/sfpg/\" target=\"_blank\" alt=\"\">Single File PHP Gallery</a></small>';
+				info += '<br><br><small><a href=\"https://sye.dk/sfpg/\" target=\"_blank\" alt=\"\">Single File PHP Gallery</a></small>';
 				gebi('box_inner_info').innerHTML = info;
 			}
 		}
@@ -1743,6 +2058,7 @@
 			}
 			else
 			{
+				fillInfo('dir', 0);
 				gebi('box_info').style.visibility='visible';
 				gebi('box_image').style.left='".INFO_BOX_WIDTH."px';
 				gebi('box_gallery').style.left='".INFO_BOX_WIDTH."px';
@@ -1762,14 +2078,7 @@
 
 		function openFile(id)
 		{
-			if (".(FILE_IN_NEW_WINDOW ? "true" : "false").")
-			{
-				window.open(phpSelf+'?cmd=file&sfpg='+fileInfo[id]['fileLink']);
-			}
-			else
-			{
-				window.location	= phpSelf+'?cmd=file&sfpg='+fileInfo[id]['fileLink'];
-			}
+			".(FILE_IN_NEW_WINDOW ? "window.open(phpSelf+'?cmd=file&sfpg='+fileInfo[id]['fileLink']);" : "window.location=phpSelf+'?cmd=file&sfpg='+fileInfo[id]['fileLink'];")."
 		}
 
 
@@ -2056,6 +2365,39 @@
 		}
 
 
+		function admSetThumb()
+		{
+			var sendForm=false;
+			var sel=selectedDirs.length + selectedImages.length + selectedFiles.length;
+			if (sel<1)
+			{
+				if (confirm('".sts(TEXT_REMOVE_THUMB)."') == true)
+				{
+					sendForm=true;
+				}
+			}
+			else if ((sel>1)||(selectedImages.length!=1))
+			{
+				alert('".sts(TEXT_ONE_IMAGE)."');
+			}
+			else
+			{
+				if (confirm('".sts(TEXT_SETTING_THUMB)."' + imgInfo[selectedImages[0]]['imageName']) == true)
+				{
+					sendForm=true;
+				}
+			}
+			if (sendForm)
+			{
+				var form = makeForm();
+				form.appendChild(makeInput('func','setthumb'));
+				form.appendChild(makeInput('path',dirInfo[0]['dirLink']));
+				formAddSelected(form);
+				submitForm(form);
+			}
+		}
+
+
 		function admSell()
 		{
 			var sel=selectedDirs.length + selectedImages.length + selectedFiles.length;
@@ -2331,7 +2673,10 @@
 
 		function mouseOver(that, type, nr)
 		{
-			fillInfo(type, nr);
+			if (showInfo)
+			{
+				fillInfo(type, nr);
+			}
 			if (isSelected(type, nr))
 			{
 				that.className='innerbox_marked';
@@ -2353,7 +2698,10 @@
 
 		function mouseOut(that, type, nr)
 		{
-			fillInfo('dir', 0);
+			if (showInfo)
+			{
+				fillInfo('dir', 0);
+			}
 			if (isSelected(type, nr))
 			{
 				that.className='innerbox_marked';
@@ -2426,7 +2774,7 @@
 				content += '<div class=\"thumbimgbox\">';
 				if (isDef(dirInfo[elementNumber]['dirThumb']))
 				{
-					content += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+dirInfo[elementNumber]['dirThumb']+'\">';
+					content += '<img class=\"thumb\" onerror=\"reloadImage(this)\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+dirInfo[elementNumber]['dirThumb']+'\">';
 				}
 				else
 				{
@@ -2444,7 +2792,7 @@
 					content += ' onmouseover=\"mouseOver(this, \'img\', '+elementNumber+')\" onmouseout=\"mouseOut(this, \'img\', '+elementNumber+')\"';
 				}
 				content += ' class=\"innerboximg\">';
-				content += '<div class=\"thumbimgbox\"><img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgInfo[elementNumber]['imageLink']+'\"></div>';
+				content += '<div class=\"thumbimgbox\"><img onerror=\"reloadImage(this)\" class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgInfo[elementNumber]['imageLink']+'\"></div>';
 				". (THUMB_CHARS_MAX ? "content += thumbDisplayName(imgInfo[elementNumber]['imageName']);" : "")."
 				content += '</div>';
 			}
@@ -2459,7 +2807,7 @@
 				content += '<div class=\"thumbimgbox\">';
 				if (isDef(fileInfo[elementNumber]['fileThumb']))
 				{
-					content += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+fileInfo[elementNumber]['fileThumb']+'\">';
+					content += '<img class=\"thumb\" onerror=\"reloadImage(this)\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+fileInfo[elementNumber]['fileThumb']+'\">';
 				}
 				else
 				{
@@ -2520,6 +2868,10 @@
 				}
 			}
 			gebi('navi').innerHTML = navLinks;
+			if (gebi('banner'))
+			{
+				gebi('banner').innerHTML = dirInfo[0]['dirName'];
+			}
 			addElement(0, 'desc');
 			for (i = 1; i < dirInfo.length; i++)
 			{
@@ -2566,12 +2918,17 @@
 		
 		if (PAYPAL_ENABLED)
 		{
+			$sfpg_cancel='';
+			if(isset($_GET['sfpg']) and sfpg_url_decode($_GET['sfpg']))
+			{
+				$sfpg_cancel='&sfpg='.$_GET['sfpg'];
+			}
 			echo "
 			function paypal(id)
 			{
-				var SelfUrl = '".RETURN_PROTOCOL."://".$_SERVER['DOMAIN_NAME'].$_SERVER['PHP_SELF']."';
+				var SelfUrl = '".RETURN_PROTOCOL."://".@$_SERVER['DOMAIN_NAME'].$_SERVER['PHP_SELF']."';
 				gebi('paypalReturn').value = SelfUrl+'?sold=1';
-				gebi('paypalCancelReturn').value = SelfUrl+'?sfpg=".(sfpg_url_decode($_GET['sfpg'])!=FALSE?$_GET['sfpg']:'')."&info=1';
+				gebi('paypalCancelReturn').value = SelfUrl+'?info=1".$sfpg_cancel."';
 				gebi('paypalAmount').value = imgInfo[id]['sellPrice'];
 				gebi('paypalItemName').value = imgInfo[id]['imageName'];
 				if(isDef(imgInfo[id]['sellID']))
@@ -2601,7 +2958,7 @@
 					if ($display_name)
 					{
 						$display_name = trim($display_name[0]);
-						$display_name = (HTML_DESCRIPTIONS?$display_name:block_html($display_name));
+						$display_name = clean_html($display_name);
 					}
 					else
 					{
@@ -2611,12 +2968,12 @@
 					$a_links[] = $gal_dirs;
 				}
 			}
-			$link_disp_lenght = strlen(TEXT_HOME) + 4;
+			$link_disp_length = strlen(TEXT_HOME) + 4;
 			$start_link = count($a_names)-1;
 			for($i = count($a_names)-1; $i >= 0; $i--)
 			{
-				$link_disp_lenght += strlen($a_names[$i]) + 5;
-				if ($link_disp_lenght < NAVI_CHARS_MAX)
+				$link_disp_length += strlen($a_names[$i]) + 5;
+				if ($link_disp_length < NAVI_CHARS_MAX)
 				{
 					$start_link = $i;
 				}
@@ -2652,7 +3009,7 @@
 			$current_dir_link = sfpg_url_string('');
 			$current_dir_name = TEXT_HOME;
 		}
-		if ((DIR_THUMB_FILE) and file_exists(GALLERY_ROOT.GALLERY.DIR_THUMB_FILE))
+		if ((DIR_THUMB_FILE) and file_exists(GALLERY_ROOT.GALLERY.DIR_THUMB_FILE) and file_exists(DATA_ROOT.'info/'.GALLERY.DIR_THUMB_FILE))
 		{
 			$filed=unserialize(file_get_contents(DATA_ROOT.'info/'.GALLERY.DIR_THUMB_FILE));
 			if (filemtime(GALLERY_ROOT.GALLERY.DIR_THUMB_FILE)!=$filed['fileMTime'])
@@ -2669,14 +3026,14 @@
 				sfpg_set_dir_info(GALLERY.$val.'/');
 			}
 			$filed=unserialize(file_get_contents(DATA_ROOT.'info/'.GALLERY.$val.'/_sfpg_dir'));
-			if (DELETE_EMPTY_DIRS and ($filed['dirs']==0) and ($filed['images']==0) and ($filed['files']==0))
+			if (DELETE_EMPTY_DIRS and ($filed['dirDirs']==0) and ($filed['dirImages']==0) and ($filed['dirFiles']==0))
 			{
 				sfpg_set_dir_info(GALLERY.$val.'/'); // refreshing information before possible delete
 				$filed=unserialize(file_get_contents(DATA_ROOT.'info/'.GALLERY.$val.'/_sfpg_dir'));
 			}
-			if (DELETE_EMPTY_DIRS and ($filed['dirs']==0) and ($filed['images']==0) and ($filed['files']==0))
+			if (DELETE_EMPTY_DIRS and ($filed['dirDirs']===0) and ($filed['dirImages']===0) and ($filed['dirFiles']===0))
 			{
-				sfpg_delete(GALLERY.$val.'/');
+				sfpg_delete(GALLERY_ROOT.GALLERY.$val.'/');
 			}
 			else
 			{
@@ -2684,7 +3041,7 @@
 				if ($display_name)
 				{
 					$display_name = trim($display_name[0]);
-					$display_name = (HTML_DESCRIPTIONS?$display_name:block_html($display_name));
+					$display_name = clean_html($display_name);
 				}
 				else
 				{
@@ -2704,10 +3061,10 @@
 				$desc = @file_get_contents(GALLERY_ROOT.GALLERY.$val.'/'.DIR_DESC_FILE);
 				if ($desc)
 				{
-					$dir_info['dirDesc'] = (HTML_DESCRIPTIONS?$desc:block_html($desc));
+					$dir_info['dirDesc'] = clean_html($desc);
 				}
 				echo_js_array('dirInfo', $item, $dir_info, DESC_NL_TO_BR);
-				unset($dir_info); // not all dirs have dirDesc, so making sure not to reuse previous
+				unset($dir_info); // not all dirs have dirDesc, so making sure that it is not reused
 				$item++;
 			}
 		}
@@ -2716,7 +3073,7 @@
 			sfpg_set_dir_info(GALLERY);
 		}
 		$filed=unserialize(file_get_contents(DATA_ROOT.'info/'.GALLERY.'_sfpg_dir'));
-		if ((count($dirs) !== $filed['dirs']) or (count($images) !== $filed['images']) or (count($files) !== $filed['files']))
+		if ((count($dirs) !== $filed['dirDirs']) or (count($images) !== $filed['dirImages']) or (count($files) !== $filed['dirFiles']))
 		{
 			sfpg_set_dir_info(GALLERY);
 			$filed=unserialize(file_get_contents(DATA_ROOT.'info/'.GALLERY.'_sfpg_dir'));
@@ -2734,7 +3091,7 @@
 		$desc = (in_array(DIR_DESC_FILE, $misc)?@file_get_contents(GALLERY_ROOT.GALLERY.DIR_DESC_FILE):'');
 		if ($desc)
 		{
-			$dir_info['dirDesc'] = (HTML_DESCRIPTIONS?$desc:block_html($desc));
+			$dir_info['dirDesc'] = clean_html($desc);
 		}
 		echo_js_array('dirInfo', 0, $dir_info, DESC_NL_TO_BR);
 
@@ -2778,7 +3135,7 @@
 						if (in_array($val.DESC_EXT, $misc)) // if description file exists, add to array
 						{
 							$desc=@file_get_contents(GALLERY_ROOT.GALLERY.$val.DESC_EXT);
-							$image_info['fileDescription']=(HTML_DESCRIPTIONS?$desc:block_html($desc));
+							$image_info['fileDescription']=clean_html($desc);
 						}
 					}
 				}
@@ -2795,7 +3152,7 @@
 					{
 						$image_info['sellPrice'] = $sell[0];
 						$image_info['sellStatus'] = $sell[1];
-						if (trim($sell[2])!='')
+						if (isset($sell[2]) and (trim($sell[2])!=''))
 						{
 							$image_info['sellID'] = $sell[2];
 						}
@@ -2839,12 +3196,12 @@
 					$file_info['fileThumb']=sfpg_url_string(ICONS_DIR, FILE_THUMB_DEFAULT);
 				}
 				$file_info['fileName']=sfpg_display_name($val, SHOW_FILE_EXT);
-				$file_info['fileTime']=filemtime(GALLERY_ROOT.GALLERY.$val);
-				$file_info['fileSize']=sfpg_file_size(filesize(GALLERY_ROOT.GALLERY.$val));
+				$file_info['fileTime']=@filemtime(GALLERY_ROOT.GALLERY.$val);
+				$file_info['fileSize']=sfpg_file_size(@filesize(GALLERY_ROOT.GALLERY.$val));
 				if (in_array($val.DESC_EXT, $misc))
 				{
 					$desc=@file_get_contents(GALLERY_ROOT.GALLERY.$val.DESC_EXT);
-					$file_info['description']=(HTML_DESCRIPTIONS?$desc:block_html($desc));
+					$file_info['description']=clean_html($desc);
 				}
 				echo_js_array('fileInfo', $item, $file_info, DESC_NL_TO_BR);
 				$item++;
@@ -2855,28 +3212,45 @@
 		</script>";
 	}
 
+
+	function spider($dir)
+	{
+		list($dirs, $images, $files, $misc) = sfpg_get_dir($dir,FALSE,FALSE,TRUE);
+		unset($files);
+		unset($misc);
+		foreach($images as $image)
+		{
+			sfpg_image($dir, $image, 'thumb', FALSE, TRUE);
+		}
+		unset($images);
+		foreach($dirs as $sub_dir)
+		{
+			spider($dir.$sub_dir.'/');
+		}
+	}
+
+
+	@include(DATA_ROOT.'sp.php');
+	if (!defined('SECURITY_PHRASE'))
+	{
+		sfpg_mkdir(DATA_ROOT);
+		file_put_contents(DATA_ROOT.'sp.php',"<?php if(function_exists('option')) option('SECURITY_PHRASE', '".sfpg_random(30)."'); ?>");
+		@include(DATA_ROOT.'sp.php');
+		if (!defined('SECURITY_PHRASE'))
+		{
+			echo '<br>PHP do not have access to create files in the defined DATA_ROOT ("'.DATA_ROOT.'").<br>See readme.txt for DATA_ROOT description.';
+			exit;
+		}
+	}
 	if (SECURITY_PHRASE=='')
 	{
-		if ($sc=@file_get_contents($_SERVER['SCRIPT_FILENAME']))
-		{
-			$phrase=sfpg_random(30);
-			$nr_replace=0;
-			$sc=str_replace("define('SECURITY"."_PHRASE', '');","define('SECURITY_PHRASE', '".$phrase."');",$sc,$nr_replace);			
-			if ($nr_replace === 1)
-			{
-				if (file_put_contents($_SERVER['SCRIPT_FILENAME'],$sc))
-				{
-					echo '<br>The SECURITY_PHRASE in the script have been set to a random value.<br>The gallery is now ready to be used.<br><br>Refresh the page to load the gallery.';
-					exit;
-				}
-			}
-		}
-		echo '<br>You have to set the SECURITY_PHRASE in the top of the script.<br>See readme.txt for description.';
+		echo '<br>The SECURITY_PHRASE in "'.DATA_ROOT.'sp.php" cannot be empty.<br>See readme.txt for DATA_ROOT description.';
 		exit;
 	}
 
 	if (PASSWORD!=='')
 	{
+		session_name('SFPG_SESSID');
 		session_start();
 		if (isset($_GET['cmd']) and ($_GET['cmd']=='logout'))
 		{
@@ -2884,7 +3258,7 @@
 			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
 		}
-		if (($_SESSION['sfpg_access']!==TRUE) or ($_SESSION['sfpg_self']!==$_SERVER['PHP_SELF']))
+		if ((($_SESSION['sfpg_access']??FALSE)!==TRUE) or ($_SESSION['sfpg_self']!==$_SERVER['PHP_SELF']))
 		{
 			if (isset($_POST['pw']) and ($_POST['pw']===PASSWORD))
 			{
@@ -2923,9 +3297,89 @@
 		define('IMAGE', '');
 	}
 
-	if (isset($_GET['cmd']))
+	if (ZIP_ENABLE and isset($_POST['zipdl']))
 	{
-		if ($get_set)
+		sfpg_mkdir(DATA_ROOT.'zip');
+		$zip_link='./_sfpg_zip';
+		if (!is_link($zip_link))
+		{
+			if (!symlink(realpath(DATA_ROOT.'zip'), $zip_link))
+			{
+				echo 'Unable to create symlink for zip download.';
+				exit;
+			}
+		}
+		if (ZIP_CACHE_DAYS !== FALSE)
+		{
+			cleanup_zip_days(time()-(ZIP_CACHE_DAYS*86400), DATA_ROOT.'zip');
+		}
+		$files_for_zip = get_files_for_zip(GALLERY);
+		if (count($files_for_zip)>0)
+		{
+			sort($files_for_zip); // sorting before hash to make sure that hash function gets input in same order every time.
+			$zip_hash = hash('sha256', serialize($files_for_zip));
+			
+			$zip_dir = DATA_ROOT.'zip/'.GALLERY;
+			if (GALLERY == '')
+			{
+				$zip_name = TEXT_ZIP_ROOT_NAME.'.zip';
+			}
+			else
+			{
+				$from = strrpos(rtrim(GALLERY, '/'), '/');
+				if ($from===FALSE)
+				{
+					$from = -1;
+				}
+				$zip_name = substr(GALLERY, $from+1, -1).'.zip';
+			}
+			if (file_exists($zip_dir.$zip_name) and file_exists($zip_dir.$zip_name.'.hash') and ($zip_hash === file_get_contents($zip_dir.$zip_name.'.hash')))
+			{
+				header('Location: '.$zip_link.'/'.GALLERY.$zip_name);
+				exit;
+			}
+			else
+			{
+				sfpg_delete($zip_dir.$zip_name);
+				sfpg_delete($zip_dir.$zip_name.'.hash');
+			}
+			sfpg_mkdir($zip_dir);
+			file_put_contents($zip_dir.$zip_name.'.hash', $zip_hash);
+
+			$zip = new ZipArchive();
+			$zip->open($zip_dir.$zip_name, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+			$zip_index = 0;
+			foreach($files_for_zip as $file)
+			{
+				$zip->addFile(realpath(GALLERY_ROOT.$file), substr($file, strlen(GALLERY)));
+				if (ZIP_COMPRESSION)
+				{
+			    	$zip->setCompressionIndex($zip_index, ZipArchive::CM_DEFLATE);
+				}
+				else
+				{
+					$zip->setCompressionIndex($zip_index, ZipArchive::CM_STORE);
+				}
+				$zip_index++;
+			}
+			if ($zip->close())
+			{
+				header('Location: '.$zip_link.'/'.GALLERY.$zip_name);
+				exit;
+			}
+			echo 'Unable to create zip file.';
+			exit;
+		}
+		else
+		{
+			echo TEXT_ZIP_NOTHING;
+			exit;
+		}
+	}
+
+	if ($get_set)
+	{
+		if (isset($_GET['cmd']))
 		{
 			if ($_GET['cmd'] == 'thumb')
 			{
@@ -2945,11 +3399,38 @@
 				exit;
 			}
 
-			if ($_GET['cmd'] == 'file')
+			if (SHOW_FILES and ($_GET['cmd'] == 'file'))
 			{
-				header('Location: '.GALLERY_ROOT.GALLERY.IMAGE);
+				if (preg_match("#^(/|([A-Z]:)?(\\\\|/))#i", GALLERY_ROOT)) // if GALLERY_ROOT is an absolute path
+				{
+					$download_path='./_sfpg_download';
+					if (is_link($download_path))
+					{
+						$prefix = $download_path.'/';
+					}
+					elseif (symlink(rtrim(GALLERY_ROOT, '/'), $download_path))
+					{
+						$prefix = $download_path.'/';
+					}
+					else
+					{
+						echo 'Unable to access file.';
+						exit;
+					}
+				}
+				else
+				{
+					$prefix = GALLERY_ROOT;
+				}
+				header('Location: '.$prefix.GALLERY.IMAGE);
 				exit;
 			}
+		}
+		elseif ((SPIDER_PASSWORD != '') and  isset($_GET['spider']) and ($_GET['spider'] === SPIDER_PASSWORD))
+		{
+			spider(GALLERY);
+			echo 'spider_done';
+			exit;
 		}
 	}
 
@@ -3014,6 +3495,41 @@
 									}
 								}
 							}
+						}
+					}
+				}
+			}
+			if ($_POST['func']==='setthumb')
+			{
+				if (isset($_POST['elems']))
+				{
+					if (count($_POST['elems']) == 1)
+					{
+						$new_thumb = sfpg_url_decode($_POST['elems'][0]);
+						if ($new_thumb)
+						{
+							if (sfpg_image_type($new_thumb[1])===sfpg_image_type(DIR_THUMB_FILE))
+							{
+								copy(GALLERY_ROOT.$new_thumb[0].$new_thumb[1], GALLERY_ROOT.$new_thumb[0].DIR_THUMB_FILE);
+								sfpg_set_dir_info($new_thumb[0]);
+							}
+							else
+							{
+								echo TEXT_WRONG_FILETYPE.sfpg_image_type(DIR_THUMB_FILE);
+								exit;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (isset($_POST['path']))
+					{
+						$path = sfpg_url_decode($_POST['path']);
+						if ($path)
+						{
+							sfpg_delete(GALLERY_ROOT.$path[0].DIR_THUMB_FILE);
+							sfpg_set_dir_info($path[0]);
 						}
 					}
 				}
@@ -3106,9 +3622,9 @@
 			}
 			if ($_POST['func']==='desc')
 			{
-				$action=$_POST['action'];
-				$text=$_POST['text'];
-				$ele=$_POST['ele'];
+				$action=@$_POST['action'];
+				$text=@$_POST['text'];
+				$ele=@$_POST['ele'];
 				if (($action==='del') or ($text===''))
 				{
 					$eleWd = sfpg_url_decode($ele);
@@ -3179,7 +3695,7 @@
 				}
 			}
 		}
-		if ($_GET['cmd'] == 'dirs')
+		if (isset($_GET['cmd']) and ($_GET['cmd'] == 'dirs'))
 		{
 			sfpg_browse_dirs();
 			exit;
@@ -3189,7 +3705,7 @@
 
 	list($dirs, $images, $files, $misc) = sfpg_get_dir(GALLERY);
 	echo '<!DOCTYPE html><html lang="'.HTML_LANGUAGE.'"><head><meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="'.CHARSET.'"><meta name="description" content="Single File PHP Gallery"><title>'.TEXT_GALLERY_NAME.'</title><style>'.
-	"
+	'
 	img
 	{
 		-ms-interpolation-mode:bicubic;
@@ -3197,10 +3713,11 @@
 
 	body.sfpg
 	{
-		background:$color_body_back;
-		color:$color_body_text;
+		overflow-wrap:break-word;
+		background:'.COLOR_BODY_BACK.';
+		color:'.COLOR_BODY_TEXT.';
 		font-family:Arial, Helvetica, sans-serif;
-		font-size:".FONT_SIZE."px;
+		font-size:'.FONT_SIZE.'px;
 		font-weight:normal;
 		margin:0px;
 		padding:0px;
@@ -3209,13 +3726,13 @@
 
 	body.sfpg a:active, body.sfpg a:link, body.sfpg a:visited, body.sfpg a:focus
 	{
-		color:$color_body_link;
+		color:'.COLOR_BODY_LINK.';
 		text-decoration:none;
 	}
 
 	body.sfpg a:hover
 	{
-		color:$color_body_hover;
+		color:'.COLOR_BODY_HOVER.';
 		text-decoration:none;
 	}
 
@@ -3223,7 +3740,7 @@
 	{
 		border-spacing:0px;
 		border-collapse:separate;
-		font-size:".FONT_SIZE."px;
+		font-size:'.FONT_SIZE.'px;
 		height:100%;
 		width:100%;
 	}
@@ -3238,22 +3755,21 @@
 	{
 		text-align:center;
 		padding:0px;
-		cellspacing:0px;
 	}
 
 	table.sfpg_disp td.menu
 	{
-		background:$color_menu_back;
-		border-top:1px solid $color_menu_top;
+		background:'.COLOR_MENU_BACK.';
+		border-top:1px solid '.COLOR_MENU_TOP.';
 		vertical-align:middle;
 		white-space:nowrap;
 	}
 
 	table.sfpg_disp td.navi
 	{
-		height:".NAV_BAR_HEIGHT."px;
-		background:$color_navbar_back;
-		border-top:1px solid $color_navbar_top;
+		height:'.NAV_BAR_HEIGHT.'px;
+		background:'.COLOR_NAVBAR_BACK.';
+		border-top:1px solid '.COLOR_NAVBAR_TOP.';
 		vertical-align:middle;
 		white-space:nowrap;
 	}
@@ -3271,20 +3787,20 @@
 
 	.sfpg_info_text
 	{
-		".(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'')."
-		background:$color_info_back;
-		border:1px solid $color_info_border;
-		color:$color_info_text;
+		'.(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'').'
+		background:'.COLOR_INFO_BACK.';
+		border:1px solid '.COLOR_INFO_BORDER.';
+		color:'.COLOR_INFO_TEXT.';
 		padding:1px 4px 1px 4px;
-		width:".(INFO_BOX_WIDTH - 35)."px;
+		width:'.(INFO_BOX_WIDTH - 35).'px;
 	}
 
 	.loading
 	{
-		".(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'')."
-		background:$color_info_back;
-		border:1px solid $color_info_border;
-		color:$color_info_text;
+		'.(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'').'
+		background:'.COLOR_INFO_BACK.';
+		border:1px solid '.COLOR_INFO_BORDER.';
+		color:'.COLOR_INFO_TEXT.';
 		width:200px;
 		padding:20px 20px 20px 20px;
 		margin:auto;
@@ -3294,9 +3810,9 @@
 	{
 		border-radius:15px;
 		cursor:pointer;
-		background:$color_button_back;
-		border:1px solid $color_button_border;
-		color:$color_button_text;
+		background:'.COLOR_BUTTON_BACK.';
+		border:1px solid '.COLOR_BUTTON_BORDER.';
+		color:'.COLOR_BUTTON_TEXT.';
 		padding:2px 8px 2px 8px;
 		margin:0px 5px 0px 5px;
 		white-space:nowrap;
@@ -3304,35 +3820,35 @@
 
 	.sfpg_button:hover, .sfpg_button_nav:hover, .sfpg_button_on:hover
 	{
-		background:$color_button_hover;
-		color:$color_button_hover_text;
+		background:'.COLOR_BUTTON_HOVER.';
+		color:'.COLOR_BUTTON_HOVER_TEXT.';
 	}
 
 	.sfpg_button_hover
 	{
-		background:$color_button_hover;
-		color:$color_button_hover_text;
+		background:'.COLOR_BUTTON_HOVER.';
+		color:'.COLOR_BUTTON_HOVER_TEXT.';
 	}
 
 	.sfpg_button_on
 	{
-		background:$color_button_on;
-		color:$color_button_text_on;
+		background:'.COLOR_BUTTON_ON.';
+		color:'.COLOR_BUTTON_TEXT_ON.';
 	}
 
 	.sfpg_button_disabled
 	{
 		cursor:default;
-		border:1px solid $color_button_border_off;
-		background:$color_button_back_off;
-		color:$color_button_text_off;
+		border:1px solid '.COLOR_BUTTON_BORDER_OFF.';
+		background:'.COLOR_BUTTON_BACK_OFF.';
+		color:'.COLOR_BUTTON_TEXT_OFF.';
 	}
 
 	.sfpg_button_nav
 	{
-		border:1px solid $color_button_nav_border;
-		background:$color_button_nav_back;
-		color:$color_button_nav_text;
+		border:1px solid '.COLOR_BUTTON_NAV_BORDER.';
+		background:'.COLOR_BUTTON_NAV_BACK.';
+		color:'.COLOR_BUTTON_NAV_TEXT.';
 	}
 
 	.thumbbox, .descbox
@@ -3342,110 +3858,110 @@
 		display:inline-block;
 		zoom:1;
 		*display:inline;
-		width:".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)."px;
-		height:".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT)."px;
+		width:'.((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2).'px;
+		height:'.((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT).'px;
 		margin:0px;
 		padding:0px;
 	}
 
 	.descbox
 	{
-		width:".(((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)*2)."px;
+		width:'.(((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)*2).'px;
 	}
 
 	.thumbimgbox
 	{
-		width:".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH)."px;
-		height:".((THUMB_BORDER_WIDTH * 2) + THUMB_MARGIN + THUMB_MAX_HEIGHT + 6)."px;
+		width:'.((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH).'px;
+		height:'.((THUMB_BORDER_WIDTH * 2) + THUMB_MARGIN + THUMB_MAX_HEIGHT + 6).'px;
 		margin:0px; 
 		padding:0px;
 	}
 
 	.innerboxdir, .innerboximg, .innerboxfile, .innerboxdir_hover, .innerboximg_hover, .innerboxfile_hover, .innerbox_marked
 	{
-		".(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'')."
+		'.(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'').'
 		cursor:pointer;
-		margin:".THUMB_BOX_MARGIN."px;
+		margin:'.THUMB_BOX_MARGIN.'px;
 		padding:0px;
-		width:".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2)."px;
-		height:".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT)."px;
+		width:'.((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2).'px;
+		height:'.((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT).'px;
 	}
 
 	.innerboxdesc
 	{
 		text-align:left;
 		overflow:auto;
-		".(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'')."
-		margin:".THUMB_BOX_MARGIN."px;
+		'.(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'').'
+		margin:'.THUMB_BOX_MARGIN.'px;
 		padding:5px;
-		width:".(2*(THUMB_BOX_MARGIN+(2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2 - 5))."px;
-		height:".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT - 10)."px;
-		border:1px solid $color_desc_box_border;
-		background:$color_desc_box_back;
-		color:$color_desc_box_text;
+		width:'.(2*(THUMB_BOX_MARGIN+(2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2 - 5)).'px;
+		height:'.((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT - 10).'px;
+		border:1px solid '.COLOR_DESC_BOX_BORDER.';
+		background:'.COLOR_DESC_BOX_BACK.';
+		color:'.COLOR_DESC_BOX_TEXT.';
 	}
 
 	.innerboxdir, .innerboxdir_hover, .innerbox_marked
 	{
-		border:1px solid $color_dir_box_border;
-		background:$color_dir_box_back;
-		color:$color_dir_box_text;
+		border:1px solid '.COLOR_DIR_BOX_BORDER.';
+		background:'.COLOR_DIR_BOX_BACK.';
+		color:'.COLOR_DIR_BOX_TEXT.';
 	}
 
 	.innerboximg, .innerboximg_hover
 	{
-		border:1px solid $color_img_box_border;
-		background:$color_img_box_back;
-		color:$color_img_box_text;
+		border:1px solid '.COLOR_IMG_BOX_BORDER.';
+		background:'.COLOR_IMG_BOX_BACK.';
+		color:'.COLOR_IMG_BOX_TEXT.';
 	}
 
 	.innerboxfile, .innerboxfile_hover
 	{
-		border:1px solid $color_file_box_border;
-		background:$color_file_box_back;
-		color:$color_file_box_text;
+		border:1px solid '.COLOR_FILE_BOX_BORDER.';
+		background:'.COLOR_FILE_BOX_BACK.';
+		color:'.COLOR_FILE_BOX_TEXT.';
 	}
 
 	.innerboxdir_hover
 	{
-		background:$color_dir_hover;
-		color:$color_dir_hover_text;
+		background:'.COLOR_DIR_HOVER.';
+		color:'.COLOR_DIR_HOVER_TEXT.';
 	}
 
 	.innerboximg_hover
 	{
-		background:$color_img_hover;
-		color:$color_img_hover_text;
+		background:'.COLOR_IMG_HOVER.';
+		color:'.COLOR_IMG_HOVER_TEXT.';
 	}
 
 	.innerboxfile_hover
 	{
-		background:$color_file_hover;
-		color:$color_file_hover_text;
+		background:'.COLOR_FILE_HOVER.';
+		color:'.COLOR_FILE_HOVER_TEXT.';
 	}
 
 	.innerbox_marked
 	{
-		background:$color_marked_back;
-		color:$color_marked_text;
+		background:'.COLOR_MARKED_BACK.';
+		color:'.COLOR_MARKED_TEXT.';
 	}
 
 	.full_image, .full_image_no_resize
 	{
 		cursor:pointer;
-		border:".FULLIMG_BORDER_WIDTH."px solid $color_fullimg_border;
-		width: auto;
-		height : auto;
-		max-height: 100%;
-		max-width: 100%;
-		opacity: 0;
-		transition: opacity 0.5s;
+		border:'.FULLIMG_BORDER_WIDTH.'px solid '.COLOR_FULLIMG_BORDER.';
+		width:auto;
+		height:auto;
+		max-height:100%;
+		max-width:100%;
+		opacity:0;
+		transition:opacity 0.5s;
 	}
 
 	.full_image_no_resize
 	{
-		max-height: none;
-		max-width: none;
+		max-height:none;
+		max-width:none;
 	}
 
 	.banner
@@ -3455,17 +3971,18 @@
 
 	.thumb
 	{
-		".(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'')."
-		margin:".THUMB_MARGIN."px ".THUMB_MARGIN."px 5px ".THUMB_MARGIN."px;
-		border:".THUMB_BORDER_WIDTH."px solid $color_thumb_border;
+		'.(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'').'
+		margin:'.THUMB_MARGIN.'px '.THUMB_MARGIN.'px 5px '.THUMB_MARGIN.'px;
+		border:'.THUMB_BORDER_WIDTH.'px solid '.COLOR_THUMB_BORDER.';
 	}
 
 	.box_image, .box_wait
 	{
 		padding:30px;
+		'.(SHOW_IMAGE_NAME_BELOW_FULL?'padding-bottom:40px;':'').'
 		position:absolute;
 		top:0px;
-		bottom:".MENU_BOX_HEIGHT."px;
+		bottom:'.MENU_BOX_HEIGHT.'px;
 		right:0px;
 		left:0px;
 		overflow:auto;
@@ -3476,7 +3993,7 @@
 	.box_wait
 	{
 		z-index:1020;
-		".(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'')."
+		'.(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'').'
 	}
 
 	.box_image
@@ -3489,25 +4006,24 @@
 		width:100%;
 		height:250px;
 		border:0;
-		scrolling:no;
 		margin:0;
-		".(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'')."
+		'.(ROUND_CORNERS?'border-radius:'.ROUND_CORNERS.'px;':'').'
 	}
 
 	.wait
 	{
-		margin: 0;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		-ms-transform: translate(-50%, -50%);
-		transform: translate(-50%, -50%);
+		margin:0;
+		position:absolute;
+		top:50%;
+		left:50%;
+		-ms-transform:translate(-50%, -50%);
+		transform:translate(-50%, -50%);
 	}
 
 	.box_hud
 	{
 		position:absolute;
-		bottom:".(MENU_BOX_HEIGHT+20)."px;
+		bottom:'.(MENU_BOX_HEIGHT+20).'px;
 		right:0;
 		z-index:1200;
 		visibility:hidden;
@@ -3519,7 +4035,7 @@
 		position:absolute;
 		bottom:0;
 		left:0;
-		height:".MENU_BOX_HEIGHT."px;
+		height:'.MENU_BOX_HEIGHT.'px;
 		width:100%;
 		z-index:1120;
 		overflow:auto;
@@ -3529,16 +4045,16 @@
 	.box_info
 	{
 		position:absolute;
-		top:".THUMB_BOX_MARGIN."px;
-		bottom:".(MENU_BOX_HEIGHT + THUMB_BOX_MARGIN)."px;
-		left:".THUMB_BOX_MARGIN."px;
-		width:".(INFO_BOX_WIDTH - (2*THUMB_BOX_MARGIN))."px;
+		top:'.THUMB_BOX_MARGIN.'px;
+		bottom:'.(MENU_BOX_HEIGHT + THUMB_BOX_MARGIN).'px;
+		left:'.THUMB_BOX_MARGIN.'px;
+		width:'.(INFO_BOX_WIDTH - (2*THUMB_BOX_MARGIN)).'px;
 		z-index:1040;
 		visibility:hidden;
 		overflow:auto;
-		border:1px solid $color_infobox_border;
-		".(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'')."
-		background:$color_infobox_back;
+		border:1px solid '.COLOR_INFOBOX_BORDER.';
+		'.(ROUND_CORNERS?'border-radius:'.(ROUND_CORNERS*2).'px;':'').'
+		background:'.COLOR_INFOBOX_BACK.';
 	}
 	
 	.box_inner_info
@@ -3554,7 +4070,7 @@
 		visibility:hidden;
 		overflow:auto;
 		z-index:1240;
-		background:$color_infobox_back;
+		background:'.COLOR_INFOBOX_BACK.';
 	}
 
 	.box_data
@@ -3566,15 +4082,15 @@
 	.box_overlay
 	{
 		position:absolute;
-		bottom:".MENU_BOX_HEIGHT."px;
+		bottom:'.MENU_BOX_HEIGHT.'px;
 		left:0;
 		height:100%;
 		width:100%;
 		z-index:1010;
 		overflow:hidden;
 		visibility:hidden;
-		background:$color_overlay;
-		opacity:".OVERLAY_OPACITY.";
+		background:'.COLOR_OVERLAY.';
+		opacity:'.OVERLAY_OPACITY.';
 	}
 
 	.box_gallery
@@ -3582,19 +4098,24 @@
 		text-align:center;
 		position:absolute;
 		top:0px;
-		bottom:".MENU_BOX_HEIGHT."px;
+		bottom:'.MENU_BOX_HEIGHT.'px;
 		left:0px;
 		right:0px;
 		z-index:1000;
 		overflow:auto;
 		-webkit-overflow-scrolling:touch;
 	}
-	".
+	#password
+	{
+		display:none;
+		visibility:hidden;
+	}
+	'.
 	'</style>';
 	sfpg_javascript();
 	echo '</head>';
 	
-	if (PAYPAL_ENABLED and $get_set and ($_GET['cmd'] == 'buy') and IMAGE!='')
+	if (PAYPAL_ENABLED and $get_set and (@$_GET['cmd'] == 'buy') and IMAGE!='')
 	{
 		$sell=@file(GALLERY_ROOT.GALLERY.IMAGE.PAYPAL_EXTENSION,FILE_IGNORE_NEW_LINES);
 		if (($sell==false) or ($sell[1]!=1))
@@ -3632,7 +4153,12 @@
 			'</table>'.
 		'</div>'.
 		'<div id="box_image" class="box_image">'.
-			'<img alt="" src="" id="full" class="full_image" onclick="closeImageView()" onmouseover="gebi(\'button_close\').className=\'sfpg_button_hover\'" onmouseout="gebi(\'button_close\').className=\'sfpg_button\'">'.
+			'<img alt="" onerror=\"reloadImage(this)\" src="data:," id="full" class="full_image" onclick="closeImageView()" onmouseover="gebi(\'button_close\').className=\'sfpg_button_hover\'" onmouseout="gebi(\'button_close\').className=\'sfpg_button\'">';
+		if(SHOW_IMAGE_NAME_BELOW_FULL)
+		{
+			echo '<div id="box_image_full_name"></div>';
+		}
+		echo	
 		'</div>'.
 		'<div id="box_wait" class="box_wait">'.
 			'<div id="wait" class="wait"></div>'.
@@ -3652,11 +4178,15 @@
 		}
 		if ($banner_file)
 		{
-			echo '<div class="banner">'.(HTML_DESCRIPTIONS?@file_get_contents($banner_file):block_html(@file_get_contents($banner_file))).'</div>';
+			echo '<div class="banner">'.clean_html(@file_get_contents($banner_file)).'</div>';
 		}
 		elseif (TEXT_BANNER)
 		{
 			echo '<div class="banner">'.TEXT_BANNER.'</div>';
+		}
+		elseif (DIR_NAME_AS_BANNER)
+		{
+			echo '<div class="banner"><h1 id="banner"></h1></div>';
 		}
 		echo '</div>';
 		if (ADMIN===TRUE)

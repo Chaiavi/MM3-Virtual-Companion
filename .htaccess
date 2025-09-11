@@ -1,0 +1,36 @@
+# .htaccess - Place in root directory
+
+# Prevent access to database files
+<FilesMatch "\.(db|sqlite|sqlite3)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to SQL files
+<FilesMatch "\.(sql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect API directory (optional - APIs already check auth)
+<FilesMatch "^(api/).*">
+    # APIs handle their own authentication
+</FilesMatch>
+
+# Enable PHP sessions
+php_flag session.auto_start on
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Redirect to index.php for clean URLs (optional)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?path=$1 [QSA,L]
+</IfModule>

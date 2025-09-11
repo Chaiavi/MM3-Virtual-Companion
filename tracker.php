@@ -1,12 +1,20 @@
 <?php
 include "link.php";
 ?>
-<!doctype html>
-<html>
+<?php
+require_once 'api/auth.php';
+
+// Require authentication for tracker
+$auth = $mm3Auth->requireAuth();
+$userId = $auth['user_id'];
+$username = $auth['username'];
+?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<title>Progress Tracker</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MM3 Progress Tracker</title>
 	
 	<style>
 		/* Reset for full width */
@@ -292,6 +300,40 @@ include "link.php";
 			box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 		}
 
+		/* User info section */
+		.user-info-section {
+			margin-top: 20px;
+			padding: 15px 20px;
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 10px;
+			backdrop-filter: blur(10px);
+			text-align: center;
+			color: white;
+		}
+		
+		.user-info-section .username {
+			font-size: 18px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+		
+		.user-info-section .logout-link {
+			color: #dc3545;
+			text-decoration: none;
+			font-weight: bold;
+			padding: 8px 16px;
+			border: 2px solid #dc3545;
+			border-radius: 20px;
+			transition: all 0.3s ease;
+			display: inline-block;
+		}
+		
+		.user-info-section .logout-link:hover {
+			background: #dc3545;
+			color: white;
+			transform: translateY(-2px);
+		}
+
 		/* Fullscreen button */
 		.fullscreen-btn {
 			position: fixed;
@@ -420,6 +462,13 @@ include "link.php";
 </head>
 
 <body>
+	<div class="tracker-header">
+		<h1 class="tracker-title">🎯 Progress Tracker</h1>
+		<p class="tracker-description">
+			Track your exploration progress through all areas of Might and Magic III - Isles of Terra
+		</p>
+	</div>
+	
 	<div class="tracker-wrapper">
 		<button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
 		
@@ -686,17 +735,49 @@ include "link.php";
 			}
 		};
 
-		// Storage Manager (same as before)
-		const Storage = {
-			save: function(progress) {
+		// Simple API caller - authentication handled server-side
+		const API = {
+			apiUrl: 'api/tracker_api.php',
+			
+			async call(action, data = null, method = 'GET') {
 				try {
-					const data = {
-						progress: progress,
-						timestamp: new Date().toISOString(),
-						version: '1.0'
+					const options = {
+						method: method,
+						headers: {
+							'Content-Type': 'application/json',
+						}
 					};
-					localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(data));
-					localStorage.setItem(STORAGE_KEYS.LAST_SAVE, data.timestamp);
+					
+					let url = `${this.apiUrl}?action=${action}`;
+					
+					if (method === 'POST' && data) {
+						options.body = JSON.stringify(data);
+					}
+					
+					const response = await fetch(url, options);
+					const result = await response.json();
+					
+					if (!result.success) {
+						throw new Error(result.error || 'API call failed');
+					}
+					
+					return result.data;
+				} catch (error) {
+					console.error(`API call failed (${action}):`, error);
+					throw error;
+				}
+			}
+		};
+
+		// Database Storage Manager - SQLite Backend
+		const Storage = {
+			async apiCall(action, data = null, method = 'GET') {
+				return API.call(action, data, method);
+			},
+			
+			async save(progress) {
+				try {
+					await this.apiCall('save_progress', { progress }, 'POST');
 					return true;
 				} catch (error) {
 					console.error('Failed to save progress:', error);
@@ -704,23 +785,19 @@ include "link.php";
 				}
 			},
 			
-			load: function() {
+			async load() {
 				try {
-					const saved = localStorage.getItem(STORAGE_KEYS.PROGRESS);
-					if (!saved) return {};
-					
-					const data = JSON.parse(saved);
-					return data.progress || {};
+					const progress = await this.apiCall('progress');
+					return progress || {};
 				} catch (error) {
 					console.error('Failed to load progress:', error);
 					return {};
 				}
 			},
 			
-			clear: function() {
+			async clear() {
 				try {
-					localStorage.removeItem(STORAGE_KEYS.PROGRESS);
-					localStorage.removeItem(STORAGE_KEYS.LAST_SAVE);
+					await this.apiCall('save_progress', { progress: {} }, 'POST');
 					return true;
 				} catch (error) {
 					console.error('Failed to clear progress:', error);
@@ -728,19 +805,19 @@ include "link.php";
 				}
 			},
 			
-			loadSettings: function() {
+			async loadSettings() {
 				try {
-					const saved = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-					return saved ? JSON.parse(saved) : this.getDefaultSettings();
+					const settings = await this.apiCall('settings');
+					return Object.keys(settings).length > 0 ? settings : this.getDefaultSettings();
 				} catch (error) {
 					console.error('Failed to load settings:', error);
 					return this.getDefaultSettings();
 				}
 			},
 			
-			saveSettings: function(settings) {
+			async saveSettings(settings) {
 				try {
-					localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+					await this.apiCall('save_settings', { settings }, 'POST');
 					return true;
 				} catch (error) {
 					console.error('Failed to save settings:', error);
@@ -756,10 +833,10 @@ include "link.php";
 				};
 			},
 			
-			autoSave: function(progress) {
-				const settings = this.loadSettings();
+			async autoSave(progress) {
+				const settings = await this.loadSettings();
 				if (settings.autoSave) {
-					return this.save(progress);
+					return await this.save(progress);
 				}
 				return false;
 			}
@@ -773,8 +850,8 @@ include "link.php";
 				settings: {}
 			},
 			
-			init: function() {
-				this.state.settings = Storage.loadSettings();
+			async init() {
+				this.state.settings = await Storage.loadSettings();
 			},
 			
 			generateLocationHTML: function(location, areaKey, locationIndex) {
@@ -835,7 +912,7 @@ include "link.php";
 				container.innerHTML = areasHTML;
 			},
 			
-			toggleSection: function(sectionId) {
+			async toggleSection(sectionId) {
 				const section = document.getElementById(sectionId);
 				if (section) {
 					section.classList.toggle('active');
@@ -849,11 +926,11 @@ include "link.php";
 						this.state.settings.expandedSections = this.state.settings.expandedSections.filter(key => key !== areaKey);
 					}
 					
-					Storage.saveSettings(this.state.settings);
+					await Storage.saveSettings(this.state.settings);
 				}
 			},
 			
-			toggleAllSections: function() {
+			async toggleAllSections() {
 				const sections = document.querySelectorAll('.area-content');
 				this.state.sectionsExpanded = !this.state.sectionsExpanded;
 				
@@ -875,10 +952,10 @@ include "link.php";
 				} else {
 					this.state.settings.expandedSections = [];
 				}
-				Storage.saveSettings(this.state.settings);
+				await Storage.saveSettings(this.state.settings);
 			},
 			
-			onLocationToggle: function(checkbox) {
+			async onLocationToggle(checkbox) {
 				const areaKey = checkbox.dataset.area;
 				const locationIndex = parseInt(checkbox.dataset.locationIndex);
 				const locationId = `${areaKey}-${locationIndex}`;
@@ -900,7 +977,7 @@ include "link.php";
 				}
 				
 				this.updateProgress();
-				Storage.autoSave(this.state.currentProgress);
+				await Storage.autoSave(this.state.currentProgress);
 			},
 			
 			updateProgress: function() {
@@ -940,8 +1017,8 @@ include "link.php";
 				}
 			},
 			
-			loadProgress: function() {
-				const progress = Storage.load();
+			async loadProgress() {
+				const progress = await Storage.load();
 				this.state.currentProgress = progress;
 				
 				for (const areaKey in progress) {
@@ -1000,25 +1077,54 @@ include "link.php";
 
 		// Main App
 		const App = {
-			init: function() {
-				console.log('Initializing MM3 Progress Tracker');
+			async init() {
+				console.log('Initializing MM3 Progress Tracker with SQLite backend');
 				
-				UI.init();
-				UI.renderAreas();
-				UI.loadProgress();
+				try {
+					await UI.init();
+					UI.renderAreas();
+					
+					// Load progress (user is already authenticated server-side)
+					await UI.loadProgress();
+					
+					// Set up auto-save
+					setInterval(async () => {
+						if (UI.state.currentProgress && Object.keys(UI.state.currentProgress).length > 0) {
+							await Storage.autoSave(UI.state.currentProgress);
+						}
+					}, 30000);
+					
+					window.addEventListener('beforeunload', async () => {
+						await Storage.save(UI.state.currentProgress);
+					});
+					
+					console.log('MM3 Progress Tracker initialized successfully with database backend');
+				} catch (error) {
+					console.error('Failed to initialize tracker:', error);
+					this.showError('Failed to connect to database. Please refresh the page.');
+				}
+			},
+			
+			showError(message) {
+				const errorDiv = document.createElement('div');
+				errorDiv.style.cssText = `
+					position: fixed;
+					top: 20px;
+					left: 50%;
+					transform: translateX(-50%);
+					background: #dc3545;
+					color: white;
+					padding: 15px 25px;
+					border-radius: 5px;
+					z-index: 1000;
+					font-weight: bold;
+				`;
+				errorDiv.textContent = message;
+				document.body.appendChild(errorDiv);
 				
-				// Set up auto-save
-				setInterval(() => {
-					if (UI.state.currentProgress && Object.keys(UI.state.currentProgress).length > 0) {
-						Storage.autoSave(UI.state.currentProgress);
-					}
-				}, 30000);
-				
-				window.addEventListener('beforeunload', () => {
-					Storage.save(UI.state.currentProgress);
-				});
-				
-				console.log('MM3 Progress Tracker initialized successfully');
+				setTimeout(() => {
+					document.body.removeChild(errorDiv);
+				}, 5000);
 			}
 		};
 

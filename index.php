@@ -1,4 +1,18 @@
 <?php
+// index.php - Main page with authentication
+require_once 'api/auth.php';
+
+// Check if user is logged in
+$auth = $mm3Auth->checkAuth();
+$isLoggedIn = $auth['logged_in'];
+$username = $isLoggedIn ? $auth['username'] : '';
+
+// If not logged in, redirect to login page
+if (!$isLoggedIn) {
+    header('Location: login.php');
+    exit;
+}
+
 include "link.php";
 ?>
 
@@ -8,7 +22,7 @@ include "link.php";
 		<title>Isles Of Terra vCompanion</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/minimal.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="assets/js/custom-util.js"></script>
@@ -19,8 +33,89 @@ include "link.php";
 				color: white;
 			}
 			
+			/* User info bar */
+			.user-bar {
+				position: fixed;
+				top: 0;
+				right: 0;
+				background: rgba(0, 0, 0, 0.8);
+				color: white;
+				padding: 10px 20px;
+				border-radius: 0 0 0 10px;
+				z-index: 1000;
+				font-size: 14px;
+			}
+			
+			/* Fix page wrapper to account for user bar */
+			#page-wrapper {
+				padding-top: 60px; /* Add space for user bar */
+			}
+			
+			/* Beautiful header styling */
+			#main > header {
+				background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(52, 73, 94, 0.95) 100%), 
+				           url('images/banner.jpg') center center / cover;
+				padding: 60px 20px;
+				text-align: center;
+				position: relative;
+				margin-bottom: 0;
+				box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+			}
+			
+			#main > header::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(135deg, rgba(44, 62, 80, 0.8) 0%, rgba(52, 73, 94, 0.6) 100%);
+				z-index: 1;
+			}
+			
+			#main > header h2 {
+				position: relative;
+				z-index: 2;
+				font-size: 2.5em;
+				font-weight: 800;
+				text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+				margin-bottom: 15px;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+			}
+			
+			#main > header p {
+				position: relative;
+				z-index: 2;
+				font-size: 1.3em;
+				opacity: 0.9;
+				text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+				font-weight: 300;
+				letter-spacing: 1px;
+			}
+			
+			.user-bar a {
+				color: #dc3545;
+				text-decoration: none;
+				margin-left: 10px;
+				font-weight: bold;
+			}
+			
+			.user-bar a:hover {
+				text-decoration: underline;
+			}
+			
 			/* Mobile-first responsive navigation */
 			@media (max-width: 768px) {
+				.user-bar {
+					position: relative;
+					top: auto;
+					right: auto;
+					border-radius: 0;
+					text-align: center;
+					margin-bottom: 20px;
+				}
+				
 				.nav-tabs {
 					display: flex;
 					flex-direction: column;
@@ -45,48 +140,6 @@ include "link.php";
 					font-weight: bold;
 					text-transform: uppercase;
 					letter-spacing: 0.5px;
-				}
-				
-				.btn-danger {
-					background: linear-gradient(135deg, #dc3545, #c82333);
-					color: white;
-					box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-				}
-				
-				.btn-danger:hover,
-				.btn-danger:focus {
-					background: linear-gradient(135deg, #c82333, #a71e2a);
-					transform: translateY(-2px);
-					box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
-				}
-				
-				.btn-danger:active {
-					transform: translateY(0);
-					box-shadow: 0 2px 10px rgba(220, 53, 69, 0.3);
-				}
-				
-				.container {
-					padding: 10px;
-				}
-				
-				header h2 {
-					font-size: 24px !important;
-					text-align: center;
-					margin-bottom: 10px;
-				}
-				
-				header p {
-					font-size: 16px !important;
-					text-align: center;
-					margin-bottom: 20px;
-				}
-				
-				#main {
-					padding: 20px 0;
-				}
-				
-				.align-center {
-					text-align: center;
 				}
 			}
 			
@@ -118,49 +171,37 @@ include "link.php";
 					letter-spacing: 0.5px;
 					white-space: nowrap;
 				}
-				
-				.btn-danger {
-					background: linear-gradient(135deg, #dc3545, #c82333);
-					color: white;
-					box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
-				}
-				
-				.btn-danger:hover,
-				.btn-danger:focus {
-					background: linear-gradient(135deg, #c82333, #a71e2a);
-					transform: translateY(-1px);
-					box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
-				}
-				
-				.btn-danger:active {
-					transform: translateY(0);
-					box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
-				}
-				
-				.container {
-					max-width: 1200px;
-					margin: 0 auto;
-					padding: 20px;
-				}
-				
-				header h2 {
-					font-size: 32px;
-					text-align: center;
-					margin-bottom: 10px;
-				}
-				
-				header p {
-					font-size: 18px;
-					text-align: center;
-					margin-bottom: 30px;
-				}
-				
-				#main {
-					padding: 40px 0;
-				}
 			}
 			
-			/* Common styles */
+			.btn-danger {
+				background: linear-gradient(135deg, #dc3545, #c82333);
+				color: white;
+				box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+			}
+			
+			.btn-danger:hover,
+			.btn-danger:focus {
+				background: linear-gradient(135deg, #c82333, #a71e2a);
+				transform: translateY(-2px);
+				box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+			}
+			
+			.btn-danger:active {
+				transform: translateY(0);
+				box-shadow: 0 2px 10px rgba(220, 53, 69, 0.3);
+			}
+			
+			.btn-danger.active {
+				background: linear-gradient(135deg, #a71e2a, #721c24);
+				box-shadow: 0 2px 8px rgba(220, 53, 69, 0.5);
+			}
+			
+			.btn-danger:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+			
+			/* Content container */
 			.content-container {
 				min-height: 400px;
 				background: rgba(255, 255, 255, 0.05);
@@ -195,36 +236,6 @@ include "link.php";
 			@keyframes spin {
 				0% { transform: rotate(0deg); }
 				100% { transform: rotate(360deg); }
-			}
-			
-			/* Active button state */
-			.btn-danger.active {
-				background: linear-gradient(135deg, #a71e2a, #721c24);
-				box-shadow: 0 2px 8px rgba(220, 53, 69, 0.5);
-			}
-			
-			/* Footer responsive */
-			#footer {
-				margin-top: 40px;
-				padding: 20px;
-				text-align: center;
-			}
-			
-			@media (max-width: 768px) {
-				#footer {
-					margin-top: 30px;
-					padding: 15px;
-				}
-				
-				#footer .copyright {
-					font-size: 14px;
-				}
-			}
-			
-			/* Disabled button state */
-			.btn-danger:disabled {
-				opacity: 0.6;
-				cursor: not-allowed;
 			}
 		</style>
 		
@@ -379,6 +390,12 @@ include "link.php";
 	</head>
 
 	<body>
+		<!-- User Authentication Bar -->
+		<div class="user-bar">
+			Welcome, <?= htmlspecialchars($username) ?>
+			<a href="login.php?action=logout">Logout</a>
+		</div>
+
 		<div id="page-wrapper">
 			<article id="main">
 				<header>
