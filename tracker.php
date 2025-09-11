@@ -745,6 +745,7 @@ $username = $auth['username'];
 						method: method,
 						headers: {
 							'Content-Type': 'application/json',
+							'X-Requested-With': 'XMLHttpRequest'
 						}
 					};
 					
@@ -754,8 +755,16 @@ $username = $auth['username'];
 						options.body = JSON.stringify(data);
 					}
 					
+					console.log(`API call: ${method} ${url}`, data ? data : '(no data)');
+					if (method === 'POST' && data) {
+						console.log('Raw JSON being sent:', options.body);
+					}
+					
 					const response = await fetch(url, options);
+					console.log(`API response status: ${response.status}`);
+					
 					const result = await response.json();
+					console.log(`API response:`, result);
 					
 					if (!result.success) {
 						throw new Error(result.error || 'API call failed');
@@ -777,7 +786,16 @@ $username = $auth['username'];
 			
 			async save(progress) {
 				try {
-					await this.apiCall('save_progress', { progress }, 'POST');
+					console.log('Saving progress to API:', progress);
+					console.log('Progress type:', typeof progress);
+					console.log('Progress keys:', Object.keys(progress));
+					
+					// Ensure progress is a proper object, not an array
+					const progressObj = progress && typeof progress === 'object' && !Array.isArray(progress) ? progress : {};
+					console.log('Cleaned progress object:', progressObj);
+					
+					await this.apiCall('save_progress', { progress: progressObj }, 'POST');
+					console.log('Progress saved successfully');
 					return true;
 				} catch (error) {
 					console.error('Failed to save progress:', error);
@@ -788,6 +806,17 @@ $username = $auth['username'];
 			async load() {
 				try {
 					const progress = await this.apiCall('progress');
+					console.log('Loaded progress from API:', progress);
+					console.log('Progress type:', typeof progress);
+					console.log('Is array:', Array.isArray(progress));
+					
+					// Ensure we return a proper object
+					if (progress && typeof progress === 'object' && !Array.isArray(progress)) {
+						return progress;
+					} else if (Array.isArray(progress) && progress.length === 0) {
+						console.log('Received empty array, converting to empty object');
+						return {};
+					}
 					return progress || {};
 				} catch (error) {
 					console.error('Failed to load progress:', error);
@@ -835,9 +864,12 @@ $username = $auth['username'];
 			
 			async autoSave(progress) {
 				const settings = await this.loadSettings();
+				console.log('AutoSave - Settings loaded:', settings);
 				if (settings.autoSave) {
+					console.log('AutoSave enabled, calling save...');
 					return await this.save(progress);
 				}
+				console.log('AutoSave disabled, skipping save');
 				return false;
 			}
 		};
@@ -960,6 +992,8 @@ $username = $auth['username'];
 				const locationIndex = parseInt(checkbox.dataset.locationIndex);
 				const locationId = `${areaKey}-${locationIndex}`;
 				
+				console.log('Location toggled:', locationId, 'checked:', checkbox.checked);
+				
 				if (!this.state.currentProgress[areaKey]) {
 					this.state.currentProgress[areaKey] = {};
 				}
@@ -977,7 +1011,10 @@ $username = $auth['username'];
 				}
 				
 				this.updateProgress();
-				await Storage.autoSave(this.state.currentProgress);
+				
+				console.log('Current progress before save:', this.state.currentProgress);
+				const saveResult = await Storage.autoSave(this.state.currentProgress);
+				console.log('Save result:', saveResult);
 			},
 			
 			updateProgress: function() {

@@ -4,7 +4,7 @@ class MM3Database {
     private $dbPath;
     
     public function __construct() {
-        $this->dbPath = __DIR__ . '/../database/mm3_progress.db';
+        $this->dbPath = __DIR__ . '/../database/mm3_vcompanion.db';
         $this->initDatabase();
     }
     
