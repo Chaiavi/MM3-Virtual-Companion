@@ -87,14 +87,26 @@ var clickOnProtectionResult = function() {
 var changeInItemValue = function() {
 	var item = document.getElementById("itemId");
 	var materials = document.getElementById("itemMaterialId");
+	var property = document.getElementById("itemPropertyId");
 
 	var selected_item = item.options[item.selectedIndex];
 	var selected_material = materials.options[materials.selectedIndex];
+	var selected_property = property.options[property.selectedIndex];
 
-	var item_protection = selected_item.value;
-	var material_protection = selected_material.value;
+	var item_protection = parseInt(selected_item.value);
+	var material_protection = parseInt(selected_material.value);
+	var property_protection = parseInt(selected_property.value);
+	
+	// Handle NaN values by converting to 0
+	if (isNaN(item_protection)) item_protection = 0;
+	if (isNaN(material_protection)) material_protection = 0;
+	if (isNaN(property_protection)) property_protection = 0;
 
-	document.getElementById("itemProtection").value = parseInt(item_protection) + parseInt(material_protection);			
+	var total_protection = item_protection + material_protection + property_protection;
+	
+	console.log("Item:", item_protection, "Material:", material_protection, "Property:", property_protection, "Total:", total_protection);
+	
+	document.getElementById("itemProtection").value = total_protection;			
 }
 
 var clickOnItemResult = function() {

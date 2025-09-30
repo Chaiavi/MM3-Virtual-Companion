@@ -8,7 +8,7 @@ include "link.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/minimal.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	<script src="assets/js/mm3calc.js"></script>
+	<script src="assets/js/mm3calc.js?v=2"></script>
 	<title>Items Calculator</title>
 	
 	<style>
@@ -85,7 +85,7 @@ include "link.php";
 			}
 			
 			.item-row {
-				grid-template-columns: 2fr 2fr 1fr;
+				grid-template-columns: 2fr 2fr 2fr 1fr;
 			}
 			
 			.form-group {
@@ -421,26 +421,29 @@ include "link.php";
 								<option value="0">Item</option>
 								<option value="0">Amulet</option>
 								<option value="0">Belt</option>
+								<option value="0">Box</option>
 								<option value="1">Boots</option>
 								<option value="0">Broach</option>
 								<option value="0">Cameo</option>
 								<option value="1">Cape</option>
 								<option value="0">Charm</option>
 								<option value="1">Cloak</option>
-								<option value="3">Cowl</option>
 								<option value="0">Crown</option>
 								<option value="1">Gauntlets</option>
-								<option value="1">Greaves</option>
 								<option value="2">Helm</option>
+								<option value="0">Jewel</option>
 								<option value="0">Medal</option>
 								<option value="0">Necklace</option>
+								<option value="0">Orb</option>
 								<option value="0">Pendant</option>
 								<option value="0">Ring</option>
 								<option value="1">Robes</option>
+								<option value="0">Rod</option>
 								<option value="0">Scarab</option>
 								<option value="4">Shield</option>
 								<option value="0">Tiara</option>
-								<option value="4">Tower Shield</option>
+								<option value="0">Wand</option>
+								<option value="0">Whistle</option>
 							</select>
 						</div>
 
@@ -469,6 +472,48 @@ include "link.php";
 								<option value="2">Silver</option>
 								<option value="4">Steel</option>
 								<option value="-3">Wooden</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<select id="itemPropertyId" onchange="changeInItemValue()">
+								<option value="0">Property</option>
+								<option value="3">Acidic</option>
+								<option value="6">Blazing</option>
+								<option value="1">Burning</option>
+								<option value="5">Cold</option>
+								<option value="6">Cryo</option>
+								<option value="2">Dense</option>
+								<option value="6">Dyna</option>
+								<option value="5">Ectoplasmic</option>
+								<option value="5">Electric</option>
+								<option value="2">Fiery</option>
+								<option value="4">Flaming</option>
+								<option value="3">Flashing</option>
+								<option value="1">Flickering</option>
+								<option value="4">Freezing</option>
+								<option value="3">Frost</option>
+								<option value="3">Fuming</option>
+								<option value="1">Glowing</option>
+								<option value="1">Icy</option>
+								<option value="2">Incandescent</option>
+								<option value="6">Kinetic</option>
+								<option value="3">Magical</option>
+								<option value="1">Mystic</option>
+								<option value="10">Noxious</option>
+								<option value="5">Poisonous</option>
+								<option value="3">Power</option>
+								<option value="2">Pyric</option>
+								<option value="5">Radiating</option>
+								<option value="8">Scorching</option>
+								<option value="5">Seething</option>
+								<option value="4">Shocking</option>
+								<option value="3">Sonic</option>
+								<option value="2">Sparking</option>
+								<option value="2">Static</option>
+								<option value="4">Thermal</option>
+								<option value="6">Toxic</option>
+								<option value="4">Venomous</option>
 							</select>
 						</div>
 
