@@ -562,5 +562,6 @@ include "link.php";
 	<script src="assets/js/main.js"></script>
 	<script src="assets/js/sweetalert2.all.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+	<script src="assets/js/searchable-dropdown.js"></script>
 </body>
 </html>
