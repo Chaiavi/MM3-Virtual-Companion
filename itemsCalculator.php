@@ -317,28 +317,28 @@ include "link.php";
 						<div class="form-group">
 							<select id="weaponMaterialId" onchange="changeInWeaponValue()">
 								<option value="0">Material</option>
-								<option value="6">Amber</option>
-								<option value="-1">Brass</option>
-								<option value="0">Bronze</option>
-								<option value="2">Coral</option>
-								<option value="2">Crystal</option>
-								<option value="39">Diamond</option>
-								<option value="8">Ebony</option>
-								<option value="22">Emerald</option>
+								<option value="8">Amber</option>
+								<option value="-2">Brass</option>
+								<option value="-1">Bronze</option>
+								<option value="3">Coral</option>
+								<option value="3">Crystal</option>
+								<option value="47">Diamond</option>
+								<option value="10">Ebony</option>
+								<option value="28">Emerald</option>
 								<option value="0">Glass</option>
-								<option value="12">Gold</option>
-								<option value="3">Iron</option>
-								<option value="4">Lapis</option>
+								<option value="15">Gold</option>
+								<option value="4">Iron</option>
+								<option value="5">Lapis</option>
 								<option value="-10">Leather</option>
-								<option value="60">Obsidian</option>
-								<option value="4">Pearl</option>
-								<option value="16">Platinum</option>
-								<option value="10">Qaurtz</option>
-								<option value="18">Ruby</option>
-								<option value="28">Sapphire</option>
-								<option value="6">Silver</option>
-								<option value="9">Steel</option>
-								<option value="-3">Wooden</option>
+								<option value="70">Obsidian</option>
+								<option value="5">Pearl</option>
+								<option value="20">Platinum</option>
+								<option value="13">Quartz</option>
+								<option value="23">Ruby</option>
+								<option value="35">Sapphire</option>
+								<option value="7">Silver</option>
+								<option value="11">Steel</option>
+								<option value="-8">Wooden</option>
 							</select>
 						</div>
 
