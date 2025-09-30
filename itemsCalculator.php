@@ -46,7 +46,7 @@ include "link.php";
 				font-size: 18px;
 				font-weight: bold;
 				margin: 20px 0 10px 0;
-				color: #333;
+				color: white;
 				text-align: center;
 			}
 			
@@ -105,7 +105,7 @@ include "link.php";
 				font-size: 20px;
 				font-weight: bold;
 				margin: 25px 0 15px 0;
-				color: #333;
+				color: white;
 				text-align: left;
 			}
 			
