@@ -219,137 +219,130 @@ $username = $auth['username'];
 			</div>
 			
 			<div class="button-group">
-				<button type="button" class="btn btn-primary" onclick="saveNotes()">💾 Save Notes</button>
-				<button type="button" class="btn btn-secondary" onclick="clearNotes()">🗑️ Clear All</button>
+				<button type="button" id="saveNotesBtn" class="btn btn-primary">💾 Save Notes</button>
+				<button type="button" id="clearNotesBtn" class="btn btn-secondary">🗑️ Clear All</button>
 			</div>
 			
 			<div class="status-message" id="statusMessage"></div>
 		</div>
 	</div>
-
+	<!-- Include jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		const API_URL = 'api/notes_api.php';
-		let autoSaveTimeout;
 		let lastSavedContent = '';
 		
-		// Load notes on page load
-		document.addEventListener('DOMContentLoaded', function() {
-			loadNotes();
+		// Function to show status messages
+		function showStatus(message, type) {
+			const $statusEl = $('#statusMessage');
+			$statusEl.text(message)
+				.removeClass('status-success status-error')
+				.addClass('status-' + type)
+				.fadeIn();
 			
-			// Set up auto-save on typing
-			const textarea = document.getElementById('notes-textarea');
-			textarea.addEventListener('input', function() {
-				clearTimeout(autoSaveTimeout);
-				autoSaveTimeout = setTimeout(autoSave, 2000); // Auto-save after 2 seconds of inactivity
-			});
-		});
-		
-		async function apiCall(action, data = null, method = 'GET') {
-			try {
-				const options = {
-					method: method,
-					headers: {
-						'Content-Type': 'application/json',
-					}
-				};
-				
-				let url = `${API_URL}?action=${action}`;
-				
-				if (method === 'POST' && data) {
-					options.body = JSON.stringify(data);
-				}
-				
-				const response = await fetch(url, options);
-				const result = await response.json();
-				
-				if (!result.success) {
-					throw new Error(result.error || 'API call failed');
-				}
-				
-				return result.data;
-			} catch (error) {
-				console.error(`API call failed (${action}):`, error);
-				throw error;
-			}
+			setTimeout(() => {
+				$statusEl.fadeOut();
+			}, 3000);
 		}
-		
+
+		// Function to show auto-save indicator
+		function showAutoSaveIndicator() {
+			$('#autoSaveIndicator').addClass('show');
+		}
+
+		// Function to hide auto-save indicator
+		function hideAutoSaveIndicator() {
+			setTimeout(() => {
+				$('#autoSaveIndicator').removeClass('show');
+			}, 1000);
+		}
+
+		// Function to load notes
 		async function loadNotes() {
 			try {
-				const data = await apiCall('load');
-				document.getElementById('notes-textarea').value = data.content || '';
-				lastSavedContent = data.content || '';
+				console.log('Loading notes...');
+				const response = await $.ajax({
+					url: API_URL,
+					data: { action: 'load' },
+					dataType: 'json',
+					xhrFields: {
+						withCredentials: true
+					}
+				});
+				
+				console.log('Load response:', response);
+				
+				if (response.success && response.data) {
+					const content = response.data.content || '';
+					$('#notes-textarea').val(content);
+					lastSavedContent = content;
+					console.log('Notes loaded successfully');
+				} else {
+					throw new Error(response.error || 'No data returned from server');
+				}
 			} catch (error) {
+				console.error('Error loading notes:', error);
 				showStatus('Failed to load notes: ' + error.message, 'error');
 			}
 		}
-		
+
+		// Function to save notes
 		async function saveNotes() {
-			const content = document.getElementById('notes-textarea').value;
+			const content = $('#notes-textarea').val();
 			
 			try {
-				await apiCall('save', { content }, 'POST');
-				lastSavedContent = content;
-				showStatus('Notes saved successfully!', 'success');
+				console.log('Saving notes...');
+				const response = await $.ajax({
+					url: `${API_URL}?action=save`,
+					method: 'POST',
+					data: JSON.stringify({ content: content }),
+					contentType: 'application/json',
+					dataType: 'json',
+					xhrFields: {
+						withCredentials: true
+					}
+				});
+				
+				console.log('Save response:', response);
+				
+				if (response.success) {
+					lastSavedContent = content;
+					showStatus('Notes saved successfully!', 'success');
+				} else {
+					throw new Error(response.error || 'Failed to save notes');
+				}
 			} catch (error) {
+				console.error('Error saving notes:', error);
 				showStatus('Failed to save notes: ' + error.message, 'error');
 			}
 		}
-		
-		async function autoSave() {
-			const content = document.getElementById('notes-textarea').value;
-			
-			// Only auto-save if content has changed
-			if (content === lastSavedContent) {
-				return;
-			}
-			
-			try {
-				showAutoSaveIndicator();
-				await apiCall('save', { content }, 'POST');
-				lastSavedContent = content;
-				hideAutoSaveIndicator();
-			} catch (error) {
-				console.error('Auto-save failed:', error);
-				hideAutoSaveIndicator();
-			}
-		}
-		
+
+		// Function to clear notes
 		function clearNotes() {
 			if (confirm('Are you sure you want to clear all notes? This cannot be undone.')) {
-				document.getElementById('notes-textarea').value = '';
+				$('#notes-textarea').val('');
 				saveNotes();
 			}
 		}
-		
-		function showStatus(message, type) {
-			const statusEl = document.getElementById('statusMessage');
-			statusEl.textContent = message;
-			statusEl.className = `status-message status-${type}`;
-			statusEl.style.display = 'block';
+
+		// Document ready handler
+		$(document).ready(function() {
+			// Load notes when the page loads
+			loadNotes();
 			
-			setTimeout(() => {
-				statusEl.style.display = 'none';
-			}, 3000);
-		}
-		
-		function showAutoSaveIndicator() {
-			document.getElementById('autoSaveIndicator').classList.add('show');
-		}
-		
-		function hideAutoSaveIndicator() {
-			setTimeout(() => {
-				document.getElementById('autoSaveIndicator').classList.remove('show');
-			}, 1000);
-		}
-		
-		// Save before leaving page
-		window.addEventListener('beforeunload', function(e) {
-			const content = document.getElementById('notes-textarea').value;
-			if (content !== lastSavedContent) {
-				// Attempt to save (may not complete due to page unload)
-				navigator.sendBeacon(`${API_URL}?action=save`, JSON.stringify({ content }));
-			}
+			// Set up event listeners
+			$('#saveNotesBtn').on('click', saveNotes);
+			$('#clearNotesBtn').on('click', clearNotes);
+			
+			// Warn before leaving page if there are unsaved changes
+			$(window).on('beforeunload', function(e) {
+				const content = $('#notes-textarea').val();
+				if (content !== lastSavedContent) {
+					e.preventDefault();
+					e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+					return e.returnValue;
+				}
+			});
 		});
 	</script>
 </body>
-</html>
