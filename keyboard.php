@@ -1,3 +1,6 @@
+<?php
+include 'includes/header_unified.php';
+?>
 <!doctype html>
 <html>
 <head>

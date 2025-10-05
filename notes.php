@@ -1,6 +1,7 @@
 <?php
 require_once 'api/auth.php';
 include "link.php";
+include 'includes/header_unified.php';
 
 // Require authentication for notes
 $auth = $mm3Auth->requireAuth();
@@ -10,49 +11,56 @@ $username = $auth['username'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MM3 Notes</title>
-	
-	<style>
-		* {
-			box-sizing: border-box;
-		}
-		
-		body {
-			margin: 0;
-			padding: 20px;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			min-height: 100vh;
-		}
-		
-		.notes-container {
-			max-width: 1200px;
-			margin: 0 auto;
-			background: rgba(255, 255, 255, 0.95);
-			border-radius: 15px;
-			box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-			overflow: hidden;
-			backdrop-filter: blur(10px);
-		}
-		
-		.notes-header {
-			background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-			color: white;
-			padding: 20px;
-			text-align: center;
-		}
-		
-		.notes-title {
-			margin: 0 0 10px 0;
-			font-size: 24px;
-			font-weight: bold;
-		}
-		
-		.user-info {
-			font-size: 14px;
-			opacity: 0.9;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM3 Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .content-wrapper {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .notes-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .notes-header {
+            background: linear-gradient(135deg, #3a5a7a 0%, #4a6b8a 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .notes-title {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            font-size: 14px;
+            opacity: 0.9;
 		}
 		
 		.notes-content {
@@ -204,22 +212,18 @@ $username = $auth['username'];
 </head>
 
 <body>
-	<div class="auto-save-indicator" id="autoSaveIndicator">Auto-saving...</div>
-	
-	<div class="notes-container">
-		<div class="notes-header">
-			<div class="notes-title">📝 Game Notes</div>
-			<div class="user-info">Logged in as: <?= htmlspecialchars($username) ?></div>
-		</div>
-		
-		<div class="notes-content">
-			<div class="form-group">
-				<label for="notes-textarea">Your Notes:</label>
-				<textarea id="notes-textarea" placeholder="Write your game notes, strategies, and important information here..."></textarea>
-			</div>
-			
-			<div class="button-group">
-				<button type="button" id="saveNotesBtn" class="btn btn-primary">💾 Save Notes</button>
+    <div class="content-wrapper" style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
+        <div class="auto-save-indicator" id="autoSaveIndicator" style="text-align: center; padding: 5px; background: #e8f4fd; color: #0a58ca; border-radius: 4px; margin-bottom: 15px; display: none;">Auto-saving...</div>
+        
+        <div class="notes-container" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; margin-top: 20px;">
+            <div class="notes-content">
+                <div class="form-group">
+                    <label for="notes-textarea">Your Notes:</label>
+                    <textarea id="notes-textarea" placeholder="Write your game notes, strategies, and important information here..."></textarea>
+                </div>
+                
+                <div class="button-group">
+{{ ... }}
 				<button type="button" id="clearNotesBtn" class="btn btn-secondary">🗑️ Clear All</button>
 			</div>
 			

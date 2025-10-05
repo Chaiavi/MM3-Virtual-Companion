@@ -1,5 +1,6 @@
 <?php
 include "link.php";
+include 'includes/header_unified.php';
 ?>
 <?php
 require_once 'api/auth.php';
@@ -856,7 +857,7 @@ $username = $auth['username'];
 			
 			getDefaultSettings: function() {
 				return {
-					autoSave: true,
+					autoSave: false,
 					expandedSections: [],
 					confirmClear: true
 				};
@@ -1012,9 +1013,7 @@ $username = $auth['username'];
 				
 				this.updateProgress();
 				
-				console.log('Current progress before save:', this.state.currentProgress);
-				const saveResult = await Storage.autoSave(this.state.currentProgress);
-				console.log('Save result:', saveResult);
+				// Manual save will be handled by the save button click handler
 			},
 			
 			updateProgress: function() {
@@ -1124,13 +1123,10 @@ $username = $auth['username'];
 					// Load progress (user is already authenticated server-side)
 					await UI.loadProgress();
 					
-					// Set up auto-save
-					setInterval(async () => {
-						if (UI.state.currentProgress && Object.keys(UI.state.currentProgress).length > 0) {
-							await Storage.autoSave(UI.state.currentProgress);
-						}
-					}, 30000);
+					// Auto-save functionality has been removed
+					// Manual save is now handled by the save button only
 					
+					// Save on page unload
 					window.addEventListener('beforeunload', async () => {
 						await Storage.save(UI.state.currentProgress);
 					});

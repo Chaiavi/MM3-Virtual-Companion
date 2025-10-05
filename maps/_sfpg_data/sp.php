@@ -1,1 +1,0 @@
-<?php if(function_exists('option')) option('SECURITY_PHRASE', 'SHEkD6fPfyFP3SdvJs8DYqOw1OPo9h'); ?>
