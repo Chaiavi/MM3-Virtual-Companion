@@ -1,42 +1,50 @@
 <?php
 include 'includes/header_unified.php';
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<title>Keyboard Shortcuts</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Might and Magic III - Keyboard Shortcuts Reference">
+	<title>Keyboard Shortcuts - MM3 Virtual Companion</title>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 	
 	<style>
 		/* Reset and base styles */
 		body {
 			margin: 0;
-			padding: 0;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: transparent;
+			padding: 20px 0;
+			font-family: 'Open Sans', Helvetica, sans-serif;
+			background: #2e3842;
+			color: #fff;
 			width: 100%;
+			line-height: 1.65em;
 		}
 		
 		.keyboard-container {
 			width: 100%;
+			max-width: 1200px;
 			margin: 0 auto;
-			background: white;
+			background: rgba(46, 56, 66, 0.95);
 			border-radius: 8px;
 			overflow: hidden;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 		}
 		
 		.keyboard-header {
-			background: linear-gradient(135deg, #dc3545, #c82333);
+			background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
 			color: white;
-			padding: 20px;
+			padding: 30px 20px;
 			text-align: center;
+			border-bottom: 2px solid #3a4652;
 		}
 		
 		.keyboard-title {
 			margin: 0 0 10px 0;
-			font-size: 24px;
+			font-size: 28px;
 			font-weight: bold;
+			text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 		}
 		
 		.keyboard-description {
@@ -47,13 +55,19 @@ include 'includes/header_unified.php';
 		
 		/* Section headers */
 		.section-header {
-			background: #f8f9fa;
+			background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+			color: white;
 			padding: 15px 20px;
 			font-size: 18px;
 			font-weight: bold;
-			color: #2c3e50;
-			border-top: 2px solid #dee2e6;
-			border-bottom: 1px solid #dee2e6;
+			border: none;
+			margin: 0;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.section-header:hover {
+			background: linear-gradient(135deg, #2980b9 0%, #1f5582 100%);
 		}
 		
 		/* Shortcuts grid */
@@ -62,7 +76,7 @@ include 'includes/header_unified.php';
 			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 			gap: 15px;
 			padding: 20px;
-			background: white;
+			background: transparent;
 		}
 		
 		/* Individual shortcut */
@@ -70,32 +84,34 @@ include 'includes/header_unified.php';
 			display: flex;
 			align-items: flex-start;
 			gap: 12px;
-			padding: 12px;
-			background: #f8f9fa;
+			padding: 15px;
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(5px);
 			border-radius: 8px;
-			border-left: 4px solid #dc3545;
+			border-left: 4px solid #3498db;
 			transition: all 0.3s ease;
 		}
 		
 		.shortcut-item:hover {
-			background: #e9ecef;
+			background: rgba(255, 255, 255, 0.15);
 			transform: translateX(5px);
-			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 		}
 		
 		/* Key display */
 		.shortcut-key {
-			background: linear-gradient(135deg, #343a40, #495057);
-			color: white;
+			background: linear-gradient(135deg, #2c3e50, #34495e);
+			color: #fff;
 			padding: 8px 12px;
 			border-radius: 6px;
 			font-family: 'Courier New', monospace;
 			font-weight: bold;
-			font-size: 18px;
+			font-size: 16px;
 			min-width: 30px;
 			text-align: center;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+			box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 			white-space: nowrap;
+			border: 1px solid rgba(255,255,255,0.1);
 		}
 		
 		/* Description */
@@ -105,15 +121,15 @@ include 'includes/header_unified.php';
 		
 		.shortcut-name {
 			font-weight: bold;
-			color: #2c3e50;
+			color: #f8f9fa;
 			margin-bottom: 4px;
 			font-size: 14px;
 		}
 		
 		.shortcut-detail {
-			color: #6c757d;
+			color: #d1d7e0;
 			font-size: 13px;
-			line-height: 1.4;
+			line-height: 1.5;
 		}
 		
 		/* Combat specific styling */
@@ -122,7 +138,7 @@ include 'includes/header_unified.php';
 		}
 		
 		.combat-section .shortcut-key {
-			background: linear-gradient(135deg, #fd7e14, #dc3545);
+			background: linear-gradient(135deg, #fd7e14, #e67e22);
 		}
 		
 		/* Special multi-key shortcuts */
@@ -133,18 +149,34 @@ include 'includes/header_unified.php';
 		}
 		
 		.key-plus {
-			color: #6c757d;
+			color: #a0aec0;
 			font-size: 14px;
 		}
 		
+		/* Info note */
+		.info-note {
+			background: rgba(23, 162, 184, 0.2);
+			border: 1px solid rgba(23, 162, 184, 0.3);
+			color: #a8e6f0;
+			padding: 15px;
+			margin: 20px;
+			border-radius: 6px;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		.info-note strong {
+			color: #4fd1e5;
+		}
+
 		/* Responsive design */
 		@media (max-width: 768px) {
 			.keyboard-header {
-				padding: 15px;
+				padding: 20px 15px;
 			}
 			
 			.keyboard-title {
-				font-size: 20px;
+				font-size: 24px;
 			}
 			
 			.keyboard-description {
@@ -154,33 +186,27 @@ include 'includes/header_unified.php';
 			.shortcuts-grid {
 				grid-template-columns: 1fr;
 				padding: 15px;
-				gap: 10px;
+				gap: 12px;
 			}
 			
 			.section-header {
-				padding: 12px 15px;
+				padding: 14px 15px;
 				font-size: 16px;
 			}
 			
 			.shortcut-item {
-				padding: 10px;
+				padding: 12px;
 			}
 			
 			.shortcut-key {
-				font-size: 16px;
+				font-size: 15px;
 				padding: 6px 10px;
 			}
-		}
-		
-		/* Info note */
-		.info-note {
-			background: #d1ecf1;
-			border: 1px solid #bee5eb;
-			color: #0c5460;
-			padding: 12px;
-			margin: 15px;
-			border-radius: 4px;
-			font-size: 14px;
+
+			.info-note {
+				margin: 15px 10px;
+				padding: 12px;
+			}
 		}
 	</style>
 </head>

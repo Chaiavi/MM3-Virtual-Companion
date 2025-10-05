@@ -123,8 +123,24 @@ class MM3Auth {
     }
     
     public function logout() {
-        session_destroy();
+        // Clear all session variables
         $_SESSION = [];
+        
+        // Delete the session cookie
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        
+        // Destroy the session
+        session_destroy();
+        
+        // Redirect to login page
+        header('Location: ../login.php');
+        exit();
     }
     
     public function isLoggedIn() {
@@ -170,4 +186,11 @@ class MM3Auth {
 
 // Create global instance
 $mm3Auth = new MM3Auth();
+
+// Handle logout action
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    $mm3Auth->logout();
+    // The logout method will handle the redirect
+    exit();
+}
 ?>

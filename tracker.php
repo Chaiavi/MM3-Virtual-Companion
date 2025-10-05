@@ -26,41 +26,50 @@ $username = $auth['username'];
 		body {
 			margin: 0;
 			padding: 0;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: transparent;
+			font-family: 'Open Sans', Helvetica, sans-serif;
+			background: #2e3842;
+			color: #fff;
 			width: 100%;
+			line-height: 1.65em;
 		}
 
 		.tracker-wrapper {
 			width: 100%;
-			margin: 0;
-			padding: 0;
+			margin: 0 auto;
+			padding: 20px;
+			max-width: 1200px;
 		}
 
 		/* Container Layout - NO BORDER RADIUS ON MOBILE */
 		.container {
 			width: 100%;
-			background: rgba(255, 255, 255, 0.95);
+			background: rgba(46, 56, 66, 0.95);
 			overflow: hidden;
+			color: #fff;
 		}
 
 		/* Header */
-		.header {
+		.tracker-header {
 			background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-			color: white;
+			color: #fff;
 			padding: 30px 20px;
 			text-align: center;
+			border-radius: 4px;
+			margin: 0 auto 20px auto;
+			border: 1px solid #4a5a6b;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
 		}
 
-		.header h1 {
-			font-size: 2em;
-			margin-bottom: 10px;
-			text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-		}
-
-		.header p {
-			font-size: 1.1em;
-			opacity: 0.9;
+		.tracker-header h1 {
+			font-size: 2.5em;
+			margin: 0 0 15px 0;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+			color: #fff;
+			text-align: center;
 		}
 
 		/* Stats Section */
@@ -68,9 +77,11 @@ $username = $auth['username'];
 			display: flex;
 			justify-content: space-around;
 			padding: 20px 10px;
-			background: #f8f9fa;
-			border-bottom: 2px solid #e9ecef;
+			background: rgba(0, 0, 0, 0.2);
+			border-bottom: 2px solid #3a4652;
 			flex-wrap: wrap;
+			border-radius: 4px;
+			margin-bottom: 20px;
 		}
 
 		.stat-item {
@@ -83,8 +94,9 @@ $username = $auth['username'];
 		.stat-number {
 			font-size: 2em;
 			font-weight: bold;
-			color: #2c3e50;
+			color: #fff;
 			transition: all 0.3s ease;
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 		}
 
 		.stat-number.updated {
@@ -93,9 +105,11 @@ $username = $auth['username'];
 		}
 
 		.stat-label {
-			color: #6c757d;
+			color: #a0a8b0;
 			font-size: 0.9em;
 			margin-top: 5px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
 		}
 
 		/* Content Area - CRITICAL FOR FULL WIDTH */
@@ -464,8 +478,8 @@ $username = $auth['username'];
 
 <body>
 	<div class="tracker-header">
-		<h1 class="tracker-title">🎯 Progress Tracker</h1>
-		<p class="tracker-description">
+		<h1>🎯 Progress Tracker</h1>
+		<p>
 			Track your exploration progress through all areas of Might and Magic III - Isles of Terra
 		</p>
 	</div>
@@ -474,9 +488,9 @@ $username = $auth['username'];
 		<button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
 		
 		<div class="container">
-			<div class="header">
-				<h1>🏰 Might and Magic III: Isles of Terra</h1>
-				<p>Progress Tracker - Mark Your Exploration Journey</p>
+			<div class="header" style="text-align: center;">
+				<h1 style="text-align: center; width: 100%;">🏰 Might and Magic III: Isles of Terra</h1>
+				<p style="text-align: center; width: 100%; margin: 10px 0 0 0;">Progress Tracker - Mark Your Exploration Journey</p>
 			</div>
 			
 			<div class="stats">

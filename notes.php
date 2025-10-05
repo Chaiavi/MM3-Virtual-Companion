@@ -12,219 +12,84 @@ $username = $auth['username'];
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MM3 Notes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
-        }
-        
-        body {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
         }
-        
-        .content-wrapper {
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+        body {
+            font-family: 'Open Sans', Helvetica, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #2e3842;
+            padding: 0;
+            margin: 0;
+        }
+        .note {
+            background: #3a4652;
+            border: 1px solid #4a5664;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            color: #e0e0e0;
         }
         
         .notes-container {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            background: #3a4652;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             overflow: hidden;
-            margin-top: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
         }
         
         .notes-header {
-            background: linear-gradient(135deg, #3a5a7a 0%, #4a6b8a 100%);
-            color: white;
-            padding: 25px 30px;
-            text-align: center;
+            background: #2a3540;
+            color: #e0e0e0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #4a5664;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
-        .notes-title {
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 600;
+        .note-title {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #4a9cff;     
+        }
+        .btn-primary {
+            background-color: #4a9cff;
+            background-image: linear-gradient(to bottom, #4a9cff, #3a8aee);
+            color: white;
+            border: 1px solid #3a8aee;
         }
         
-        .user-info {
-            font-size: 14px;
-            opacity: 0.9;
-		}
-		
-		.notes-content {
-			padding: 20px;
-		}
-		
-		.form-group {
-			margin-bottom: 20px;
-		}
-		
-		.form-group label {
-			display: block;
-			margin-bottom: 8px;
-			font-weight: 600;
-			color: #333;
-		}
-		
-		#notes-textarea {
-			width: 100%;
-			min-height: 400px;
-			padding: 15px;
-			border: 2px solid #e0e0e0;
-			border-radius: 8px;
-			font-family: 'Consolas', 'Monaco', monospace;
-			font-size: 14px;
-			line-height: 1.5;
-			resize: vertical;
-			transition: border-color 0.3s ease;
-		}
-		
-		#notes-textarea:focus {
-			outline: none;
-			border-color: #667eea;
-			box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-		}
-		
-		.button-group {
-			display: flex;
-			gap: 10px;
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-		
-		.btn {
-			padding: 12px 24px;
-			border: none;
-			border-radius: 6px;
-			font-size: 16px;
-			font-weight: 600;
-			cursor: pointer;
-			transition: all 0.3s ease;
-			min-width: 120px;
-		}
-		
-		.btn-primary {
-			background: linear-gradient(135deg, #667eea, #764ba2);
-			color: white;
-		}
-		
-		.btn-primary:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-		}
-		
-		.btn-secondary {
-			background: #6c757d;
-			color: white;
-		}
-		
-		.btn-secondary:hover {
-			background: #5a6268;
-			transform: translateY(-2px);
-		}
-		
-		.status-message {
-			margin-top: 15px;
-			padding: 12px;
-			border-radius: 6px;
-			text-align: center;
-			font-weight: 600;
-			display: none;
-		}
-		
-		.status-success {
-			background: #d4edda;
-			color: #155724;
-			border: 1px solid #c3e6cb;
-		}
-		
-		.status-error {
-			background: #f8d7da;
-			color: #721c24;
-			border: 1px solid #f5c6cb;
-		}
-		
-		.auto-save-indicator {
-			position: fixed;
-			top: 20px;
-			right: 20px;
-			background: rgba(0, 0, 0, 0.8);
-			color: white;
-			padding: 8px 16px;
-			border-radius: 20px;
-			font-size: 12px;
-			z-index: 1000;
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
-		
-		.auto-save-indicator.show {
-			opacity: 1;
-		}
-		
-		@media (max-width: 768px) {
-			body {
-				padding: 10px;
-			}
-			
-			.notes-container {
-				border-radius: 10px;
-			}
-			
-			.notes-header {
-				padding: 15px;
-			}
-			
-			.notes-title {
-				font-size: 20px;
-			}
-			
-			.notes-content {
-				padding: 15px;
-			}
-			
-			#notes-textarea {
-				min-height: 300px;
-				font-size: 16px; /* Prevent zoom on iOS */
-			}
-			
-			.button-group {
-				flex-direction: column;
-			}
-			
-			.btn {
-				width: 100%;
-			}
-		}
+        .notes-content {
+            padding: 20px;
+        }
+{{ ... }}
 	</style>
 </head>
 
 <body>
-    <div class="content-wrapper" style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
-        <div class="auto-save-indicator" id="autoSaveIndicator" style="text-align: center; padding: 5px; background: #e8f4fd; color: #0a58ca; border-radius: 4px; margin-bottom: 15px; display: none;">Auto-saving...</div>
-        
-        <div class="notes-container" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; margin-top: 20px;">
+    <div class="content-wrapper">
+        <div class="notes-container">
             <div class="notes-content">
                 <div class="form-group">
                     <label for="notes-textarea">Your Notes:</label>
-                    <textarea id="notes-textarea" placeholder="Write your game notes, strategies, and important information here..."></textarea>
+                    <textarea id="notes-textarea" class="form-control" rows="20" placeholder="Type your notes here..."></textarea>
                 </div>
                 
-                <div class="button-group">
-{{ ... }}
-				<button type="button" id="clearNotesBtn" class="btn btn-secondary">🗑️ Clear All</button>
+                <div class="button-group" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button type="button" id="saveNotesBtn" class="btn btn-primary">💾 Save Notes</button>
+                    <button type="button" id="clearNotesBtn" class="btn btn-secondary">🗑️ Clear All</button>
 			</div>
 			
 			<div class="status-message" id="statusMessage"></div>
