@@ -211,34 +211,291 @@ select {
             <div class="form-group">            
                 <select id="weaponId" onchange="changeInWeaponValue()">
                     <option value="0" data-hands="0" data-usable-by="">Weapon</option>
-                    <!-- Add your weapon options here -->
+                    <option value="10" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Bardiche</option>
+                    <option value="9" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ba, Ra">Battle Axe</option>
+                    <option value="8" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Broad Sword</option>
+                    <option value="2" data-hands="1" data-usable-by="All">Club</option>
+                    <option value="6" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Crossbow</option>
+                    <option value="4" data-hands="1" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Cudgel</option>
+                    <option value="5" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Cutlass</option>
+                    <option value="3" data-hands="1" data-usable-by="Kn, Pa, Ar, So, Ro, Ni, Ba, Dr, Ra">Dagger</option>
+                    <option value="6" data-hands="1" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Flail</option>
+                    <option value="12" data-hands="2" data-usable-by="Kn, Pa, Ar, Ra">Flamberge</option>
+                    <option value="8" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Glaive</option>
+                    <option value="11" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ba, Ra">Grand Axe</option>
+                    <option value="12" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ba, Ra">Great Axe</option>
+                    <option value="11" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Halberd</option>
+                    <option value="6" data-hands="2" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Hammer</option>
+                    <option value="4" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Dr, Ra">Hand Axe</option>
+                    <option value="8" data-hands="1" data-usable-by="Kn, Pa, Ni">Katana</option>
+                    <option value="8" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Long Bow</option>
+                    <option value="6" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Long Sword</option>
+                    <option value="5" data-hands="1" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Mace</option>
+                    <option value="5" data-hands="1" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Maul</option>
+                    <option value="10" data-hands="2" data-usable-by="Kn, Pa, Ni">Naginata</option>
+                    <option value="4" data-hands="1" data-usable-by="Kn, Pa, Ni">Nunchakas</option>
+                    <option value="9" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Pike</option>
+                    <option value="6" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Rapier</option>
+                    <option value="6" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Sabre</option>
+                    <option value="6" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Scimitar</option>
+                    <option value="5" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Short Bow</option>
+                    <option value="4" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ra">Short Sword</option>
+                    <option value="3" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Sling</option>
+                    <option value="5" data-hands="1" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Dr, Ra">Spear</option>
+                    <option value="5" data-hands="2" data-usable-by="All">Staff</option>
+                    <option value="7" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ni, Ba, Ra">Trident</option>
+                    <option value="6" data-hands="1" data-usable-by="Kn, Pa, Ni">Wakazashi</option>
+                    <option value="9" data-hands="2" data-usable-by="Kn, Pa, Ar, Ro, Ba, Ra">War Axe</option>
                 </select>
             </div>
-            <!-- Add all other weapon fields -->
+
+            <div class="form-group">
+                <select id="weaponSpecialId" onchange="changeInWeaponValue()">
+                    <option value="0">Special Property</option>
+                    <option value="5">Acidic</option>
+                    <option value="26">Blazing</option>
+                    <option value="3">Burning</option>
+                    <option value="15">Cold</option>
+                    <option value="26">Cryo</option>
+                    <option value="6">Dense</option>
+                    <option value="26">Dyna</option>
+                    <option value="30">Ectoplasmic</option>
+                    <option value="20">Electric</option>
+                    <option value="5">Fiery</option>
+                    <option value="14">Flaming</option>
+                    <option value="8">Flashing</option>
+                    <option value="3">Flickering</option>
+                    <option value="9">Freezing</option>
+                    <option value="7">Frost</option>
+                    <option value="8">Fuming</option>
+                    <option value="3">Glowing</option>
+                    <option value="3">Icy</option>
+                    <option value="5">Incandescent</option>
+                    <option value="36">Kinetic</option>
+                    <option value="13">Magical</option>
+                    <option value="6">Mystic</option>
+                    <option value="42">Noxious</option>
+                    <option value="13">Poisonous</option>
+                    <option value="6">Pyric</option>
+                    <option value="25">Radiating</option>
+                    <option value="38">Scorching</option>
+                    <option value="20">Seething</option>
+                    <option value="14">Shocking</option>
+                    <option value="8">Sonic</option>
+                    <option value="5">Sparking</option>
+                    <option value="6">Static</option>
+                    <option value="19">Thermal</option>
+                    <option value="22">Toxic</option>
+                    <option value="8">Venomous</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <select id="weaponMaterialId" onchange="changeInWeaponValue()">
+                    <option value="0">Material</option>
+                    <option value="8">Amber</option>
+                    <option value="-2">Brass</option>
+                    <option value="-1">Bronze</option>
+                    <option value="3">Coral</option>
+                    <option value="3">Crystal</option>
+                    <option value="47">Diamond</option>
+                    <option value="10">Ebony</option>
+                    <option value="28">Emerald</option>
+                    <option value="0">Glass</option>
+                    <option value="15">Gold</option>
+                    <option value="4">Iron</option>
+                    <option value="5">Lapis</option>
+                    <option value="-10">Leather</option>
+                    <option value="70">Obsidian</option>
+                    <option value="5">Pearl</option>
+                    <option value="20">Platinum</option>
+                    <option value="13">Quartz</option>
+                    <option value="23">Ruby</option>
+                    <option value="35">Sapphire</option>
+                    <option value="7">Silver</option>
+                    <option value="11">Steel</option>
+                    <option value="-8">Wooden</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="hands" placeholder="Hands" onclick="clickOnHands()" readonly class="readonly-input" />	
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="weapon_usable" placeholder="Usable By" onclick="clickOnWeaponUsableBy()" readonly class="readonly-input" />
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="damage" placeholder="Damage" onclick="clickOnDamageResult()" readonly class="readonly-input" />
+            </div>
         </div>
         
         <!-- ARMOR SECTION -->
         <div class="section-title">🛡️ ARMOR</div>
         <div class="form-row armor-row">
-            <div class="form-group">            
+            <div class="form-group">
                 <select id="armorId" onchange="changeInArmorValue()">
-                    <option value="0">Armor</option>
-                    <!-- Add your armor options here -->
+                    <option value="0" data-usable-by="">Armor</option>
+                    <option value="1" data-usable-by="All">Cape</option>
+                    <option value="6" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ra">Chain Mail</option>
+                    <option value="1" data-usable-by="All">Cloak</option>
+                    <option value="5" data-usable-by="All">Jerkin</option>
+                    <option value="3" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Dr, Ra">Leather Armor</option>
+                    <option value="2" data-usable-by="All">Padded Armor</option>
+                    <option value="10" data-usable-by="Kn, Pa">Plate Armor</option>
+                    <option value="8" data-usable-by="Kn, Pa">Plate Mail</option>
+                    <option value="5" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ra">Ring mail</option>
+                    <option value="1" data-usable-by="All">Robes</option>
+                    <option value="4" data-usable-by="Kn, Pa, Ar, Cl, Ro, Ni, Ba, Ra">Scale Armor</option>
+                    <option value="7" data-usable-by="Kn, Pa, Cl, Ra">Splint Mail</option>
                 </select>
             </div>
-            <!-- Add all other armor fields -->
+
+            <div class="form-group">
+                <select id="armorMaterialId" onchange="changeInArmorValue()">
+                    <option value="0">Material</option>
+                    <option value="3">Amber</option>
+                    <option value="-2">Brass</option>
+                    <option value="-1">Bronze</option>
+                    <option value="1">Coral</option>
+                    <option value="1">Crystal</option>
+                    <option value="16">Diamond</option>
+                    <option value="4">Ebony</option>
+                    <option value="12">Emerald</option>
+                    <option value="0">Glass</option>
+                    <option value="6">Gold</option>
+                    <option value="1">Iron</option>
+                    <option value="2">Lapis</option>
+                    <option value="0">Leather</option>
+                    <option value="20">Obsidian</option>
+                    <option value="2">Pearl</option>
+                    <option value="8">Platinum</option>
+                    <option value="5">Qaurtz</option>
+                    <option value="10">Ruby</option>
+                    <option value="14">Sapphire</option>
+                    <option value="2">Silver</option>
+                    <option value="4">Steel</option>
+                    <option value="-3">Wooden</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="armor_usable" placeholder="Usable By" onclick="clickOnArmorUsableBy()" readonly class="readonly-input" />
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="protection" placeholder="Protection" onclick="clickOnProtectionResult()" readonly class="readonly-input" />
+            </div>
         </div>
         
         <!-- ITEMS SECTION -->
-        <div class="section-title">💎 ITEMS</div>
+        <div class="section-title">💍 ITEMS</div>
         <div class="form-row item-row">
-            <div class="form-group">            
+            <div class="form-group">
                 <select id="itemId" onchange="changeInItemValue()">
                     <option value="0">Item</option>
-                    <!-- Add your item options here -->
+                    <option value="0">Amulet</option>
+                    <option value="0">Belt</option>
+                    <option value="0">Box</option>
+                    <option value="1">Boots</option>
+                    <option value="0">Broach</option>
+                    <option value="0">Cameo</option>
+                    <option value="1">Cape</option>
+                    <option value="0">Charm</option>
+                    <option value="1">Cloak</option>
+                    <option value="0">Crown</option>
+                    <option value="1">Gauntlets</option>
+                    <option value="2">Helm</option>
+                    <option value="0">Jewel</option>
+                    <option value="0">Medal</option>
+                    <option value="0">Necklace</option>
+                    <option value="0">Orb</option>
+                    <option value="0">Pendant</option>
+                    <option value="0">Ring</option>
+                    <option value="1">Robes</option>
+                    <option value="0">Rod</option>
+                    <option value="0">Scarab</option>
+                    <option value="4">Shield</option>
+                    <option value="0">Tiara</option>
+                    <option value="0">Wand</option>
+                    <option value="0">Whistle</option>
                 </select>
             </div>
-            <!-- Add all other item fields -->
+
+            <div class="form-group">
+                <select id="itemMaterialId" onchange="changeInItemValue()">
+                    <option value="0">Material</option>
+                    <option value="3">Amber</option>
+                    <option value="-2">Brass</option>
+                    <option value="-1">Bronze</option>
+                    <option value="1">Coral</option>
+                    <option value="1">Crystal</option>
+                    <option value="16">Diamond</option>
+                    <option value="4">Ebony</option>
+                    <option value="12">Emerald</option>
+                    <option value="0">Glass</option>
+                    <option value="6">Gold</option>
+                    <option value="1">Iron</option>
+                    <option value="2">Lapis</option>
+                    <option value="0">Leather</option>
+                    <option value="20">Obsidian</option>
+                    <option value="2">Pearl</option>
+                    <option value="8">Platinum</option>
+                    <option value="5">Qaurtz</option>
+                    <option value="10">Ruby</option>
+                    <option value="14">Sapphire</option>
+                    <option value="2">Silver</option>
+                    <option value="4">Steel</option>
+                    <option value="-3">Wooden</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select id="itemPropertyId" onchange="changeInItemValue()">
+                    <option value="0">Property</option>
+                    <option value="3">Acidic</option>
+                    <option value="6">Blazing</option>
+                    <option value="1">Burning</option>
+                    <option value="5">Cold</option>
+                    <option value="6">Cryo</option>
+                    <option value="2">Dense</option>
+                    <option value="6">Dyna</option>
+                    <option value="5">Ectoplasmic</option>
+                    <option value="5">Electric</option>
+                    <option value="2">Fiery</option>
+                    <option value="4">Flaming</option>
+                    <option value="3">Flashing</option>
+                    <option value="1">Flickering</option>
+                    <option value="4">Freezing</option>
+                    <option value="3">Frost</option>
+                    <option value="3">Fuming</option>
+                    <option value="1">Glowing</option>
+                    <option value="1">Icy</option>
+                    <option value="2">Incandescent</option>
+                    <option value="6">Kinetic</option>
+                    <option value="3">Magical</option>
+                    <option value="1">Mystic</option>
+                    <option value="10">Noxious</option>
+                    <option value="5">Poisonous</option>
+                    <option value="3">Power</option>
+                    <option value="2">Pyric</option>
+                    <option value="5">Radiating</option>
+                    <option value="8">Scorching</option>
+                    <option value="5">Seething</option>
+                    <option value="4">Shocking</option>
+                    <option value="3">Sonic</option>
+                    <option value="2">Sparking</option>
+                    <option value="2">Static</option>
+                    <option value="4">Thermal</option>
+                    <option value="6">Toxic</option>
+                    <option value="4">Venomous</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="itemProtection" placeholder="Item Protection" onclick="clickOnItemResult()" readonly class="readonly-input" />
+            </div>
         </div>
         
         <div class="form-group">
@@ -250,4 +507,10 @@ select {
 
 <?php include 'includes/footer.php'; ?>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="assets/js/custom-util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<script src="assets/js/searchable-dropdown.js"></script>
 <script src="assets/js/mm3calc.js?v=2"></script>
