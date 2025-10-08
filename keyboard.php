@@ -1,4 +1,11 @@
 <?php
+require_once 'api/auth.php';
+
+$auth = $mm3Auth->requireAuth();
+$userId = $auth['user_id'];
+$username = $auth['username'];
+$page_title = 'Keyboard Shortcuts - MM3 Virtual Companion';
+
 include 'includes/header_unified.php';
 ?>
 <!DOCTYPE html>
@@ -466,5 +473,10 @@ include 'includes/header_unified.php';
 			</div>
 		</div>
 	</div>
+	<?php
+// Include footer
+include 'includes/footer.php';
+?>
 </body>
 </html>
+

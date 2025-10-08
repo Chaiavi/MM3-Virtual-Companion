@@ -1,8 +1,12 @@
 <?php
-// Enable error reporting
+require_once 'api/auth.php';
+
+$auth = $mm3Auth->requireAuth();
+$userId = $auth['user_id'];
+$username = $auth['username'];
+$page_title = 'Maps of All Areas - MM3 Virtual Companion';
+
 include 'includes/header_unified.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Set the base path for the gallery
 $mapsDir = __DIR__ . '/maps';
@@ -112,5 +116,10 @@ natsort($imageFiles);
             <?php endif; ?>
         </div>
     </div>
+
+    <?php
+// Include footer
+include 'includes/footer.php';
+?>
 </body>
 </html>

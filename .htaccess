@@ -28,9 +28,11 @@ php_flag session.auto_start on
 </IfModule>
 
 # Redirect to index.php for clean URLs (optional)
+# URL rewriting disabled - using direct PHP file access
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    # Only redirect directory access to index.php
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php?path=$1 [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^(.*)$ index.php [L]
 </IfModule>

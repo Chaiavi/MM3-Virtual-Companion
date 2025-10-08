@@ -1,12 +1,15 @@
 <?php
-require_once 'api/auth.php';
-include "link.php";
-include 'includes/header_unified.php';
 
-// Require authentication for notes
+require_once 'api/auth.php';
+
 $auth = $mm3Auth->requireAuth();
 $userId = $auth['user_id'];
 $username = $auth['username'];
+$page_title = 'Important Notes - MM3 Virtual Companion';
+
+
+include "link.php";
+include 'includes/header_unified.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -214,4 +217,9 @@ $username = $auth['username'];
 			});
 		});
 	</script>
+
+<?php
+// Include footer
+include 'includes/footer.php';
+?>
 </body>

@@ -1,5 +1,4 @@
 <?php
-include "link.php";
 include 'includes/header_unified.php';
 ?>
 <?php
@@ -1208,5 +1207,10 @@ $username = $auth['username'];
 			}
 		});
 	</script>
+
+<?php
+// Include footer
+include 'includes/footer.php';
+?>
 </body>
 </html>
