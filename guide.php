@@ -108,6 +108,10 @@ include 'includes/header_unified.php';
     background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
 }
 
+.section-header.items {
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+}
+
 .section-title {
     font-size: 1.2em;
     font-weight: 600;
@@ -168,6 +172,16 @@ include 'includes/header_unified.php';
     line-height: 1.7;
 }
 
+.section-content ol {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+.section-content ol li {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
 /* Highlight boxes */
 .highlight-box {
     background: #ecf0f1;
@@ -192,7 +206,16 @@ include 'includes/header_unified.php';
     border-left-color: #27ae60;
 }
 
+.highlight-box.info {
+    background: #e8f4f8;
+    border-left-color: #3498db;
+}
+
 .highlight-box strong {
+    color: #2c3e50;
+}
+
+.section-content strong {
     color: #2c3e50;
 }
 
@@ -383,7 +406,135 @@ include 'includes/header_unified.php';
         </div>
     </div>
 
-    <!-- Additional sections continue... (I'll include the rest in the script below) -->
+    <!-- Items & Equipment Section -->
+    <div class="guide-section">
+        <div class="section-header items" onclick="toggleSection(this)">
+            <div class="section-title">
+                <span class="section-icon">⚔️</span>
+                Items & Equipment Guide
+            </div>
+        </div>
+        <div class="section-content">
+            <h3>Understanding Item Properties</h3>
+            
+            <div class="highlight-box info">
+                <strong>Suffix "OF...":</strong> Can be disregarded – it only means you can use the item to cast that spell
+            </div>
+
+            <div class="highlight-box warning">
+                <strong>Important:</strong> Item prefixes are not all equal – always check their actual value, as some prefixes provide better bonuses than others
+            </div>
+
+            <h3>Best Equipment</h3>
+            <div class="highlight-box success">
+                <strong>OBSIDIAN Items:</strong> If you find OBSIDIAN items, use them immediately – they are almost always the best equipment available in their category
+            </div>
+
+            <h3>Items to Discard</h3>
+            <ul>
+                <li><strong>Jewelry of Youth and Beauty:</strong> Throw these out – they're not worth keeping</li>
+            </ul>
+
+            <h3>Inventory Management Tips</h3>
+            <ul>
+                <li><strong>Use inactive characters as item holders:</strong> Characters not in your active party make excellent storage for keys, quest items, and equipment you don't need short-term</li>
+                <li><strong>Equipment management takes time:</strong> Be prepared to spend significant time organizing, equipping, and selling items throughout your adventure</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Pro Tips & Strategies Section -->
+    <div class="guide-section">
+        <div class="section-header tips" onclick="toggleSection(this)">
+            <div class="section-title">
+                <span class="section-icon">💡</span>
+                Pro Tips & Strategies
+            </div>
+        </div>
+        <div class="section-content">
+            <h3>Save Management</h3>
+            <div class="highlight-box success">
+                <strong>Multi-Save Slots:</strong> Duplicate the save file to create multiple save slots for safety and experimentation
+            </div>
+
+            <h3>Money Management</h3>
+            <ul>
+                <li><strong>Use the bank:</strong> Put spare money in the bank to earn excellent interest over time</li>
+            </ul>
+
+            <h3>Quest Optimization</h3>
+            <div class="highlight-box warning">
+                <strong>Skip timed quests:</strong> Disregard quests that require waiting for a specific day – they're generally not worth the time investment
+            </div>
+
+            <h3>Hireling Management</h3>
+            <ul>
+                <li><strong>Cost scaling:</strong> Hirelings cost more and more as they gain higher levels</li>
+                <li><strong>Temporary hirelings:</strong> You can hire them momentarily just to sell their equipment or give them quest items for safekeeping</li>
+            </ul>
+
+            <h3>Character Issues</h3>
+            <div class="highlight-box info">
+                <strong>Aging problem:</strong> If your characters age too much, you can use a hex editor to restore them (advanced users only)
+            </div>
+
+            <h3>Game Modifications</h3>
+            <div class="highlight-box warning">
+                <strong>Ludwig Patch:</strong> There is only one worthy patch for the game (Ludwig), but the price is lots of non-needed fights. Use at your own discretion.
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Completionist Section -->
+    <div class="guide-section">
+        <div class="section-header advanced" onclick="toggleSection(this)">
+            <div class="section-title">
+                <span class="section-icon">🏆</span>
+                Advanced Completionist Guide
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="highlight-box info">
+                <strong>For a more full experience:</strong> These optional challenges provide a richer gameplay experience
+            </div>
+
+            <h3>Optional Challenge Order</h3>
+            <ol>
+                <li><strong>Return artifacts of Good/Evil/Neutral</strong> before turning in 11 Power Orbs to a castle
+                    <ul>
+                        <li>Save the Power Orbs in one of your non-active hirelings for safekeeping</li>
+                    </ul>
+                </li>
+                <li><strong>Solve the castle dungeons</strong> before returning the Power Orbs for maximum challenge and rewards</li>
+            </ol>
+
+            <p>These optional objectives add depth and challenge to your playthrough while ensuring you experience more of the game's content before reaching the endgame.</p>
+        </div>
+    </div>
+
+    <!-- Story Background Section -->
+    <div class="guide-section">
+        <div class="section-header story" onclick="toggleSection(this)">
+            <div class="section-title">
+                <span class="section-icon">📖</span>
+                Story Background
+            </div>
+        </div>
+        <div class="section-content">
+            <h3>The Eternal Conflict</h3>
+            
+            <p><strong>Sheltem & Corak</strong> are two guardians created by the Ancients. Sheltem developed a critical bug in his programming and now attempts to destroy worlds across the galaxy.</p>
+
+            <p>In <em>Might and Magic III: Isles of Terra</em>, you are helping <strong>Corak</strong> defend Terra from Sheltem's destructive plans.</p>
+
+            <div class="highlight-box info">
+                <strong>Series Continuity:</strong> In later games of the series, Sheltem will attempt to destroy other worlds, which you will save with Corak's continued assistance. This ongoing conflict forms the backbone of the early Might and Magic saga.
+            </div>
+
+            <h3>Your Role</h3>
+            <p>As adventurers on the Isles of Terra, your party must gather the necessary power and artifacts to enter the Main Control Center and stop Sheltem's plans once and for all – at least for this world.</p>
+        </div>
+    </div>
 
 </div>
 
@@ -396,6 +547,5 @@ function toggleSection(header) {
 </script>
 
 <?php
-// Include footer
 include 'includes/footer.php';
 ?>
