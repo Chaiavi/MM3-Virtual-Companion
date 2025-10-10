@@ -53,7 +53,7 @@ if (!isset($page_title)) {
         /* Title Section */
         .header-title-section {
             text-align: center;
-            padding: 25px 20px 20px;
+            padding: 20px 20px 15px;
             background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
         }
         
@@ -86,6 +86,19 @@ if (!isset($page_title)) {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+        }
+        
+        /* Hamburger Menu Button - Hidden on desktop */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8em;
+            cursor: pointer;
+            padding: 15px 20px;
+            z-index: 1001;
         }
         
         .nav-menu {
@@ -129,7 +142,7 @@ if (!isset($page_title)) {
             font-weight: 600;
         }
         
-        /* User Info Section - Same line as menu */
+        /* User Info Section */
         .user-section {
             display: flex;
             align-items: center;
@@ -186,21 +199,41 @@ if (!isset($page_title)) {
         
         @media (max-width: 768px) {
             .app-title {
-                font-size: 1.8em;
+                font-size: 1.5em;
                 letter-spacing: 1px;
             }
             
             .app-subtitle {
-                font-size: 0.95em;
+                font-size: 0.85em;
             }
             
+            .header-title-section {
+                padding: 15px 15px 12px;
+            }
+            
+            /* Show hamburger button */
+            .hamburger-btn {
+                display: block;
+            }
+            
+            /* Mobile menu wrapper */
             .nav-container {
-                flex-direction: column;
+                flex-wrap: wrap;
             }
             
+            /* Hide menu by default on mobile */
             .nav-menu {
+                display: none;
                 flex-direction: column;
                 width: 100%;
+                order: 3;
+                background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Show menu when active */
+            .nav-menu.active {
+                display: flex;
             }
             
             .nav-item {
@@ -209,7 +242,7 @@ if (!isset($page_title)) {
             
             .nav-link {
                 width: 100%;
-                text-align: center;
+                text-align: left;
                 padding: 15px 20px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 border-left: 3px solid transparent;
@@ -220,22 +253,37 @@ if (!isset($page_title)) {
                 border-left-color: #e94560;
             }
             
+            /* User section on mobile */
             .user-section {
-                width: 100%;
-                justify-content: center;
-                padding: 15px 20px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                width: auto;
+                padding: 12px 15px;
                 margin: 0;
-                gap: 15px;
+                gap: 10px;
+                order: 2;
             }
             
             .username-display {
-                font-size: 1em;
+                font-size: 0.85em;
             }
             
             .logout-btn {
-                padding: 10px 20px;
-                font-size: 0.95em;
+                padding: 8px 12px;
+                font-size: 0.8em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .app-title {
+                font-size: 1.3em;
+            }
+            
+            .app-subtitle {
+                font-size: 0.8em;
+            }
+            
+            .username-display::before {
+                content: '';
+                margin-right: 0;
             }
         }
     </style>
@@ -248,7 +296,9 @@ if (!isset($page_title)) {
         </div>
         <nav class="header-navigation">
             <div class="nav-container">
-                <ul class="nav-menu">
+                <button class="hamburger-btn" onclick="toggleMobileMenu()">☰</button>
+                
+                <ul class="nav-menu" id="navMenu">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="itemsCalculator.php">Items Calculator</a></li>
                     <li class="nav-item"><a class="nav-link" href="guide.php">Guide & Tips</a></li>
@@ -257,6 +307,7 @@ if (!isset($page_title)) {
                     <li class="nav-item"><a class="nav-link" href="maps.php">Maps</a></li>
                     <li class="nav-item"><a class="nav-link" href="tracker.php">Progress Tracker</a></li>
                 </ul>
+                
                 <?php if (!empty($username)): ?>
                 <div class="user-section">
                     <span class="username-display"><?php echo htmlspecialchars($username); ?></span>
@@ -269,6 +320,27 @@ if (!isset($page_title)) {
     <main class="app-content">
     
     <script>
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            
+            navMenu.classList.toggle('active');
+            hamburgerBtn.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+        }
+        
+        // Close menu when clicking a link on mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    const navMenu = document.getElementById('navMenu');
+                    const hamburgerBtn = document.querySelector('.hamburger-btn');
+                    navMenu.classList.remove('active');
+                    hamburgerBtn.textContent = '☰';
+                }
+            });
+        });
+        
         // Highlight active page
         document.addEventListener('DOMContentLoaded', function() {
             const currentPage = window.location.pathname.split('/').pop() || 'index.php';
