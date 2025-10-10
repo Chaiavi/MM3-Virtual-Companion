@@ -29,13 +29,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $mm3Auth->login($username, $password);
         if ($result['success']) {
             $redirect = $_GET['redirect'] ?? 'index.php';
-            // Clean up redirect path - remove any duplicate base paths
-            $redirect = str_replace($_SERVER['SCRIPT_NAME'], '', $redirect);
-            $redirect = ltrim($redirect, '/');
-            if (empty($redirect)) {
-                $redirect = 'index.php';
+            
+            // Parse the redirect URL to extract just the path
+            $redirectPath = parse_url($redirect, PHP_URL_PATH);
+            if ($redirectPath === null) {
+                $redirectPath = $redirect;
             }
-            header('Location: ' . $redirect);
+            
+            // Get the base directory (e.g., /mm4/)
+            $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+            $scriptDir = rtrim($scriptDir, '/') . '/';
+            
+            // Remove the base directory from the redirect if it's duplicated
+            if (strpos($redirectPath, $scriptDir) === 0) {
+                $redirectPath = substr($redirectPath, strlen($scriptDir));
+            }
+            
+            // Clean up the path
+            $redirectPath = ltrim($redirectPath, '/');
+            
+            // If empty or just the base directory, default to index.php
+            if (empty($redirectPath) || $redirectPath === '/') {
+                $redirectPath = 'index.php';
+            }
+            
+            // Ensure we're not redirecting to an external site
+            if (strpos($redirectPath, '://') !== false || strpos($redirectPath, '//') === 0) {
+                $redirectPath = 'index.php';
+            }
+            
+            header('Location: ' . $redirectPath);
             exit;
         } else {
             $error = $result['message'];

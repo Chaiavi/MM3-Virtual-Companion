@@ -55,6 +55,14 @@ if (!isset($page_title)) {
             text-align: center;
             padding: 20px 20px 15px;
             background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title-content {
+            flex: 1;
+            text-align: center;
         }
         
         .app-title {
@@ -74,6 +82,46 @@ if (!isset($page_title)) {
             letter-spacing: 1px;
         }
         
+        /* User Info Section - NOW IN HEADER */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 20px;
+            flex-shrink: 0;
+        }
+        
+        .username-display {
+            color: #e94560;
+            font-weight: 600;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        
+        .username-display::before {
+            content: '👤 ';
+            margin-right: 3px;
+        }
+        
+        .logout-btn {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            white-space: nowrap;
+            background: rgba(220, 53, 69, 0.2);
+            border-radius: 4px;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        
+        .logout-btn:hover {
+            color: #fff;
+            background: rgba(220, 53, 69, 0.5);
+            border-color: rgba(220, 53, 69, 0.6);
+        }
+        
         /* Navigation Menu */
         .header-navigation {
             background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
@@ -85,7 +133,6 @@ if (!isset($page_title)) {
             margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             position: relative;
         }
         
@@ -104,11 +151,12 @@ if (!isset($page_title)) {
         .nav-menu {
             display: flex;
             align-items: center;
+            justify-content: center;
             list-style: none;
             padding: 0;
-            margin: 0;
+            margin: 0 auto;
             flex-wrap: wrap;
-            flex: 1;
+            width: 100%;
         }
         
         .nav-item {
@@ -142,46 +190,6 @@ if (!isset($page_title)) {
             font-weight: 600;
         }
         
-        /* User Info Section */
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0 15px;
-            margin-left: auto;
-        }
-        
-        .username-display {
-            color: #e94560;
-            font-weight: 600;
-            font-size: 0.9em;
-            white-space: nowrap;
-        }
-        
-        .username-display::before {
-            content: '👤 ';
-            margin-right: 3px;
-        }
-        
-        .logout-btn {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.85em;
-            transition: all 0.3s ease;
-            padding: 6px 12px;
-            white-space: nowrap;
-            background: rgba(220, 53, 69, 0.2);
-            border-radius: 4px;
-            border: 1px solid rgba(220, 53, 69, 0.3);
-        }
-        
-        .logout-btn:hover {
-            color: #fff;
-            background: rgba(220, 53, 69, 0.5);
-            border-color: rgba(220, 53, 69, 0.6);
-        }
-        
         /* Content Area */
         .app-content {
             max-width: 1400px;
@@ -192,8 +200,8 @@ if (!isset($page_title)) {
         /* Responsive Design */
         @media (max-width: 1200px) {
             .nav-link {
-                padding: 18px 15px;
-                font-size: 0.85em;
+                padding: 18px 12px;
+                font-size: 0.8em;
             }
         }
         
@@ -209,6 +217,17 @@ if (!isset($page_title)) {
             
             .header-title-section {
                 padding: 15px 15px 12px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .title-content {
+                order: 1;
+            }
+            
+            .user-section {
+                order: 2;
+                padding: 0;
             }
             
             /* Show hamburger button */
@@ -253,15 +272,6 @@ if (!isset($page_title)) {
                 border-left-color: #e94560;
             }
             
-            /* User section on mobile */
-            .user-section {
-                width: auto;
-                padding: 12px 15px;
-                margin: 0;
-                gap: 10px;
-                order: 2;
-            }
-            
             .username-display {
                 font-size: 0.85em;
             }
@@ -291,8 +301,17 @@ if (!isset($page_title)) {
 <body>
     <header class="app-header">
         <div class="header-title-section">
-            <h1 class="app-title">Might and Magic III - Virtual Companion</h1>
-            <p class="app-subtitle">Your ultimate companion for the world of Might and Magic III</p>
+            <div class="title-content">
+                <h1 class="app-title">Might and Magic III - Virtual Companion</h1>
+                <p class="app-subtitle">Your ultimate companion for the world of Might and Magic III</p>
+            </div>
+            
+            <?php if (!empty($username)): ?>
+            <div class="user-section">
+                <span class="username-display"><?php echo htmlspecialchars($username); ?></span>
+                <a class="logout-btn" href="api/auth.php?action=logout">Logout</a>
+            </div>
+            <?php endif; ?>
         </div>
         <nav class="header-navigation">
             <div class="nav-container">
@@ -302,18 +321,12 @@ if (!isset($page_title)) {
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="itemsCalculator.php">Items Calculator</a></li>
                     <li class="nav-item"><a class="nav-link" href="guide.php">Guide & Tips</a></li>
+                    <li class="nav-item"><a class="nav-link" href="riddles.php">Answers to Riddles</a></li>
                     <li class="nav-item"><a class="nav-link" href="keyboard.php">Keyboard Shortcuts</a></li>
                     <li class="nav-item"><a class="nav-link" href="notes.php">Notes</a></li>
                     <li class="nav-item"><a class="nav-link" href="maps.php">Maps</a></li>
                     <li class="nav-item"><a class="nav-link" href="tracker.php">Progress Tracker</a></li>
                 </ul>
-                
-                <?php if (!empty($username)): ?>
-                <div class="user-section">
-                    <span class="username-display"><?php echo htmlspecialchars($username); ?></span>
-                    <a class="logout-btn" href="api/auth.php?action=logout">Logout</a>
-                </div>
-                <?php endif; ?>
             </div>
         </nav>
     </header>
